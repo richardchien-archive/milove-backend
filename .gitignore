@@ -1,6 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
-### Example user template template
-### Example user template
+
+# Current project
+media
+db.sqlite3
 
 # IntelliJ project files
 .idea

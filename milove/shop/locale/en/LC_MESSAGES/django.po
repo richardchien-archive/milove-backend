@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-14 16:02+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\models.py:7
+msgid "brand"
+msgstr ""
+
+#: .\models.py:8
+msgid "brands"
+msgstr ""
+
+#: .\models.py:10 .\models.py:21
+msgid "name"
+msgstr ""
+
+#: .\models.py:18
+msgid "category"
+msgstr ""
+
+#: .\models.py:19
+msgid "categories"
+msgstr ""
+
+#: .\models.py:23
+msgid "super_category"
+msgstr "super category"
+
+#: .\models.py:33 .\models.py:60
+msgid "product"
+msgstr ""
+
+#: .\models.py:34
+msgid "products"
+msgstr ""
+
+#: .\models.py:36
+msgid "Product|brand"
+msgstr ""
+
+#: .\models.py:37
+msgid "Product|name"
+msgstr "name"
+
+#: .\models.py:38
+msgid "Product|size"
+msgstr "size"
+
+#: .\models.py:39
+msgid "Product|style"
+msgstr "style"
+
+#: .\models.py:40
+msgid "Product|condition"
+msgstr "condition"
+
+#: .\models.py:41
+msgid "Product|categories"
+msgstr "categories"
+
+#: .\models.py:42
+msgid "Product|attachments"
+msgstr "attachments"
+
+#: .\models.py:43
+msgid "Product|description"
+msgstr "description"
+
+#: .\models.py:44
+#, fuzzy
+#| msgid "Product|name"
+msgid "Product|original_price"
+msgstr "name"
+
+#: .\models.py:45
+#, fuzzy
+#| msgid "Product|size"
+msgid "Product|price"
+msgstr "size"
+
+#: .\models.py:46
+#, fuzzy
+#| msgid "Product|style"
+msgid "Product|sold"
+msgstr "style"
+
+#: .\models.py:48
+#, fuzzy
+#| msgid "Product|name"
+msgid "Product|main_image"
+msgstr "name"
+
+#: .\models.py:56
+#, fuzzy
+#| msgid "Product|name"
+msgid "product image"
+msgstr "name"
+
+#: .\models.py:57
+#, fuzzy
+#| msgid "Product|categories"
+msgid "product images"
+msgstr "categories"
