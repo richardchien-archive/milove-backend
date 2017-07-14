@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-14 16:04+0800\n"
+"POT-Creation-Date: 2017-07-14 21:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,90 +17,102 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\models.py:7
+#: .\models.py:10
 msgid "brand"
 msgstr "品牌"
 
-#: .\models.py:8
+#: .\models.py:11
 msgid "brands"
 msgstr "品牌"
 
-#: .\models.py:10 .\models.py:21
+#: .\models.py:13 .\models.py:24
 msgid "name"
 msgstr "名称"
 
-#: .\models.py:18
+#: .\models.py:21
 msgid "category"
 msgstr "分类"
 
-#: .\models.py:19
+#: .\models.py:22
 msgid "categories"
 msgstr "分类"
 
-#: .\models.py:23
-msgid "super_category"
+#: .\models.py:26
+msgid "super category"
 msgstr "父级分类"
 
-#: .\models.py:33 .\models.py:60
+#: .\models.py:45 .\models.py:89
 msgid "product"
 msgstr "商品"
 
-#: .\models.py:34
+#: .\models.py:46
 msgid "products"
 msgstr "商品"
 
-#: .\models.py:36
+#: .\models.py:49
 msgid "Product|brand"
 msgstr "品牌"
 
-#: .\models.py:37
+#: .\models.py:50
 msgid "Product|name"
 msgstr "名称"
 
-#: .\models.py:38
+#: .\models.py:51
 msgid "Product|size"
 msgstr "尺码"
 
-#: .\models.py:39
+#: .\models.py:52
 msgid "Product|style"
 msgstr "款式"
 
-#: .\models.py:40
+#: .\models.py:53
 msgid "Product|condition"
 msgstr "成色"
 
-#: .\models.py:41
+#: .\models.py:54 .\models.py:76
 msgid "Product|categories"
 msgstr "分类"
 
-#: .\models.py:42
+#: .\models.py:55
 msgid "Product|attachments"
 msgstr "附件"
 
-#: .\models.py:43
+#: .\models.py:56
 msgid "Product|description"
 msgstr "描述"
 
-#: .\models.py:44
-msgid "Product|original_price"
+#: .\models.py:57
+msgid "Product|original price"
 msgstr "原价"
 
-#: .\models.py:45
+#: .\models.py:58
 msgid "Product|price"
 msgstr "定价"
 
-#: .\models.py:46
+#: .\models.py:59
 msgid "Product|sold"
-msgstr "已售"
+msgstr "已出售"
 
-#: .\models.py:48
-msgid "Product|main_image"
+#: .\models.py:62
+msgid "Product|main image"
 msgstr "主图"
 
-#: .\models.py:56
+#: .\models.py:70
+msgid "Product|main image preview"
+msgstr "主图预览"
+
+#: .\models.py:84
 msgid "product image"
 msgstr "商品图片"
 
-#: .\models.py:57
+#: .\models.py:85
 msgid "product images"
 msgstr "商品图片"
+
+#: .\models.py:87
+msgid "image"
+msgstr "图片"
+
+#: .\models.py:96
+msgid "image preview"
+msgstr "图片预览"
