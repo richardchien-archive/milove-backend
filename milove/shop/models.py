@@ -45,12 +45,13 @@ class Product(models.Model):
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name=_('Product|brand'))
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE,
+                              related_name='products', verbose_name=_('Product|brand'))
     name = models.CharField(max_length=200, blank=True, verbose_name=_('Product|name'))
     size = models.CharField(max_length=20, blank=True, verbose_name=_('Product|size'))
     style = models.CharField(max_length=200, verbose_name=_('Product|style'))
     condition = models.CharField(max_length=20, verbose_name=_('Product|condition'))
-    categories = models.ManyToManyField(Category, verbose_name=_('Product|categories'))
+    categories = models.ManyToManyField(Category, related_name='products', verbose_name=_('Product|categories'))
     attachments = models.CharField(max_length=200, verbose_name=_('Product|attachments'))
     description = models.TextField(verbose_name=_('Product|description'))
     original_price = models.FloatField(verbose_name=_('Product|original price'))
@@ -69,6 +70,11 @@ class Product(models.Model):
     main_image_preview.short_description = _('Product|main image preview')
     main_image_preview.allow_tags = True
 
+    def categories_string(self):
+        return ', '.join(map(str, self.categories.all()))
+
+    categories_string.short_description = _('Product|categories')
+
     def __str__(self):
         return '[{}] {}'.format(self.condition, self.brand) + (' ' + str(self.name) if self.name else '')
 
@@ -80,7 +86,7 @@ class ProductImage(models.Model):
 
     image = models.ImageField(upload_to=_prod_image_path, verbose_name=_('image'))
     image_thumb = ImageSpecField(source='image', spec=Thumbnail)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))
 
     def image_preview(self):
         if self.image_thumb:
@@ -91,4 +97,4 @@ class ProductImage(models.Model):
     image_preview.allow_tags = True
 
     def __str__(self):
-        return ''
+        return str(self.image)
