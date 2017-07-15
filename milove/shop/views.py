@@ -1,19 +1,14 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import viewsets
 
 from milove.shop.models import *
 from milove.shop.serializers import *
 
 
-@api_view(['GET'])
-def product_list(request):
-    products = Product.objects.all()
-    serializer = ProductSerializer(products, many=True)
-    return Response(serializer.data)
+class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 
-@api_view(['GET'])
-def category_list(request):
-    categories = Category.objects.all()
-    serializer = CategorySerializer(categories, many=True)
-    return Response(serializer.data)
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
