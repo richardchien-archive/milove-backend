@@ -34,7 +34,7 @@ class Category(models.Model):
 _prod_image_path = 'images/products/'
 
 
-class Thumbnail(ImageSpec):
+class _Thumbnail(ImageSpec):
     processors = [ResizeToFill(120, 120)]
     format = 'JPEG'
     options = {'quality': 80}
@@ -60,7 +60,7 @@ class Product(models.Model):
 
     main_image = models.ImageField(default='images/placeholder-120x120.png',
                                    upload_to=_prod_image_path, verbose_name=_('Product|main image'))
-    main_image_thumb = ImageSpecField(source='main_image', spec=Thumbnail)
+    main_image_thumb = ImageSpecField(source='main_image', spec=_Thumbnail)
 
     def main_image_preview(self):
         if self.main_image_thumb:
@@ -85,7 +85,7 @@ class ProductImage(models.Model):
         verbose_name_plural = _('product images')
 
     image = models.ImageField(upload_to=_prod_image_path, verbose_name=_('image'))
-    image_thumb = ImageSpecField(source='image', spec=Thumbnail)
+    image_thumb = ImageSpecField(source='image', spec=_Thumbnail)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))
 
     def image_preview(self):
