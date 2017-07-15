@@ -3,6 +3,7 @@
 # Current project
 media
 db.sqlite3
+.vscode
 
 # IntelliJ project files
 .idea
