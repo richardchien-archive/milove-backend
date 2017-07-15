@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from milove.shop import models
+from . import models
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -16,3 +16,13 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Category
         fields = '__all__'
+
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    username = serializers.CharField(source='get_username')
+    email = serializers.CharField(source='get_email')
+
+    class Meta:
+        model = models.UserInfo
+        exclude = ['user']

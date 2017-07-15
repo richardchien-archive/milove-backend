@@ -62,13 +62,13 @@ class Product(models.Model):
                                    upload_to=_prod_image_path, verbose_name=_('Product|main image'))
     main_image_thumb = ImageSpecField(source='main_image', spec=_Thumbnail)
 
-    def main_image_preview(self):
+    def get_main_image_preview(self):
         if self.main_image_thumb:
             return '<img src="%s" width="120" />' % self.main_image_thumb.url
         return '-'
 
-    main_image_preview.short_description = _('Product|main image preview')
-    main_image_preview.allow_tags = True
+    get_main_image_preview.short_description = _('Product|main image preview')
+    get_main_image_preview.allow_tags = True
 
     def categories_string(self):
         return ', '.join(map(str, self.categories.all()))
@@ -88,13 +88,13 @@ class ProductImage(models.Model):
     image_thumb = ImageSpecField(source='image', spec=_Thumbnail)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))
 
-    def image_preview(self):
+    def get_image_preview(self):
         if self.image_thumb:
             return '<img src="%s" width="120" />' % self.image_thumb.url
         return '-'
 
-    image_preview.short_description = _('image preview')
-    image_preview.allow_tags = True
+    get_image_preview.short_description = _('image preview')
+    get_image_preview.allow_tags = True
 
     def __str__(self):
         return str(self.image)
