@@ -8,7 +8,8 @@ class UserInfo(models.Model):
         verbose_name = _('user information')
         verbose_name_plural = _('user information')
 
-    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE, verbose_name=_('user'))
+    user = models.OneToOneField(User, primary_key=True, related_name='info',
+                                on_delete=models.CASCADE, verbose_name=_('user'))
 
     def get_id(self):
         return self.user.id
