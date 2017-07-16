@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import ugettext_lazy as _
 
 from .models import *
+
+admin.site.site_header = admin.site.site_title = _('MiLove Admin')
 
 
 # Admin of goods
