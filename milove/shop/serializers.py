@@ -4,7 +4,18 @@ from . import models
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    images = serializers.StringRelatedField(many=True)
+    class ProductImageField(serializers.RelatedField):
+        def __init__(self, **kwargs):
+            super().__init__(read_only=True, **kwargs)
+
+        def to_internal_value(self, data):
+            return super().to_internal_value(data)
+
+        def to_representation(self, value):
+            return value.image.name
+
+    main_image = serializers.ImageField(use_url=False)
+    images = ProductImageField(many=True)
 
     class Meta:
         model = models.Product

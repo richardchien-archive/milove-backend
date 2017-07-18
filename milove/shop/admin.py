@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import *
 
-admin.site.site_header = admin.site.site_title = _('MiLove Admin')
+admin.site.site_header = admin.site.site_title = _('Milove Admin')
 
 
 # Admin of goods

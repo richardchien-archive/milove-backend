@@ -24,23 +24,32 @@ SECRET_KEY = 'ej30v$ipwpnsr&vhn4tx0$w(5i79jagrtnnj3u_eelo)q7^q!8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'pc.lan',
+    '192.168.0.14',
+]
 
 # Application definition
 
 INSTALLED_APPS = [
     'milove.shop',
+    'imagekit',
+    'rest_framework',
+    'corsheaders',
+    'flat_responsive',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'imagekit',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -119,8 +128,28 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# REST framework
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
 }
+
+# CORS
+
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:3000',
+    '192.168.0.14:3000',
+    'pc.lan:3000',
+)
+
+CORS_URLS_REGEX = r'^/api/.*$'
+
+CSRF_TRUSTED_ORIGINS = (
+    '127.0.0.1:3000',
+    '192.168.0.14:3000',
+    'pc.lan:3000',
+)
