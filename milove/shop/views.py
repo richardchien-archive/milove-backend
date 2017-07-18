@@ -40,14 +40,14 @@ def login(request):
         raise exceptions.AuthenticationFailed
 
     auth.login(request, user)
-    return Response(UserInfoSerializer(user.userinfo).data)
+    return Response(UserInfoSerializer(user.info).data)
 
 
 @api_view(['GET'])
 def get_user_info(request):
     if not request.user.is_authenticated:
         raise exceptions.NotAuthenticated
-    return Response(UserInfoSerializer(request.user.userinfo).data)
+    return Response(UserInfoSerializer(request.user.info).data)
 
 
 @api_view(['POST'])

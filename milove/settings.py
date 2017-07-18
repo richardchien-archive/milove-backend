@@ -146,10 +146,12 @@ CORS_ORIGIN_WHITELIST = (
     'pc.lan:3000',
 )
 
-CORS_URLS_REGEX = r'^/api/.*$'
-
 CSRF_TRUSTED_ORIGINS = (
     '127.0.0.1:3000',
     '192.168.0.14:3000',
     'pc.lan:3000',
 )
+
+CORS_URLS_REGEX = r'^/api/.*$'
+
+CORS_ALLOW_CREDENTIALS = True
