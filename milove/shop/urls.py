@@ -14,5 +14,7 @@ urlpatterns = [
     url(r'^logout/$', views.logout),
     url(r'^upload/$', views.upload),
     url(r'^checkout/$', views.checkout),
+    url(r'^pay-test/$', views.pay_test),
+    url(r'^pay-test-paypal/$', views.pay_test_paypal),
 ]
 urlpatterns.extend(router.urls)
