@@ -24,11 +24,9 @@ SECRET_KEY = 'ej30v$ipwpnsr&vhn4tx0$w(5i79jagrtnnj3u_eelo)q7^q!8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'pc.lan',
-    '192.168.0.14',
-]
+ADMINS = []
+
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -138,20 +136,32 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
 }
 
+# CSRF
+
+CSRF_TRUSTED_ORIGINS = []
+
 # CORS
 
-CORS_ORIGIN_WHITELIST = (
-    '127.0.0.1:3000',
-    '192.168.0.14:3000',
-    'pc.lan:3000',
-)
-
-CSRF_TRUSTED_ORIGINS = (
-    '127.0.0.1:3000',
-    '192.168.0.14:3000',
-    'pc.lan:3000',
-)
-
+CORS_ORIGIN_WHITELIST = []
 CORS_URLS_REGEX = r'^/api/.*$'
-
 CORS_ALLOW_CREDENTIALS = True
+
+# Clickjacking protection
+
+X_FRAME_OPTIONS = 'DENY'
+
+# Mail
+
+EMAIL_BACKEND = 'milove.mail.backends.HybridEmailBackend'
+DEFAULT_FROM_EMAIL = 'no-reply@notifications.milove.com'
+MAIL_FROM_NAME = 'Milove Inc.'
+SENDGRID_API_KEY = ''
+SENDCLOUD_API_USER = ''
+SENDCLOUD_API_KEY = ''
+
+# Payment methods
+
+STRIPE_API_KEY = ''
+PAYPAL_MODE = 'sandbox'
+PAYPAL_CLIENT_ID = ''
+PAYPAL_CLIENT_SECRET = ''

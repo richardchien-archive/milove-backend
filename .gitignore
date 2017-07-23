@@ -3,6 +3,7 @@
 # Current project
 media
 db.sqlite3
+milove/settings_*.py
 
 # IntelliJ project files
 out
