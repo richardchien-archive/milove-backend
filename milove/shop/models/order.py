@@ -29,11 +29,11 @@ class Order(models.Model):
                              on_delete=models.SET_NULL, verbose_name=_('user'))
     total_price = models.FloatField(verbose_name=_('total price'))
 
-    STATUS_UNPAID = 'UNPAID'
-    STATUS_PAID = 'PAID'
-    STATUS_SHIPPING = 'SHIPPING'
-    STATUS_DONE = 'DONE'
-    STATUS_CANCELED = 'CANCELED'
+    STATUS_UNPAID = 'unpaid'
+    STATUS_PAID = 'paid'
+    STATUS_SHIPPING = 'shipping'
+    STATUS_DONE = 'done'
+    STATUS_CANCELED = 'canceled'
 
     STATUSES = (
         (STATUS_UNPAID, _('OrderStatus|unpaid')),
@@ -46,9 +46,9 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUSES, default=STATUS_UNPAID,
                               verbose_name=_('status'))
 
-    PAYMENT_BALANCE = 'BALANCE'
-    PAYMENT_PAYPAL = 'PAYPAL'
-    PAYMENT_STRIPE = 'STRIPE'
+    PAYMENT_BALANCE = 'balance'
+    PAYMENT_PAYPAL = 'paypal'
+    PAYMENT_STRIPE = 'stripe'
 
     PAYMENT_METHODS = (
         (PAYMENT_BALANCE, _('PaymentMethod|balance')),
