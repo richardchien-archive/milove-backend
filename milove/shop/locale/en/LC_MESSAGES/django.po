@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-14 21:37+0800\n"
+"POT-Creation-Date: 2017-07-23 23:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,118 +17,262 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\models.py:10
-msgid "brand"
+#: .\admin\__init__.py:6
+msgid "Milove Admin"
 msgstr ""
 
-#: .\models.py:11
-msgid "brands"
+#: .\admin\goods.py:34
+msgid "total number of products"
 msgstr ""
 
-#: .\models.py:13 .\models.py:24
-msgid "name"
+#: .\admin\goods.py:40
+msgid "number of products for sale"
 msgstr ""
 
-#: .\models.py:21
-msgid "category"
+#: .\admin\goods.py:80
+msgid "image preview"
 msgstr ""
 
-#: .\models.py:22
-msgid "categories"
-msgstr ""
-
-#: .\models.py:26
-#, fuzzy
-#| msgid "super_category"
-msgid "super category"
-msgstr ""
-
-#: .\models.py:45 .\models.py:89
-msgid "product"
-msgstr ""
-
-#: .\models.py:46
-msgid "products"
-msgstr ""
-
-#: .\models.py:49
-msgid "Product|brand"
-msgstr "brand"
-
-#: .\models.py:50
-msgid "Product|name"
-msgstr "name"
-
-#: .\models.py:51
-msgid "Product|size"
-msgstr "size"
-
-#: .\models.py:52
-msgid "Product|style"
-msgstr "style"
-
-#: .\models.py:53
-msgid "Product|condition"
-msgstr "condition"
-
-#: .\models.py:54 .\models.py:76
-msgid "Product|categories"
-msgstr "categories"
-
-#: .\models.py:55
-msgid "Product|attachments"
-msgstr "attachments"
-
-#: .\models.py:56
-msgid "Product|description"
-msgstr "description"
-
-#: .\models.py:57
-#, fuzzy
-#| msgid "Product|name"
-msgid "Product|original price"
-msgstr "original price"
-
-#: .\models.py:58
-#, fuzzy
-#| msgid "Product|size"
-msgid "Product|price"
-msgstr "price"
-
-#: .\models.py:59
-#, fuzzy
-#| msgid "Product|style"
-msgid "Product|sold"
-msgstr "sold"
-
-#: .\models.py:62
-#, fuzzy
-#| msgid "Product|name"
-msgid "Product|main image"
-msgstr "main image"
-
-#: .\models.py:70
-#, fuzzy
-#| msgid "Product|name"
+#: .\admin\goods.py:93
 msgid "Product|main image preview"
 msgstr "main image preview"
 
-#: .\models.py:84
-#, fuzzy
-#| msgid "Product|name"
+#: .\admin\goods.py:99 .\models\goods.py:112
+msgid "Product|categories"
+msgstr "categories"
+
+#: .\admin\goods.py:104
+msgid "Product|price / original price"
+msgstr "price / original price"
+
+#: .\models\goods.py:13
+msgid "brand"
+msgstr ""
+
+#: .\models\goods.py:14
+msgid "brands"
+msgstr ""
+
+#: .\models\goods.py:16 .\models\goods.py:27 .\models\goods.py:42
+msgid "name"
+msgstr ""
+
+#: .\models\goods.py:24
+msgid "category"
+msgstr ""
+
+#: .\models\goods.py:25
+msgid "categories"
+msgstr ""
+
+#: .\models\goods.py:29
+msgid "super category"
+msgstr ""
+
+#: .\models\goods.py:39
+msgid "attachment"
+msgstr ""
+
+#: .\models\goods.py:40
+msgid "attachments"
+msgstr ""
+
+#: .\models\goods.py:60
 msgid "product image"
 msgstr ""
 
-#: .\models.py:85
-#, fuzzy
-#| msgid "Product|categories"
+#: .\models\goods.py:61
 msgid "product images"
 msgstr ""
 
-#: .\models.py:87
+#: .\models\goods.py:63
 msgid "image"
 msgstr ""
 
-#: .\models.py:96
-msgid "image preview"
+#: .\models\goods.py:65 .\models\goods.py:73 .\models\order.py:15
+msgid "product"
 msgstr ""
+
+#: .\models\goods.py:74
+msgid "products"
+msgstr ""
+
+#: .\models\goods.py:76
+msgid "Product|publish datetime"
+msgstr "publish datetime"
+
+#: .\models\goods.py:78
+msgid "Product|sold"
+msgstr "sold"
+
+#: .\models\goods.py:79
+msgid "Product|sold datetime"
+msgstr "sold datetime"
+
+#: .\models\goods.py:89
+msgid "Product|brand"
+msgstr "brand"
+
+#: .\models\goods.py:90
+msgid "Product|name"
+msgstr "name"
+
+#: .\models\goods.py:91
+msgid "Product|style"
+msgstr "style"
+
+#: .\models\goods.py:92
+msgid "Product|size"
+msgstr "size"
+
+#: .\models\goods.py:102
+msgid "ProductCondition|S"
+msgstr "S"
+
+#: .\models\goods.py:103
+msgid "ProductCondition|A+"
+msgstr "A+"
+
+#: .\models\goods.py:104
+msgid "ProductCondition|A"
+msgstr "A"
+
+#: .\models\goods.py:105
+msgid "ProductCondition|B"
+msgstr "B"
+
+#: .\models\goods.py:106
+msgid "ProductCondition|C"
+msgstr "C"
+
+#: .\models\goods.py:107
+msgid "ProductCondition|D"
+msgstr "D"
+
+#: .\models\goods.py:110
+msgid "Product|condition"
+msgstr "condition"
+
+#: .\models\goods.py:113
+msgid "Product|attachments"
+msgstr "attachments"
+
+#: .\models\goods.py:114
+msgid "Product|description"
+msgstr "description"
+
+#: .\models\goods.py:115
+msgid "Product|original price"
+msgstr "original price"
+
+#: .\models\goods.py:116
+msgid "Product|price"
+msgstr "price"
+
+#: .\models\goods.py:119
+msgid "Product|main image"
+msgstr "main image"
+
+#: .\models\order.py:12
+msgid "order item"
+msgstr ""
+
+#: .\models\order.py:13
+msgid "order items"
+msgstr ""
+
+#: .\models\order.py:16 .\models\order.py:25
+msgid "order"
+msgstr ""
+
+#: .\models\order.py:17
+msgid "strike price"
+msgstr ""
+
+#: .\models\order.py:26
+msgid "orders"
+msgstr ""
+
+#: .\models\order.py:29 .\models\user.py:12
+msgid "user"
+msgstr ""
+
+#: .\models\order.py:30
+msgid "total price"
+msgstr ""
+
+#: .\models\order.py:39
+msgid "OrderStatus|unpaid"
+msgstr "unpaid"
+
+#: .\models\order.py:40
+msgid "OrderStatus|paid"
+msgstr "paid"
+
+#: .\models\order.py:41
+msgid "OrderStatus|shipping"
+msgstr "shipping"
+
+#: .\models\order.py:42
+msgid "OrderStatus|done"
+msgstr "done"
+
+#: .\models\order.py:43
+msgid "OrderStatus|canceled"
+msgstr "canceled"
+
+#: .\models\order.py:47
+msgid "status"
+msgstr ""
+
+#: .\models\order.py:54
+msgid "PaymentMethod|balance"
+msgstr "balance"
+
+#: .\models\order.py:55
+msgid "PaymentMethod|paypal"
+msgstr "PayPal"
+
+#: .\models\order.py:56
+msgid "PaymentMethod|stripe"
+msgstr "Stripe"
+
+#: .\models\order.py:59
+msgid "payment method"
+msgstr ""
+
+#: .\models\order.py:60
+msgid "Order|use balance"
+msgstr "use balance"
+
+#: .\models\order.py:61
+msgid "Order|from balance"
+msgstr "from balance"
+
+#: .\models\user.py:8 .\models\user.py:9
+msgid "user information"
+msgstr ""
+
+#: .\models\user.py:17
+msgid "id"
+msgstr ""
+
+#: .\models\user.py:23
+msgid "username"
+msgstr ""
+
+#: .\models\user.py:29
+msgid "email"
+msgstr ""
+
+#: .\models\user.py:32
+msgid "nickname"
+msgstr ""
+
+#: .\models\user.py:33
+msgid "UserInfo|balance"
+msgstr "balance"
+
+#: .\models\user.py:34
+msgid "UserInfo|point"
+msgstr "point"

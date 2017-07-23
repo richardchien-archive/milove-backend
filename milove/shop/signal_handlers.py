@@ -4,6 +4,10 @@ from django.dispatch import receiver
 
 @receiver(signals.pre_save)
 def models_pre_save(sender, instance, **_):
+    if not sender.__module__.startswith('milove.shop.models'):
+        # ignore models of other apps
+        return
+
     # noinspection PyProtectedMember
     fields = sender._meta.local_fields
 

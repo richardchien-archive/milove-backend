@@ -99,7 +99,7 @@ class ProductAdmin(admin.ModelAdmin):
     get_categories_string.short_description = _('Product|categories')
 
     def get_price_fraction(self, instance: Product):
-        return '{}/{}'.format(instance.price, instance.original_price)
+        return '{} / {}'.format(instance.price, instance.original_price)
 
     get_price_fraction.short_description = _('Product|price / original price')
     get_price_fraction.admin_order_field = 'price'
