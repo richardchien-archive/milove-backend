@@ -26,7 +26,8 @@ class Category(models.Model):
 
     name = models.CharField(max_length=50, verbose_name=_('name'))
     super_category = models.ForeignKey('self', blank=True, null=True,
-                                       on_delete=models.CASCADE, verbose_name=_('super category'))
+                                       on_delete=models.CASCADE,
+                                       verbose_name=_('super category'))
 
     def __str__(self):
         if not self.super_category:
@@ -46,7 +47,8 @@ class Attachment(models.Model):
 
 
 _prod_image_path = 'products'
-_prod_image_placeholder_path = os.path.join(_prod_image_path, 'placeholder-120x120.png')
+_prod_image_placeholder_path = os.path.join(_prod_image_path,
+                                            'placeholder-120x120.png')
 
 
 class _Thumbnail(ImageSpec):
@@ -60,9 +62,12 @@ class ProductImage(models.Model):
         verbose_name = _('product image')
         verbose_name_plural = _('product images')
 
-    image = models.ImageField(upload_to=_prod_image_path, verbose_name=_('image'))
+    image = models.ImageField(upload_to=_prod_image_path,
+                              verbose_name=_('image'))
     image_thumb = ImageSpecField(source='image', spec=_Thumbnail)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))
+    product = models.ForeignKey('Product', on_delete=models.CASCADE,
+                                related_name='images',
+                                verbose_name=_('product'))
 
     def __str__(self):
         return str(self.image)
@@ -73,10 +78,12 @@ class Product(models.Model):
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
-    publish_dt = models.DateTimeField(default=timezone.now, verbose_name=_('Product|publish datetime'))
+    publish_dt = models.DateTimeField(default=timezone.now, verbose_name=_(
+        'Product|publish datetime'))
 
     sold = models.BooleanField(default=False, verbose_name=_('Product|sold'))
-    sold_dt = models.DateTimeField(null=True, blank=True, verbose_name=_('Product|sold datetime'))
+    sold_dt = models.DateTimeField(null=True, blank=True,
+                                   verbose_name=_('Product|sold datetime'))
 
     @staticmethod
     def sold_changed(_, new_obj):
@@ -86,10 +93,13 @@ class Product(models.Model):
             new_obj.sold_dt = None
 
     brand = models.ForeignKey('Brand', on_delete=models.CASCADE,
-                              related_name='products', verbose_name=_('Product|brand'))
-    name = models.CharField(max_length=200, blank=True, verbose_name=_('Product|name'))
+                              related_name='products',
+                              verbose_name=_('Product|brand'))
+    name = models.CharField(max_length=200, blank=True,
+                            verbose_name=_('Product|name'))
     style = models.CharField(max_length=200, verbose_name=_('Product|style'))
-    size = models.CharField(max_length=20, blank=True, verbose_name=_('Product|size'))
+    size = models.CharField(max_length=20, blank=True,
+                            verbose_name=_('Product|size'))
 
     CONDITION_S = 'S'
     CONDITION_A_PLUS = 'A+'
@@ -107,17 +117,22 @@ class Product(models.Model):
         (CONDITION_D, _('ProductCondition|D')),
     )
 
-    condition = models.CharField(max_length=2, choices=CONDITIONS, verbose_name=_('Product|condition'))
+    condition = models.CharField(max_length=2, choices=CONDITIONS,
+                                 verbose_name=_('Product|condition'))
 
-    categories = models.ManyToManyField('Category', related_name='products', verbose_name=_('Product|categories'))
-    attachments = models.ManyToManyField('Attachment', blank=True, verbose_name=_('Product|attachments'))
+    categories = models.ManyToManyField('Category', related_name='products',
+                                        verbose_name=_('Product|categories'))
+    attachments = models.ManyToManyField('Attachment', blank=True,
+                                         verbose_name=_('Product|attachments'))
     description = models.TextField(verbose_name=_('Product|description'))
     original_price = models.FloatField(verbose_name=_('Product|original price'))
     price = models.FloatField(verbose_name=_('Product|price'))
 
     main_image = models.ImageField(default=_prod_image_placeholder_path,
-                                   upload_to=_prod_image_path, verbose_name=_('Product|main image'))
+                                   upload_to=_prod_image_path,
+                                   verbose_name=_('Product|main image'))
     main_image_thumb = ImageSpecField(source='main_image', spec=_Thumbnail)
 
     def __str__(self):
-        return ('#%s ' % self.pk) + self.brand.name + (' ' + str(self.name) if self.name else '')
+        return ('#%s ' % self.pk) + self.brand.name \
+               + (' ' + str(self.name) if self.name else '')

@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "c:/Users/richard/Projects/MiLoveBackend/.venv/scripts/python.exe",
+    "python.linting.pylintEnabled": false,
+    "python.linting.pep8Enabled": true,
+    "python.linting.ignorePatterns": [
+        ".vscode/*.py",
+        "**/site-packages/**/*.py",
+        "milove/settings*.py",
+        ".venv/**/*.py"
+    ],
+    "files.exclude": {
+        ".venv": true
+    }
+}

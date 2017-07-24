@@ -11,7 +11,7 @@ class SendGridEmailBackend(BaseEmailBackend):
     @staticmethod
     def _email_message_to_json_payload(email_message):
         assert email_message.to
-        # see docs: https://sendgrid.com/docs/API_Reference/api_v3.html
+        # https://sendgrid.com/docs/API_Reference/api_v3.html
         payload = {
             'personalizations': [
                 {
@@ -25,21 +25,27 @@ class SendGridEmailBackend(BaseEmailBackend):
             'subject': email_message.subject,
             'content': [
                 {
-                    'type': 'text/' + (email_message.content_subtype or 'plain'),
+                    'type': 'text/' + email_message.content_subtype,
                     'value': email_message.body,
                 }
             ]
         }
         if email_message.cc:
-            payload['personalizations'][0]['cc'] = [{'email': email} for email in email_message.cc]
+            payload['personalizations'][0]['cc'] = [
+                {'email': email} for email in email_message.cc
+            ]
         if email_message.bcc:
-            payload['personalizations'][0]['bcc'] = [{'email': email} for email in email_message.bcc]
+            payload['personalizations'][0]['bcc'] = [
+                {'email': email} for email in email_message.bcc
+            ]
         return payload
 
     def send_messages(self, email_messages):
         success_count = 0
         session = requests.Session()
-        session.headers['Authorization'] = 'Bearer ' + settings.SENDGRID_API_KEY
+        session.headers['Authorization'] = 'Bearer {}'.format(
+            settings.SENDGRID_API_KEY
+        )
         for email_message in email_messages:
             assert isinstance(email_message, EmailMessage)
             if not email_message.to:
@@ -48,7 +54,8 @@ class SendGridEmailBackend(BaseEmailBackend):
                 continue
             payload = self._email_message_to_json_payload(email_message)
             try:
-                resp = session.post('https://api.sendgrid.com/v3/mail/send', json=payload)
+                resp = session.post('https://api.sendgrid.com/v3/mail/send',
+                                    json=payload)
                 if resp.status_code == 202:
                     # accepted
                     success_count += 1
@@ -61,7 +68,7 @@ class SendCloudEmailBackend(BaseEmailBackend):
     @staticmethod
     def _email_message_to_json_payload(email_message):
         assert email_message.to
-        # see docs: http://sendcloud.sohu.com/doc/email_v2/send_email/
+        # http://sendcloud.sohu.com/doc/email_v2/send_email/
         payload = {
             'apiUser': settings.SENDCLOUD_API_USER,
             'apiKey': settings.SENDCLOUD_API_KEY,
@@ -94,8 +101,10 @@ class SendCloudEmailBackend(BaseEmailBackend):
                 continue
             payload = self._email_message_to_json_payload(email_message)
             try:
-                resp = session.post('http://api.sendcloud.net/apiv2/mail/send', data=payload)
-                if resp.status_code == 200 and resp.json().get('statusCode') == 200:
+                resp = session.post('http://api.sendcloud.net/apiv2/mail/send',
+                                    data=payload)
+                if resp.status_code == 200 \
+                        and resp.json().get('statusCode') == 200:
                     # ok
                     success_count += 1
             except requests.RequestException:
@@ -105,7 +114,8 @@ class SendCloudEmailBackend(BaseEmailBackend):
 
 _china_mailbox_regex = [
     re.compile(r'.*\.cn'),
-    re.compile(r'(?:163|126|qq|vip\.qq|sohu|sina|2008\.sina|vip\.sina|51uc|21cn|cntv|189|139|tom|360)\.com'),
+    re.compile(r'(?:163|126|qq|vip\.qq|sohu|sina|2008\.sina'
+               r'|vip\.sina|51uc|21cn|cntv|189|139|tom|360)\.com'),
     re.compile(r'(?:milove|milosale)\.com'),
 ]
 
@@ -115,7 +125,8 @@ class HybridEmailBackend(BaseEmailBackend):
     def _collect_by_mailbox(all_email: list, china: list, non_china: list):
         for email in all_email:
             mailbox = email.rsplit('@', maxsplit=1)[-1]
-            if any(map(lambda r: bool(r.match(mailbox)), _china_mailbox_regex)):
+            if any(map(lambda r: bool(r.match(mailbox)),
+                       _china_mailbox_regex)):
                 china.append(email)
             else:
                 non_china.append(email)
@@ -158,7 +169,11 @@ class HybridEmailBackend(BaseEmailBackend):
 
         success_count = 0
         if messages_to_china:
-            success_count += SendCloudEmailBackend(fail_silently=self.fail_silently).send_messages(messages_to_china)
+            success_count += SendCloudEmailBackend(
+                fail_silently=self.fail_silently
+            ).send_messages(messages_to_china)
         if messages_to_nonchina:
-            success_count += SendGridEmailBackend(fail_silently=self.fail_silently).send_messages(messages_to_nonchina)
+            success_count += SendGridEmailBackend(
+                fail_silently=self.fail_silently
+            ).send_messages(messages_to_nonchina)
         return success_count
