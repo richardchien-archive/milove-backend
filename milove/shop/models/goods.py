@@ -25,7 +25,8 @@ class Category(models.Model):
         verbose_name_plural = _('categories')
 
     name = models.CharField(max_length=50, verbose_name=_('name'))
-    super_category = models.ForeignKey('self', blank=True, null=True,
+    super_category = models.ForeignKey('self', related_name='children',
+                                       blank=True, null=True,
                                        on_delete=models.CASCADE,
                                        verbose_name=_('super category'))
 
@@ -47,8 +48,7 @@ class Attachment(models.Model):
 
 
 _prod_image_path = 'products'
-_prod_image_placeholder_path = os.path.join(_prod_image_path,
-                                            'placeholder-120x120.png')
+_prod_image_placeholder_path = 'products/placeholder-120x120.png'
 
 
 class _Thumbnail(ImageSpec):
@@ -70,7 +70,7 @@ class ProductImage(models.Model):
                                 verbose_name=_('product'))
 
     def __str__(self):
-        return str(self.image)
+        return self.image.name
 
 
 class Product(models.Model):
@@ -120,12 +120,14 @@ class Product(models.Model):
     condition = models.CharField(max_length=2, choices=CONDITIONS,
                                  verbose_name=_('Product|condition'))
 
-    categories = models.ManyToManyField('Category', related_name='products',
+    categories = models.ManyToManyField('Category', blank=True,
+                                        related_name='products',
                                         verbose_name=_('Product|categories'))
     attachments = models.ManyToManyField('Attachment', blank=True,
                                          verbose_name=_('Product|attachments'))
     description = models.TextField(verbose_name=_('Product|description'))
-    original_price = models.FloatField(verbose_name=_('Product|original price'))
+    original_price = models.FloatField(
+        verbose_name=_('Product|original price'))
     price = models.FloatField(verbose_name=_('Product|price'))
 
     main_image = models.ImageField(default=_prod_image_placeholder_path,

@@ -11,18 +11,12 @@ from django.conf import settings
 from django.utils.datetime_safe import datetime
 from django.db import transaction
 
-from .models import *
-from .serializers import *
+from ..models import *
+from ..serializers import *
 
+from . import public_data
 
-class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-
-
-class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+urlpatterns = public_data.urlpatterns
 
 
 @api_view(['GET'])
@@ -35,7 +29,8 @@ def login(request):
     if 'username' not in request.data or 'password' not in request.data:
         raise exceptions.ParseError
 
-    user = auth.authenticate(request, username=request.data['username'], password=request.data['password'])
+    user = auth.authenticate(request, username=request.data['username'],
+                             password=request.data['password'])
     if not user:
         raise exceptions.AuthenticationFailed
 
@@ -75,8 +70,10 @@ def upload(request):
     filename_hash = hashlib.md5()
     filename_hash.update(file.name.encode('utf-8'))
     filename_hash.update(str(now.timestamp()).encode('utf-8'))
-    filename = '{}-{}{}'.format(now.strftime('%Y%m%d%H%M%S'), filename_hash.hexdigest(), ext)
-    with open(os.path.join(settings.MEDIA_ROOT, 'uploads', filename), 'wb') as f:
+    filename = '{}-{}{}'.format(now.strftime('%Y%m%d%H%M%S'),
+                                filename_hash.hexdigest(), ext)
+    with open(os.path.join(settings.MEDIA_ROOT, 'uploads', filename),
+              'wb') as f:
         for chunk in file.chunks():
             f.write(chunk)
 

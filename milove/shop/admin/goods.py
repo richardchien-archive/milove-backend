@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.db import models as db_models
 
-from ..filters import RelatedFieldDropdownFilter, ChoicesFieldDropdownFilter
+from ..admin_filters import RelatedFieldDropdownFilter, ChoicesFieldDropdownFilter
 from ..models.goods import *
 
 
@@ -91,7 +91,7 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     def get_main_image_preview(self, instance: Product):
         if instance.main_image_thumb:
-            return '<img src="{}" width="120" />' \
+            return '<img src="%s" width="120" />' \
                    % instance.main_image_thumb.url
         return '-'
 
