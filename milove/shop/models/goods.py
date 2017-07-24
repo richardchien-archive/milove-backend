@@ -110,7 +110,7 @@ class Product(models.Model):
     condition = models.CharField(max_length=2, choices=CONDITIONS, verbose_name=_('Product|condition'))
 
     categories = models.ManyToManyField('Category', related_name='products', verbose_name=_('Product|categories'))
-    attachments = models.ManyToManyField('Attachment', null=True, blank=True, verbose_name=_('Product|attachments'))
+    attachments = models.ManyToManyField('Attachment', blank=True, verbose_name=_('Product|attachments'))
     description = models.TextField(verbose_name=_('Product|description'))
     original_price = models.FloatField(verbose_name=_('Product|original price'))
     price = models.FloatField(verbose_name=_('Product|price'))
