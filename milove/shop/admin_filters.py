@@ -1,4 +1,5 @@
-from django.contrib.admin.filters import AllValuesFieldListFilter, RelatedFieldListFilter, ChoicesFieldListFilter
+from django.contrib.admin.filters import AllValuesFieldListFilter, \
+    RelatedFieldListFilter, ChoicesFieldListFilter
 
 
 class AllValueFieldDropdownFilter(AllValuesFieldListFilter):
