@@ -1,3 +1,6 @@
+import os
+import hashlib
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
@@ -11,7 +14,8 @@ class Brand(models.Model):
         verbose_name = _('brand')
         verbose_name_plural = _('brands')
 
-    name = models.CharField(max_length=200, verbose_name=_('name'))
+    name = models.CharField(max_length=200, unique=True,
+                            verbose_name=_('name'))
 
     def __str__(self):
         return self.name
@@ -45,7 +49,15 @@ class Attachment(models.Model):
         return self.name
 
 
-_prod_image_path = 'products'
+def _prod_image_path(_, filename):
+    filename, ext = os.path.splitext(filename)
+    now = timezone.now()
+    filename_hash = hashlib.md5()
+    filename_hash.update(filename.encode('utf-8'))
+    filename_hash.update(str(now.timestamp()).encode('utf-8'))
+    return 'products/{}{}'.format(filename_hash.hexdigest(), ext)
+
+
 _prod_image_placeholder_path = 'products/placeholder-120x120.png'
 
 
@@ -95,7 +107,8 @@ class Product(models.Model):
                               verbose_name=_('Product|brand'))
     name = models.CharField(max_length=200, blank=True,
                             verbose_name=_('Product|name'))
-    style = models.CharField(max_length=200, verbose_name=_('Product|style'))
+    style = models.CharField(max_length=200, blank=True,
+                             verbose_name=_('Product|style'))
     size = models.CharField(max_length=20, blank=True,
                             verbose_name=_('Product|size'))
 
@@ -123,9 +136,13 @@ class Product(models.Model):
                                         verbose_name=_('Product|categories'))
     attachments = models.ManyToManyField('Attachment', blank=True,
                                          verbose_name=_('Product|attachments'))
-    description = models.TextField(verbose_name=_('Product|description'))
+    description = models.TextField(blank=True,
+                                   verbose_name=_('Product|description'))
     original_price = models.FloatField(
         verbose_name=_('Product|original price'))
+    buy_back_price = models.FloatField(null=True, blank=True,
+                                       verbose_name=_(
+                                           'Product|buy back price'))
     price = models.FloatField(verbose_name=_('Product|price'))
 
     main_image = models.ImageField(default=_prod_image_placeholder_path,

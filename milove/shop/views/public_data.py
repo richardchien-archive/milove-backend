@@ -1,6 +1,4 @@
 import django_filters.rest_framework
-from django.db.models import Q
-from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.routers import DefaultRouter
 from rest_framework.pagination import PageNumberPagination
@@ -49,28 +47,35 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     class Pagination(PageNumberPagination):
         page_size = 20
 
-    class FilterSet(django_filters.rest_framework.FilterSet):
+    class Filter(django_filters.rest_framework.FilterSet):
         publish_dt = django_filters.rest_framework.DateFromToRangeFilter()
         sold = django_filters.rest_framework.BooleanFilter()
         brand = rest_filters.CommaSplitListFilter()
+        categories = rest_filters.CommaSplitListFilter()
         condition = rest_filters.CommaSplitListFilter()
+        original_price = django_filters.rest_framework.RangeFilter()
         price = django_filters.rest_framework.RangeFilter()
 
         class Meta:
             model = Product
-            fields = ('publish_dt', 'sold', 'brand', 'condition', 'price')
+            fields = ('publish_dt', 'sold', 'brand', 'categories',
+                      'condition', 'original_price', 'price')
 
-    def get_queryset(self):
-        # only return unsold products and
-        # sold products which are sold within 7 days
-        return Product.objects.filter(
-            Q(sold=False)
-            | Q(sold_dt__gt=timezone.now() - timezone.timedelta(days=7))
-        )
+    # def get_queryset(self):
+    #     # only return unsold products and
+    #     # sold products which are sold within 7 days
+    #     return Product.objects.filter(
+    #         Q(sold=False)
+    #         | Q(sold_dt__gt=timezone.now() - timezone.timedelta(days=7))
+    #     )
 
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = Pagination
-    filter_class = FilterSet
+    filter_class = Filter
+    ordering = ('sold', '-publish_dt',)  # most recently published unsold first
+    search_fields = ('brand__name', 'name', 'style', 'size',
+                     'categories__name', 'description')
 
 
 router.register('products', ProductViewSet, base_name='product')

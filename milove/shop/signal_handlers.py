@@ -14,22 +14,25 @@ def models_pre_save(sender, instance, **_):
     # 'changed' trigger
     if instance.pk:
         old = sender.objects.get(pk=instance.pk)
-
-        for field in fields:
-            # noinspection PyBroadException
-            try:
-                func = getattr(sender, field.name + '_changed', None)  # class function or static function
-                if func and callable(func) and getattr(old, field.name, None) != getattr(instance, field.name, None):
-                    # field has changed
-                    func(old, instance)
-            except:
-                pass
+    else:
+        old = None
+    for field in fields:
+        # noinspection PyBroadException
+        try:
+            func = getattr(sender, field.name + '_changed', None)
+            if func and callable(func) \
+                    and (old is None or getattr(old, field.name) != getattr(
+                        instance, field.name)):
+                # field has changed
+                func(old, instance)
+        except:
+            pass
 
     # 'default' trigger
     for field in fields:
         # noinspection PyBroadException
         try:
-            func = getattr(sender, field.name + '_default', None)  # class function or static function
+            func = getattr(sender, field.name + '_default', None)
             if func and callable(func) and not getattr(instance, field.name):
                 default_val = func(instance)
                 if default_val is not None:

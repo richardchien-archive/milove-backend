@@ -30,7 +30,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Product
-        fields = '__all__'
+        exclude = ('buy_back_price',)  # hide this field to users
         depth = 1
 
 

@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.db import models as db_models
 
-from ..admin_filters import RelatedFieldDropdownFilter, ChoicesFieldDropdownFilter
+from ..admin_filters import RelatedFieldDropdownFilter, \
+    ChoicesFieldDropdownFilter
 from ..models.goods import *
 
 
@@ -63,14 +64,7 @@ class CategoryAdmin(_ModelWithProductCount):
 
 admin.site.register(Category, CategoryAdmin)
 
-
-class AttachmentAdmin(admin.ModelAdmin):
-    def get_model_perms(self, request):
-        # hide Attachment from admin index
-        return {}
-
-
-admin.site.register(Attachment, AttachmentAdmin)
+admin.site.register(Attachment)
 
 
 class ProductImageInline(admin.TabularInline):
@@ -109,11 +103,18 @@ class ProductAdmin(admin.ModelAdmin):
     get_price_fraction.short_description = _('Product|price / original price')
     get_price_fraction.admin_order_field = 'price'
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'brand':
+            # sort the brand dropdown
+            kwargs['queryset'] = Brand.objects.order_by('name')
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
     list_per_page = 20
     list_max_show_all = 100
     list_display = ('id', 'get_main_image_preview',
                     'brand', 'name', 'style', 'size', 'condition',
-                    'get_categories_string', 'get_price_fraction', 'sold')
+                    'get_categories_string', 'get_price_fraction',
+                    'buy_back_price', 'sold')
     list_display_links = ('id', 'get_main_image_preview')
     ordering = ('-publish_dt',)  # order by publish datetime descending
     list_editable = ('sold',)
@@ -124,15 +125,16 @@ class ProductAdmin(admin.ModelAdmin):
         ('categories', RelatedFieldDropdownFilter),
         ('attachments', RelatedFieldDropdownFilter)
     )
-    search_fields = ('id', 'brand__name', 'name', 'style')
+    search_fields = ('id', 'brand__name', 'name', 'style',
+                     'size', 'description')
 
-    fields = ('sold', 'sold_dt', 'brand', 'name', 'style', 'size', 'condition',
-              'categories', 'attachments', 'description',
-              'original_price', 'price',
+    fields = ('sold', 'sold_dt', 'brand', 'name', 'style', 'size',
+              'condition', 'categories', 'attachments', 'description',
+              'original_price', 'buy_back_price', 'price',
               'main_image', 'get_main_image_preview')
     readonly_fields = ('sold_dt', 'get_main_image_preview',)
     inlines = (ProductImageInline,)
-    filter_horizontal = ('categories', 'attachments')
+    # filter_horizontal = ('categories', 'attachments')
 
 
 admin.site.register(Product, ProductAdmin)

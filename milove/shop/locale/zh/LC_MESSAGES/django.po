@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-24 00:04+0800\n"
+"POT-Creation-Date: 2017-07-25 14:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,27 +21,27 @@ msgstr ""
 msgid "Milove Admin"
 msgstr "Milove 后台管理"
 
-#: .\admin\goods.py:34
+#: .\admin\goods.py:36
 msgid "total number of products"
 msgstr "商品总数"
 
-#: .\admin\goods.py:40
+#: .\admin\goods.py:43
 msgid "number of products for sale"
 msgstr "在售商品数"
 
-#: .\admin\goods.py:80
+#: .\admin\goods.py:85
 msgid "image preview"
 msgstr "图片预览"
 
-#: .\admin\goods.py:93
+#: .\admin\goods.py:99
 msgid "Product|main image preview"
 msgstr "主图预览"
 
-#: .\admin\goods.py:99 .\models\goods.py:112
+#: .\admin\goods.py:105 .\models\goods.py:136
 msgid "Product|categories"
 msgstr "分类"
 
-#: .\admin\goods.py:104
+#: .\admin\goods.py:110
 msgid "Product|price / original price"
 msgstr "定价 / 原价"
 
@@ -49,131 +49,135 @@ msgstr "定价 / 原价"
 msgid "Shop"
 msgstr "商店"
 
-#: .\models\goods.py:13
+#: .\models\goods.py:14
 msgid "brand"
 msgstr "品牌"
 
-#: .\models\goods.py:14
+#: .\models\goods.py:15
 msgid "brands"
 msgstr "品牌"
 
-#: .\models\goods.py:16 .\models\goods.py:27 .\models\goods.py:42
+#: .\models\goods.py:18 .\models\goods.py:29 .\models\goods.py:46
 msgid "name"
 msgstr "名称"
 
-#: .\models\goods.py:24
+#: .\models\goods.py:26
 msgid "category"
 msgstr "分类"
 
-#: .\models\goods.py:25
+#: .\models\goods.py:27
 msgid "categories"
 msgstr "分类"
 
-#: .\models\goods.py:29
+#: .\models\goods.py:33
 msgid "super category"
 msgstr "父级分类"
 
-#: .\models\goods.py:39
+#: .\models\goods.py:43
 msgid "attachment"
 msgstr "附件"
 
-#: .\models\goods.py:40
+#: .\models\goods.py:44
 msgid "attachments"
 msgstr "附件"
 
-#: .\models\goods.py:60
+#: .\models\goods.py:72
 msgid "product image"
 msgstr "商品图片"
 
-#: .\models\goods.py:61
+#: .\models\goods.py:73
 msgid "product images"
 msgstr "商品图片"
 
-#: .\models\goods.py:63
+#: .\models\goods.py:76
 msgid "image"
 msgstr "图片"
 
-#: .\models\goods.py:65 .\models\goods.py:73 .\models\order.py:15
+#: .\models\goods.py:80 .\models\goods.py:88 .\models\order.py:15
 msgid "product"
 msgstr "商品"
 
-#: .\models\goods.py:74
+#: .\models\goods.py:89
 msgid "products"
 msgstr "商品"
 
-#: .\models\goods.py:76
+#: .\models\goods.py:92
 msgid "Product|publish datetime"
 msgstr "发布时间"
 
-#: .\models\goods.py:78
+#: .\models\goods.py:94
 msgid "Product|sold"
 msgstr "已出售"
 
-#: .\models\goods.py:79
+#: .\models\goods.py:96
 msgid "Product|sold datetime"
 msgstr "出售时间"
 
-#: .\models\goods.py:89
+#: .\models\goods.py:107
 msgid "Product|brand"
 msgstr "品牌"
 
-#: .\models\goods.py:90
+#: .\models\goods.py:109
 msgid "Product|name"
 msgstr "名称"
 
-#: .\models\goods.py:91
+#: .\models\goods.py:111
 msgid "Product|style"
 msgstr "款式"
 
-#: .\models\goods.py:92
+#: .\models\goods.py:113
 msgid "Product|size"
 msgstr "尺码"
 
-#: .\models\goods.py:102
+#: .\models\goods.py:123
 msgid "ProductCondition|S"
 msgstr "S"
 
-#: .\models\goods.py:103
+#: .\models\goods.py:124
 msgid "ProductCondition|A+"
 msgstr "A+"
 
-#: .\models\goods.py:104
+#: .\models\goods.py:125
 msgid "ProductCondition|A"
 msgstr "A"
 
-#: .\models\goods.py:105
+#: .\models\goods.py:126
 msgid "ProductCondition|B"
 msgstr "B"
 
-#: .\models\goods.py:106
+#: .\models\goods.py:127
 msgid "ProductCondition|C"
 msgstr "C"
 
-#: .\models\goods.py:107
+#: .\models\goods.py:128
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\goods.py:110
+#: .\models\goods.py:132
 msgid "Product|condition"
 msgstr "成色"
 
-#: .\models\goods.py:113
+#: .\models\goods.py:138
 msgid "Product|attachments"
 msgstr "附件"
 
-#: .\models\goods.py:114
+#: .\models\goods.py:140
 msgid "Product|description"
 msgstr "描述"
 
-#: .\models\goods.py:115
+#: .\models\goods.py:142
 msgid "Product|original price"
 msgstr "原价"
 
-#: .\models\goods.py:116
+#: .\models\goods.py:145
+msgid "Product|buy back price"
+msgstr "回购价"
+
+#: .\models\goods.py:146
 msgid "Product|price"
 msgstr "定价"
 
-#: .\models\goods.py:119
+#: .\models\goods.py:150
 msgid "Product|main image"
 msgstr "主图"
 
