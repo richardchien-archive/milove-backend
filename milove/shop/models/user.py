@@ -12,7 +12,7 @@ from ..validators import UsernameValidator
 User._meta.get_field('username').__dict__['validators'] = [UsernameValidator()]
 User._meta.get_field('username').__dict__['help_text'] = _(
     'Required. 150 characters or fewer. '
-    'Letters, digits and underline (_) only.')
+    'Letters, digits and ./+/-/_ only.')
 User._meta.get_field('email').__dict__['blank'] = False  # make email required
 User._meta.get_field('email').__dict__['_unique'] = True  # make email unique
 User._meta.get_field('email').__dict__['error_messages'] = {
@@ -28,8 +28,6 @@ class UserInfo(models.Model):
     user = models.OneToOneField(User, primary_key=True, related_name='info',
                                 on_delete=models.CASCADE,
                                 verbose_name=_('user'))
-    nickname = models.CharField(max_length=100,
-                                verbose_name=_('nickname'))
     balance = models.FloatField(default=0.0,
                                 verbose_name=_('UserInfo|balance'))
     point = models.IntegerField(default=0, verbose_name=_('UserInfo|point'))
@@ -44,4 +42,4 @@ class UserInfo(models.Model):
 def create_default_user_info(instance: User, **_):
     if not hasattr(instance, 'info'):
         # there is no UserInfo object bound to the current User, create one
-        UserInfo.objects.create(user=instance, nickname=instance.username)
+        UserInfo.objects.create(user=instance)

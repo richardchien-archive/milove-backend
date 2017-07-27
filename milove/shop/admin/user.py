@@ -27,16 +27,18 @@ class UserInfoAdmin(admin.ModelAdmin):
     def get_contact_string(self, instance: UserInfo):
         if not instance.contact:
             return '-'
+        if not isinstance(instance.contact, dict):
+            return str(instance.contact)
         return '; '.join(['%s: %s' % (k, v)
                           for k, v in instance.contact.items()])
 
     get_contact_string.short_description = _('UserInfo|contact')
 
     list_display = ('get_id', 'get_username', 'get_email',
-                    'nickname', 'balance', 'point', 'get_contact_string')
+                    'balance', 'point', 'get_contact_string')
     list_display_links = ('get_id', 'get_username', 'get_email')
     ordering = ('user__id',)
-    search_fields = ('user__username', 'user__email', 'nickname')
+    search_fields = ('user__username', 'user__email')
 
 
 admin.site.register(UserInfo, UserInfoAdmin)

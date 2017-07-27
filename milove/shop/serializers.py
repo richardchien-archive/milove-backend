@@ -39,16 +39,29 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
-    contact = serializers.JSONField(read_only=True)
+    contact = serializers.JSONField()
 
     class Meta:
         model = UserInfo
         exclude = ['user']
+        read_only_fields = ('balance', 'point')
 
 
 class UserSerializer(serializers.ModelSerializer):
-    info = UserInfoSerializer(read_only=True)
+    info = UserInfoSerializer()
 
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'info')
+
+    def update(self, instance: User, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        info = validated_data.get('info', None)
+        if info:
+            info_serializer = UserInfoSerializer(instance.info,
+                                                 data=info, partial=True)
+            if info_serializer.is_valid():
+                info_serializer.save()
+        instance.save()
+        return instance

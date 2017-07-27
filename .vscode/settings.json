@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "c:/Users/richard/Projects/MiLoveBackend/.venv/scripts/python.exe",
+    "python.pythonPath": "c:/Users/richard/Projects/MiloveBackend/.venv/scripts/python.exe",
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
     "python.linting.ignorePatterns": [

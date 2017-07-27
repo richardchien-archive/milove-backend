@@ -3,8 +3,8 @@ from django.core import validators
 
 
 class UsernameValidator(validators.RegexValidator):
-    regex = r'^[_a-zA-Z0-9]+$'
+    regex = r'^[\w.+-]+$'
     message = _(
-        'Enter a valid username. This value may contain only English letters, '
-        'numbers, and underline character (_).'
+        'Enter a valid username. This value may contain only letters, '
+        'numbers, and ./+/-/_ characters.'
     )

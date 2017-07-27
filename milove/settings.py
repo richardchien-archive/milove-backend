@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Authentication
 
-AUTHENTICATION_BACKENDS = ['milove.shop.auth.AuthBackend']
+AUTHENTICATION_BACKENDS = ['milove.shop.auth.Backend']
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
