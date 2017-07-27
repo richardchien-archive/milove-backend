@@ -111,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Authentication
 
+AUTH_USER_MODEL = 'shop.User'
 AUTHENTICATION_BACKENDS = ['milove.shop.auth.Backend']
 
 # Internationalization

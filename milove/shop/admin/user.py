@@ -1,8 +1,35 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from ..models.user import *
+from ..models.user import UserInfo
+from ..auth import User
+
+
+class UserAdmin(BaseUserAdmin):
+    list_display = ('id', 'username', 'email',
+                    'date_joined', 'last_login',
+                    'is_active', 'is_staff')
+    list_display_links = ('id', 'username', 'email')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups',
+                   'date_joined', 'last_login')
+    ordering = ('id',)
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2'),
+        }),
+    )
+    fieldsets = (
+        (None, {'fields': ('username', 'email', 'password')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+
+
+admin.site.register(User, UserAdmin)
 
 
 class UserInfoAdmin(admin.ModelAdmin):
@@ -42,23 +69,3 @@ class UserInfoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserInfo, UserInfoAdmin)
-
-# hack UserAdmin
-UserAdmin.list_display = ('id', 'username', 'email',
-                          'date_joined', 'last_login',
-                          'is_active', 'is_staff')
-UserAdmin.list_display_links = ('id', 'username', 'email')
-UserAdmin.ordering = ('id',)
-UserAdmin.list_filter = UserAdmin.list_filter + ('date_joined', 'last_login')
-UserAdmin.add_fieldsets = (
-    (None, {
-        'classes': ('wide',),
-        'fields': ('username', 'email', 'password1', 'password2'),
-    }),
-)
-UserAdmin.fieldsets = (
-    (None, {'fields': ('username', 'email', 'password')}),
-    (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                   'groups', 'user_permissions')}),
-    (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-)

@@ -1,8 +1,8 @@
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
 from django.db.models import signals
 from django.dispatch import receiver
+from django.conf import settings
 
 from .goods import Product
 
@@ -12,8 +12,11 @@ class OrderItem(models.Model):
         verbose_name = _('order item')
         verbose_name_plural = _('order items')
 
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name=_('product'))
-    order = models.ForeignKey('Order', related_name='items', on_delete=models.CASCADE, verbose_name=_('order'))
+    product = models.ForeignKey(Product, on_delete=models.PROTECT,
+                                verbose_name=_('product'))
+    order = models.ForeignKey('Order', related_name='items',
+                              on_delete=models.CASCADE,
+                              verbose_name=_('order'))
     price = models.FloatField(verbose_name=_('strike price'))
 
     def __str__(self):
@@ -25,7 +28,8 @@ class Order(models.Model):
         verbose_name = _('order')
         verbose_name_plural = _('orders')
 
-    user = models.ForeignKey(User, null=True, related_name='orders',
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,
+                             related_name='orders',
                              on_delete=models.SET_NULL, verbose_name=_('user'))
     total_price = models.FloatField(verbose_name=_('total price'))
 
@@ -43,7 +47,8 @@ class Order(models.Model):
         (STATUS_CANCELED, _('OrderStatus|canceled')),
     )
 
-    status = models.CharField(max_length=20, choices=STATUSES, default=STATUS_UNPAID,
+    status = models.CharField(max_length=20, choices=STATUSES,
+                              default=STATUS_UNPAID,
                               verbose_name=_('status'))
 
     PAYMENT_BALANCE = 'balance'
@@ -56,9 +61,11 @@ class Order(models.Model):
         (PAYMENT_STRIPE, _('PaymentMethod|stripe')),
     )
 
-    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS, verbose_name=_('payment method'))
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS,
+                                      verbose_name=_('payment method'))
     use_balance = models.BooleanField(verbose_name=_('Order|use balance'))
-    from_balance = models.FloatField(verbose_name=_('Order|from balance'))  # money paid from balance
+    from_balance = models.FloatField(
+        verbose_name=_('Order|from balance'))  # money paid from balance
 
     # transaction id for 3rd party payment methods
     # transaction_id = models.CharField(max_length=200, verbose_name=_('transaction id'))

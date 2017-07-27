@@ -1,7 +1,8 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework import exceptions
 
 from .models import *
+from .auth import User
 
 __all__ = ('BrandSerializer', 'ProductSerializer',
            'UserInfoSerializer', 'UserSerializer')
@@ -48,11 +49,12 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    info = UserInfoSerializer()
+    info = UserInfoSerializer(required=False)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'info')
+        exclude = ('password', 'is_superuser', 'is_staff',
+                   'groups', 'user_permissions')
 
     def update(self, instance: User, validated_data):
         instance.username = validated_data.get('username', instance.username)
@@ -63,5 +65,39 @@ class UserSerializer(serializers.ModelSerializer):
                                                  data=info, partial=True)
             if info_serializer.is_valid():
                 info_serializer.save()
+        instance.save()
+        return instance
+
+
+class UserSignupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+            }
+        }
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
+
+
+class UserChangePasswordSerializer(serializers.ModelSerializer):
+    old_password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('old_password', 'password')
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+            }
+        }
+
+    def update(self, instance, validated_data):
+        if not instance.check_password(validated_data['old_password']):
+            raise exceptions.PermissionDenied
+        instance.set_password(validated_data['password'])
         instance.save()
         return instance

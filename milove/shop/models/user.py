@@ -1,23 +1,50 @@
 import jsonfield
 from django.db import models
 from django.db.models import signals
+from django.conf import settings
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.password_validation import validate_password
 
 from ..validators import UsernameValidator
 
-# hack User model
-# https://stackoverflow.com/questions/1160030/how-to-make-email-field-unique-in-model-user-from-contrib-auth-in-django
-User._meta.get_field('username').__dict__['validators'] = [UsernameValidator()]
-User._meta.get_field('username').__dict__['help_text'] = _(
-    'Required. 150 characters or fewer. '
-    'Letters, digits and ./+/-/_ only.')
-User._meta.get_field('email').__dict__['blank'] = False  # make email required
-User._meta.get_field('email').__dict__['_unique'] = True  # make email unique
-User._meta.get_field('email').__dict__['error_messages'] = {
-    'unique': _("A user with that email already exists."),
-}
+
+class User(AbstractUser):
+    first_name = None
+    last_name = None
+
+    username_validator = UsernameValidator()
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        unique=True,
+        help_text=_('Required. 150 characters or fewer. '
+                    'Letters, digits and ./+/-/_ only.'),
+        validators=[username_validator],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        },
+    )
+    email = models.EmailField(
+        _('email address'),
+        unique=True,
+        error_messages={
+            'unique': _("A user with that email already exists."),
+        }
+    )
+    password = models.CharField(_('password'), validators=[validate_password],
+                                max_length=128)
+
+    def get_full_name(self):
+        """
+        Returns the first_name plus the last_name, with a space in between.
+        """
+        return self.username
+
+    def get_short_name(self):
+        "Returns the short name for the user."
+        return self.username
 
 
 class UserInfo(models.Model):
@@ -25,7 +52,9 @@ class UserInfo(models.Model):
         verbose_name = _('user information')
         verbose_name_plural = _('user information')
 
-    user = models.OneToOneField(User, primary_key=True, related_name='info',
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                primary_key=True,
+                                related_name='info',
                                 on_delete=models.CASCADE,
                                 verbose_name=_('user'))
     balance = models.FloatField(default=0.0,
@@ -38,8 +67,8 @@ class UserInfo(models.Model):
         return str(self.user)
 
 
-@receiver(signals.post_save, sender=User)
-def create_default_user_info(instance: User, **_):
+@receiver(signals.post_save, sender=settings.AUTH_USER_MODEL)
+def create_default_user_info(instance, **_):
     if not hasattr(instance, 'info'):
         # there is no UserInfo object bound to the current User, create one
         UserInfo.objects.create(user=instance)
