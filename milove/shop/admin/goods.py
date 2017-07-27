@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.db import models as db_models
+from django import forms
 
 from ..admin_filters import RelatedFieldDropdownFilter, \
     ChoicesFieldDropdownFilter
@@ -134,7 +135,25 @@ class ProductAdmin(admin.ModelAdmin):
               'main_image', 'get_main_image_preview')
     readonly_fields = ('sold_dt', 'get_main_image_preview',)
     inlines = (ProductImageInline,)
+
     # filter_horizontal = ('categories', 'attachments')
+
+    class Form(forms.ModelForm):
+        class AjaxImageField(forms.CharField):
+            widget = forms.TextInput
+
+        # main_image = AjaxImageField(label=_('Product|main image'))
+        # TODO: this should be customized
+        # see https://github.com/bradleyg/django-ajaximage
+
+        class Meta:
+            model = Product
+            fields = '__all__'
+
+    form = Form
+    formfield_overrides = {
+        db_models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
+    }
 
 
 admin.site.register(Product, ProductAdmin)

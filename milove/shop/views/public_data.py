@@ -1,5 +1,5 @@
 import django_filters.rest_framework
-from rest_framework import viewsets
+from rest_framework import viewsets, serializers
 from rest_framework.routers import DefaultRouter
 from rest_framework.pagination import PageNumberPagination
 
@@ -23,7 +23,7 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         """Special serializer for CategoryViewSet"""
 
         class Meta:
-            model = models.Category
+            model = Category
             exclude = ('super_category',)
             depth = 10  # this is intended to be large
 

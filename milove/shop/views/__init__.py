@@ -1,53 +1,25 @@
 import os
 import hashlib
 
-from rest_framework import viewsets, exceptions, parsers
-from rest_framework.decorators import api_view, parser_classes
-from rest_framework.response import Response
-from django.contrib import auth
-from django.middleware import csrf
+from django.conf.urls import url
 from django import forms
 from django.conf import settings
 from django.utils.datetime_safe import datetime
 from django.db import transaction
+from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework import viewsets, exceptions, parsers
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.response import Response
 
-from ..models import *
-from ..serializers import *
-
-from . import public_data
-
-urlpatterns = public_data.urlpatterns
+from . import public_data, user
 
 
-@api_view(['GET'])
+@ensure_csrf_cookie
+@api_view(['GET', 'POST'])
 def get_token(request):
-    return Response({'token': csrf.get_token(request)})
-
-
-@api_view(['POST'])
-def login(request):
-    if 'username' not in request.data or 'password' not in request.data:
-        raise exceptions.ParseError
-
-    user = auth.authenticate(request, username=request.data['username'],
-                             password=request.data['password'])
-    if not user:
-        raise exceptions.AuthenticationFailed
-
-    auth.login(request, user)
-    return Response(UserInfoSerializer(user.info).data)
-
-
-@api_view(['GET'])
-def get_user_info(request):
-    if not request.user.is_authenticated:
-        raise exceptions.NotAuthenticated
-    return Response(UserInfoSerializer(request.user.info).data)
-
-
-@api_view(['POST'])
-def logout(request):
-    auth.logout(request)
+    # this should be called every time
+    # before the frontend doing a POST request
+    # to ensure the frontend has a valid CSRF token
     return Response()
 
 
@@ -78,3 +50,10 @@ def upload(request):
             f.write(chunk)
 
     return Response({'path': 'uploads/' + filename})
+
+
+urlpatterns = [
+    url(r'^get_token/$', get_token),
+]
+urlpatterns += public_data.urlpatterns
+urlpatterns += user.urlpatterns

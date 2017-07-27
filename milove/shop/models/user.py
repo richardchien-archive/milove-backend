@@ -1,6 +1,23 @@
+import jsonfield
 from django.db import models
+from django.db.models import signals
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+
+from ..validators import UsernameValidator
+
+# hack User model
+# https://stackoverflow.com/questions/1160030/how-to-make-email-field-unique-in-model-user-from-contrib-auth-in-django
+User._meta.get_field('username').__dict__['validators'] = [UsernameValidator()]
+User._meta.get_field('username').__dict__['help_text'] = _(
+    'Required. 150 characters or fewer. '
+    'Letters, digits and underline (_) only.')
+User._meta.get_field('email').__dict__['blank'] = False  # make email required
+User._meta.get_field('email').__dict__['_unique'] = True  # make email unique
+User._meta.get_field('email').__dict__['error_messages'] = {
+    'unique': _("A user with that email already exists."),
+}
 
 
 class UserInfo(models.Model):
@@ -9,29 +26,22 @@ class UserInfo(models.Model):
         verbose_name_plural = _('user information')
 
     user = models.OneToOneField(User, primary_key=True, related_name='info',
-                                on_delete=models.CASCADE, verbose_name=_('user'))
-
-    def get_id(self):
-        return self.user.id
-
-    get_id.short_description = _('id')
-    get_id.admin_order_field = 'user__id'
-
-    def get_username(self):
-        return self.user.username
-
-    get_username.short_description = _('username')
-    get_username.admin_order_field = 'user__username'
-
-    def get_email(self):
-        return self.user.email
-
-    get_email.short_description = _('email')
-    get_email.admin_order_field = 'user__email'
-
-    nickname = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('nickname'))
-    balance = models.FloatField(default=0.0, verbose_name=_('UserInfo|balance'))
+                                on_delete=models.CASCADE,
+                                verbose_name=_('user'))
+    nickname = models.CharField(max_length=100,
+                                verbose_name=_('nickname'))
+    balance = models.FloatField(default=0.0,
+                                verbose_name=_('UserInfo|balance'))
     point = models.IntegerField(default=0, verbose_name=_('UserInfo|point'))
+    contact = jsonfield.JSONField(default={}, blank=True, help_text=' ',
+                                  verbose_name=_('UserInfo|contact'))
 
     def __str__(self):
-        return self.get_username()
+        return str(self.user)
+
+
+@receiver(signals.post_save, sender=User)
+def create_default_user_info(instance: User, **_):
+    if not hasattr(instance, 'info'):
+        # there is no UserInfo object bound to the current User, create one
+        UserInfo.objects.create(user=instance, nickname=instance.username)

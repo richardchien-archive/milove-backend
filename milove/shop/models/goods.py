@@ -2,11 +2,15 @@ import os
 import hashlib
 
 from django.db import models
+from django.db.models import signals
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from imagekit import ImageSpec
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+
+from ..helpers import get_or_none
 
 
 class Brand(models.Model):
@@ -88,9 +92,9 @@ class Product(models.Model):
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
-    publish_dt = models.DateTimeField(default=timezone.now, verbose_name=_(
-        'Product|publish datetime'))
-
+    publish_dt = models.DateTimeField(default=timezone.now,
+                                      verbose_name=_(
+                                          'Product|publish datetime'))
     sold = models.BooleanField(default=False, verbose_name=_('Product|sold'))
     sold_dt = models.DateTimeField(null=True, blank=True,
                                    verbose_name=_('Product|sold datetime'))
@@ -152,4 +156,12 @@ class Product(models.Model):
 
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand.name \
-               + (' ' + str(self.name) if self.name else '')
+               + (' ' + self.name if self.name else '')
+
+
+@receiver(signals.pre_save, sender=Product)
+def product_pre_save(sender, instance: Product, **_):
+    old = get_or_none(sender, pk=instance.pk)
+
+    if old is None or old.sold != instance.sold:
+        instance.sold_changed(old, instance)

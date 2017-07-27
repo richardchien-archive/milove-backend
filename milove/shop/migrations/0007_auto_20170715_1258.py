@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             name='UserInfo',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nickname', models.CharField(default=milove.shop.models.user.UserInfo.get_username, max_length=100, verbose_name='nickname')),
+                ('nickname', models.CharField(max_length=100, verbose_name='nickname')),
                 ('balance', models.FloatField(default=0.0, verbose_name='UserInfo|balance')),
                 ('point', models.IntegerField(default=0, verbose_name='UserInfo|point')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='user')),

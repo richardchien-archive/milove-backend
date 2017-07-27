@@ -1,11 +1,15 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from . import models
+from .models import *
+
+__all__ = ('BrandSerializer', 'ProductSerializer',
+           'UserInfoSerializer', 'UserSerializer')
 
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Brand
+        model = Brand
         fields = '__all__'
 
 
@@ -21,7 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fullname = serializers.CharField(source='__str__')
 
         class Meta:
-            model = models.Category
+            model = Category
             fields = '__all__'
 
     main_image = serializers.ImageField(use_url=False, read_only=True)
@@ -29,16 +33,22 @@ class ProductSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
 
     class Meta:
-        model = models.Product
+        model = Product
         exclude = ('buy_back_price',)  # hide this field to users
         depth = 1
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
-    id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
-    username = serializers.CharField(source='get_username', read_only=True)
-    email = serializers.CharField(source='get_email', read_only=True)
+    contact = serializers.JSONField(read_only=True)
 
     class Meta:
-        model = models.UserInfo
+        model = UserInfo
         exclude = ['user']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    info = UserInfoSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'info')

@@ -10,4 +10,4 @@ from . import views
 #     url(r'^upload/$', views.upload),
 #     # url(r'^checkout/$', views.checkout),
 # ]
-urlpatterns = [] + views.urlpatterns
+urlpatterns = views.urlpatterns
