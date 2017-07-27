@@ -49,14 +49,13 @@ class SignupForm(forms.Form):
     password = forms.CharField()
 
 
-# @api_view(['POST'])
-# def signup(request):
-#     form = SignupForm(request.data)
-#     if not form.is_valid():
-#         raise exceptions.ParseError
-#
-#
-#     return Response()
+@api_view(['POST'])
+def signup(request):
+    form = SignupForm(request.data)
+    if not form.is_valid():
+        raise exceptions.ParseError
+
+    return Response()
 
 
 urlpatterns = [
