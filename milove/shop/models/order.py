@@ -4,7 +4,7 @@ from django.db.models import signals
 from django.dispatch import receiver
 from django.conf import settings
 
-from .goods import Product
+from .product import Product
 
 
 class OrderItem(models.Model):

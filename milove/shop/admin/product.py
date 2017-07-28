@@ -5,7 +5,7 @@ from django import forms
 
 from ..admin_filters import RelatedFieldDropdownFilter, \
     ChoicesFieldDropdownFilter
-from ..models.goods import *
+from ..models.product import *
 
 
 class _ModelWithProductCount(admin.ModelAdmin):

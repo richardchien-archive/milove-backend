@@ -1,4 +1,4 @@
-from .goods import *
+from .product import *
 from .user import *
 from .order import *
 

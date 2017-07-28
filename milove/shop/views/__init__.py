@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 
 from . import (
-    public_data,
+    product,
     user,
 )
 
@@ -58,5 +58,5 @@ def upload(request):
 urlpatterns = [
     url(r'^get_token/$', get_token),
 ]
-urlpatterns += public_data.urlpatterns
+urlpatterns += product.urlpatterns
 urlpatterns += user.urlpatterns
