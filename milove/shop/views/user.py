@@ -78,6 +78,7 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
         )
         validate_or_raise(serializer)
         serializer.save()
+        auth.update_session_auth_hash(request, user)  # prevent log out
         return Response()
 
     @list_route(['POST'])

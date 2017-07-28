@@ -162,6 +162,5 @@ class Product(models.Model):
 @receiver(signals.pre_save, sender=Product)
 def product_pre_save(sender, instance: Product, **_):
     old = get_or_none(sender, pk=instance.pk)
-
     if old is None or old.sold != instance.sold:
         instance.sold_changed(old, instance)
