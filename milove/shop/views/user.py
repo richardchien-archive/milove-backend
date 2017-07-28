@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth.tokens import default_token_generator
 from django import forms
 from rest_framework import exceptions as rest_exceptions
 from rest_framework.decorators import list_route, detail_route
@@ -9,8 +10,10 @@ from rest_framework.permissions import BasePermission
 from rest_framework.routers import DefaultRouter
 from rest_framework.generics import get_object_or_404
 
+from .. import mail_shortcuts as mail
 from .. import serializers
 from ..models import User
+from .helpers import validate_or_raise
 
 router = DefaultRouter()
 
@@ -18,6 +21,10 @@ router = DefaultRouter()
 class LoginForm(forms.Form):
     username = forms.CharField()  # may be username or email
     password = forms.CharField()
+
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField()
 
 
 class IsCurrentUser(BasePermission):
@@ -36,17 +43,16 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
     @list_route(methods=['POST'])
     def signup(self, request):
         serializer = serializers.UserSignupSerializer(data=request.data)
-        if not serializer.is_valid():
-            raise rest_exceptions.ValidationError(detail=serializer.errors)
+        validate_or_raise(serializer)
 
         user = serializer.save()
+        mail.notify_signed_up(user)
         return Response(serializers.UserSerializer(user).data)
 
     @list_route(['POST'])
     def login(self, request):
         form = LoginForm(request.data)
-        if not form.is_valid():
-            raise rest_exceptions.ValidationError(detail=form.errors)
+        validate_or_raise(form)
 
         user = auth.authenticate(request,
                                  username=form.cleaned_data['username'],
@@ -70,8 +76,29 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
             instance=user,
             data=request.data
         )
-        if not serializer.is_valid():
-            raise rest_exceptions.ValidationError(detail=serializer.errors)
+        validate_or_raise(serializer)
+        serializer.save()
+        return Response()
+
+    @list_route(['POST'])
+    def forgot_password(self, request):
+        form = ForgotPasswordForm(request.data)
+        validate_or_raise(form)
+
+        user = get_object_or_404(User, email=form.cleaned_data['email'])
+        mail.notify_reset_password(
+            user=user,
+            token=default_token_generator.make_token(user)
+        )
+        return Response()
+
+    @detail_route(['POST'], permission_classes=[])
+    def set_password(self, request, pk=None):
+        user = get_object_or_404(User, pk=pk)
+        self.check_object_permissions(request, user)
+
+        serializer = serializers.UserSetPasswordSerializer(user, request.data)
+        validate_or_raise(serializer)
         serializer.save()
         return Response()
 

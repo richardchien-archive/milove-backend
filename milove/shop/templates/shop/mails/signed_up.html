@@ -1,0 +1,9 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>您好，{{ user.username }}</h2>
+  <p>
+    您的账户已经创建成功，现在您可以点
+    <a href="https://www.milove.com/login/">此处</a>
+    登录您的账户。祝您购物愉快！
+  </p>
+{% endblock %}

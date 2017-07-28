@@ -1,3 +1,4 @@
+from django.contrib.auth.tokens import default_token_generator
 from rest_framework import serializers
 from rest_framework import exceptions
 
@@ -63,6 +64,28 @@ class UserChangePasswordSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if not instance.check_password(validated_data['old_password']):
+            raise exceptions.PermissionDenied
+        instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
+
+
+class UserSetPasswordSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('token', 'password')
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+            }
+        }
+
+    def update(self, instance, validated_data):
+        if not default_token_generator.check_token(
+                user=instance,
+                token=validated_data['token']):
             raise exceptions.PermissionDenied
         instance.set_password(validated_data['password'])
         instance.save()
