@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-25 14:49+0800\n"
+"POT-Creation-Date: 2017-07-28 13:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,163 +21,187 @@ msgstr ""
 msgid "Milove Admin"
 msgstr ""
 
-#: .\admin\goods.py:36
+#: .\admin\goods.py:37
 msgid "total number of products"
 msgstr ""
 
-#: .\admin\goods.py:43
+#: .\admin\goods.py:44
 msgid "number of products for sale"
 msgstr ""
 
-#: .\admin\goods.py:85
+#: .\admin\goods.py:79
 msgid "image preview"
 msgstr ""
 
-#: .\admin\goods.py:99
+#: .\admin\goods.py:93
 msgid "Product|main image preview"
 msgstr "main image preview"
 
-#: .\admin\goods.py:105 .\models\goods.py:136
+#: .\admin\goods.py:99 .\models\goods.py:140
 msgid "Product|categories"
 msgstr "categories"
 
-#: .\admin\goods.py:110
+#: .\admin\goods.py:104
 msgid "Product|price / original price"
 msgstr "price / original price"
+
+#: .\admin\user.py:26
+msgid "Permissions"
+msgstr ""
+
+#: .\admin\user.py:28
+msgid "Important dates"
+msgstr ""
+
+#: .\admin\user.py:39
+msgid "id"
+msgstr "ID"
+
+#: .\admin\user.py:45 .\models\user.py:19
+msgid "username"
+msgstr ""
+
+#: .\admin\user.py:51
+msgid "email"
+msgstr ""
+
+#: .\admin\user.py:62 .\models\user.py:64
+msgid "UserInfo|contact"
+msgstr "contact"
 
 #: .\apps.py:7
 msgid "Shop"
 msgstr ""
 
-#: .\models\goods.py:14
+#: .\models\goods.py:18
 msgid "brand"
 msgstr ""
 
-#: .\models\goods.py:15
+#: .\models\goods.py:19
 msgid "brands"
 msgstr ""
 
-#: .\models\goods.py:18 .\models\goods.py:29 .\models\goods.py:46
+#: .\models\goods.py:22 .\models\goods.py:33 .\models\goods.py:50
 msgid "name"
 msgstr ""
 
-#: .\models\goods.py:26
+#: .\models\goods.py:30
 msgid "category"
 msgstr ""
 
-#: .\models\goods.py:27
+#: .\models\goods.py:31
 msgid "categories"
 msgstr ""
 
-#: .\models\goods.py:33
+#: .\models\goods.py:37
 msgid "super category"
 msgstr ""
 
-#: .\models\goods.py:43
+#: .\models\goods.py:47
 msgid "attachment"
 msgstr ""
 
-#: .\models\goods.py:44
+#: .\models\goods.py:48
 msgid "attachments"
 msgstr ""
 
-#: .\models\goods.py:72
+#: .\models\goods.py:76
 msgid "product image"
 msgstr ""
 
-#: .\models\goods.py:73
+#: .\models\goods.py:77
 msgid "product images"
 msgstr ""
 
-#: .\models\goods.py:76
+#: .\models\goods.py:80
 msgid "image"
 msgstr ""
 
-#: .\models\goods.py:80 .\models\goods.py:88 .\models\order.py:15
+#: .\models\goods.py:84 .\models\goods.py:92 .\models\order.py:16
 msgid "product"
 msgstr ""
 
-#: .\models\goods.py:89
+#: .\models\goods.py:93
 msgid "products"
 msgstr ""
 
-#: .\models\goods.py:92
+#: .\models\goods.py:97
 msgid "Product|publish datetime"
 msgstr "publish datetime"
 
-#: .\models\goods.py:94
+#: .\models\goods.py:98
 msgid "Product|sold"
 msgstr "sold"
 
-#: .\models\goods.py:96
+#: .\models\goods.py:100
 msgid "Product|sold datetime"
 msgstr "sold datetime"
 
-#: .\models\goods.py:107
+#: .\models\goods.py:111
 msgid "Product|brand"
 msgstr "brand"
 
-#: .\models\goods.py:109
+#: .\models\goods.py:113
 msgid "Product|name"
 msgstr "name"
 
-#: .\models\goods.py:111
+#: .\models\goods.py:115
 msgid "Product|style"
 msgstr "style"
 
-#: .\models\goods.py:113
+#: .\models\goods.py:117
 msgid "Product|size"
 msgstr "size"
 
-#: .\models\goods.py:123
+#: .\models\goods.py:127
 msgid "ProductCondition|S"
 msgstr "S"
 
-#: .\models\goods.py:124
+#: .\models\goods.py:128
 msgid "ProductCondition|A+"
 msgstr "A+"
 
-#: .\models\goods.py:125
+#: .\models\goods.py:129
 msgid "ProductCondition|A"
 msgstr "A"
 
-#: .\models\goods.py:126
+#: .\models\goods.py:130
 msgid "ProductCondition|B"
 msgstr "B"
 
-#: .\models\goods.py:127
+#: .\models\goods.py:131
 msgid "ProductCondition|C"
 msgstr "C"
 
-#: .\models\goods.py:128
+#: .\models\goods.py:132
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\goods.py:132
+#: .\models\goods.py:136
 msgid "Product|condition"
 msgstr "condition"
 
-#: .\models\goods.py:138
+#: .\models\goods.py:142
 msgid "Product|attachments"
 msgstr "attachments"
 
-#: .\models\goods.py:140
+#: .\models\goods.py:144
 msgid "Product|description"
 msgstr "description"
 
-#: .\models\goods.py:142
+#: .\models\goods.py:146
 msgid "Product|original price"
 msgstr "original price"
 
-#: .\models\goods.py:145
+#: .\models\goods.py:149
 msgid "Product|buy back price"
 msgstr "buy back price"
 
-#: .\models\goods.py:146
+#: .\models\goods.py:150
 msgid "Product|price"
 msgstr "price"
 
-#: .\models\goods.py:150
+#: .\models\goods.py:154
 msgid "Product|main image"
 msgstr "main image"
 
@@ -189,98 +213,113 @@ msgstr ""
 msgid "order items"
 msgstr ""
 
-#: .\models\order.py:16 .\models\order.py:25
+#: .\models\order.py:19 .\models\order.py:28
 msgid "order"
 msgstr ""
 
-#: .\models\order.py:17
+#: .\models\order.py:20
 msgid "strike price"
 msgstr ""
 
-#: .\models\order.py:26
+#: .\models\order.py:29
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:29 .\models\user.py:12
+#: .\models\order.py:33 .\models\user.py:59
 msgid "user"
 msgstr ""
 
-#: .\models\order.py:30
+#: .\models\order.py:34
 msgid "total price"
 msgstr ""
 
-#: .\models\order.py:39
+#: .\models\order.py:43
 msgid "OrderStatus|unpaid"
 msgstr "unpaid"
 
-#: .\models\order.py:40
+#: .\models\order.py:44
 msgid "OrderStatus|paid"
 msgstr "paid"
 
-#: .\models\order.py:41
+#: .\models\order.py:45
 msgid "OrderStatus|shipping"
 msgstr "shipping"
 
-#: .\models\order.py:42
+#: .\models\order.py:46
 msgid "OrderStatus|done"
 msgstr "done"
 
-#: .\models\order.py:43
+#: .\models\order.py:47
 msgid "OrderStatus|canceled"
 msgstr "canceled"
 
-#: .\models\order.py:47
+#: .\models\order.py:52
 msgid "status"
 msgstr ""
 
-#: .\models\order.py:54
+#: .\models\order.py:59
 msgid "PaymentMethod|balance"
 msgstr "balance"
 
-#: .\models\order.py:55
+#: .\models\order.py:60
 msgid "PaymentMethod|paypal"
 msgstr "PayPal"
 
-#: .\models\order.py:56
+#: .\models\order.py:61
 msgid "PaymentMethod|stripe"
 msgstr "Stripe"
 
-#: .\models\order.py:59
+#: .\models\order.py:65
 msgid "payment method"
 msgstr ""
 
-#: .\models\order.py:60
+#: .\models\order.py:66
 msgid "Order|use balance"
 msgstr "use balance"
 
-#: .\models\order.py:61
+#: .\models\order.py:68
 msgid "Order|from balance"
 msgstr "from balance"
 
-#: .\models\user.py:8 .\models\user.py:9
-msgid "user information"
+#: .\models\user.py:22
+msgid "Required. 150 characters or fewer. Letters, digits and ./+/-/_ only."
 msgstr ""
 
-#: .\models\user.py:17
-msgid "id"
+#: .\models\user.py:26
+msgid "A user with that username already exists."
 msgstr ""
 
-#: .\models\user.py:23
-msgid "username"
-msgstr ""
-
-#: .\models\user.py:29
-msgid "email"
-msgstr ""
-
-#: .\models\user.py:32
-msgid "nickname"
+#: .\models\user.py:30
+msgid "email address"
 msgstr ""
 
 #: .\models\user.py:33
+msgid "A user with that email address already exists."
+msgstr ""
+
+#: .\models\user.py:36
+msgid "password"
+msgstr ""
+
+#: .\models\user.py:52 .\models\user.py:53
+msgid "user information"
+msgstr ""
+
+#: .\models\user.py:61
 msgid "UserInfo|balance"
 msgstr "balance"
 
-#: .\models\user.py:34
+#: .\models\user.py:62
 msgid "UserInfo|point"
 msgstr "point"
+
+#: .\templates\admin\dropdown_filter.html:7
+#, python-format
+msgid " By %(filter_title)s "
+msgstr ""
+
+#: .\validators.py:8
+msgid ""
+"Enter a valid username. This value may contain only letters, numbers, and ./"
+"+/-/_ characters."
+msgstr ""
