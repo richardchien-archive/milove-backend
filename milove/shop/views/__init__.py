@@ -15,6 +15,7 @@ from . import (
     product,
     user,
     address,
+    payment_method,
 )
 
 
@@ -62,3 +63,4 @@ urlpatterns = [
 urlpatterns += product.urlpatterns
 urlpatterns += user.urlpatterns
 urlpatterns += address.urlpatterns
+urlpatterns += payment_method.urlpatterns

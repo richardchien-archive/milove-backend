@@ -12,5 +12,6 @@ class AddressSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'user': {
                 'write_only': True,
+                'default': serializers.CurrentUserDefault()
             }
         }

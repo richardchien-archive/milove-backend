@@ -62,7 +62,7 @@ class UserInfo(models.Model):
     balance = models.FloatField(default=0.0,
                                 verbose_name=_('UserInfo|balance'))
     point = models.IntegerField(default=0, verbose_name=_('UserInfo|point'))
-    contact = jsonfield.JSONField(default={}, blank=True, help_text=' ',
+    contact = jsonfield.JSONField(default={}, blank=True,
                                   verbose_name=_('UserInfo|contact'))
 
     def __str__(self):

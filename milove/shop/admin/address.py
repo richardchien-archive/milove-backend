@@ -17,4 +17,4 @@ class AddressAdmin(admin.ModelAdmin):
                      'phone_number', 'province', 'city', 'zip_code')
 
 
-admin.site.register(Address, AddressAdmin)
+# admin.site.register(Address, AddressAdmin)

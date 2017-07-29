@@ -3,8 +3,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django import forms
 from rest_framework import exceptions as rest_exceptions
 from rest_framework.decorators import list_route, detail_route
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.viewsets import mixins
+from rest_framework.viewsets import GenericViewSet, mixins
 from rest_framework.response import Response
 from rest_framework.permissions import BasePermission
 from rest_framework.routers import DefaultRouter
