@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-29 14:18+0800\n"
+"POT-Creation-Date: 2017-07-29 21:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,53 +73,54 @@ msgstr "contact"
 msgid "Shop"
 msgstr ""
 
-#: .\models\address.py:10
-msgid "address"
-msgstr ""
-
-#: .\models\address.py:11
-msgid "addresses"
-msgstr ""
-
-#: .\models\address.py:16 .\models\order.py:33 .\models\user.py:61
-msgid "user"
-msgstr ""
-
-#: .\models\address.py:18
+#: .\models\address.py:12
 msgid "Address|fullname"
 msgstr "fullname"
 
-#: .\models\address.py:19
+#: .\models\address.py:13
 msgid "phone number"
 msgstr ""
 
-#: .\models\address.py:24
+#: .\models\address.py:18
 msgid "United State"
 msgstr ""
 
-#: .\models\address.py:25
+#: .\models\address.py:19
 msgid "Canada"
 msgstr ""
 
-#: .\models\address.py:28
+#: .\models\address.py:22
 msgid "Address|country"
 msgstr "country"
 
-#: .\models\address.py:31
+#: .\models\address.py:25
 msgid "Address|street address"
 msgstr "street address"
 
-#: .\models\address.py:33
+#: .\models\address.py:27
 msgid "Address|city"
 msgstr "city"
 
-#: .\models\address.py:34
+#: .\models\address.py:28
 msgid "Address|province"
 msgstr "state / province"
 
-#: .\models\address.py:35
+#: .\models\address.py:29
 msgid "Address|ZIP code"
 msgstr "ZIP code"
+
+#: .\models\address.py:42
+msgid "address"
+msgstr ""
+
+#: .\models\address.py:43
+msgid "addresses"
+msgstr ""
+
+#: .\models\address.py:48 .\models\order.py:33 .\models\payment_method.py:17
+#: .\models\user.py:61
+msgid "user"
+msgstr ""
 
 #: .\models\order.py:12
 msgid "order item"
@@ -185,7 +186,7 @@ msgstr "PayPal"
 msgid "PaymentMethod|stripe"
 msgstr "Stripe"
 
-#: .\models\order.py:65
+#: .\models\order.py:65 .\models\payment_method.py:11
 msgid "payment method"
 msgstr ""
 
@@ -197,16 +198,37 @@ msgstr "use balance"
 msgid "Order|from balance"
 msgstr "from balance"
 
+#: .\models\payment_method.py:12
+msgid "payment methods"
+msgstr ""
+
+#: .\models\payment_method.py:19 .\models\product.py:25 .\models\product.py:36
+#: .\models\product.py:53
+msgid "name"
+msgstr ""
+
+#: .\models\payment_method.py:27
+msgid "credit card"
+msgstr ""
+
+#: .\models\payment_method.py:30
+msgid "PaymentMethod|method"
+msgstr "method"
+
+#: .\models\payment_method.py:32
+msgid "PaymentMethod|information"
+msgstr "information"
+
+#: .\models\payment_method.py:33
+msgid "PaymentMethod|secret information"
+msgstr "secret information"
+
 #: .\models\product.py:21
 msgid "brand"
 msgstr ""
 
 #: .\models\product.py:22
 msgid "brands"
-msgstr ""
-
-#: .\models\product.py:25 .\models\product.py:36 .\models\product.py:53
-msgid "name"
 msgstr ""
 
 #: .\models\product.py:33
@@ -356,6 +378,19 @@ msgstr "balance"
 #: .\models\user.py:64
 msgid "UserInfo|point"
 msgstr "point"
+
+#: .\serializers\payment_method.py:22
+msgid "This field must be a JSON object."
+msgstr ""
+
+#: .\serializers\payment_method.py:27
+msgid "Payment method failed to pass check."
+msgstr ""
+
+#: .\serializers\payment_method.py:56
+#, python-format
+msgid "Value of \"%(field_name)s\" field is not valid."
+msgstr ""
 
 #: .\templates\admin\dropdown_filter.html:7
 #, python-format

@@ -53,7 +53,9 @@ class PaymentMethodAddSerializer(PaymentMethodSerializer):
             except AssertionError:
                 raise exceptions.ValidationError(detail={
                     'data': {
-                        'token': _('Value of "token" field is not valid.')
+                        'token': _('Value of "%(field_name)s" '
+                                   'field is not valid.') % {
+                                     'field_name': 'token'}
                     }
                 })
             try:

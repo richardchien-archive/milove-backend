@@ -5,15 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 __all__ = ['Address']
 
 
-class Address(models.Model):
+class AbstractAddress(models.Model):
     class Meta:
-        verbose_name = _('address')
-        verbose_name_plural = _('addresses')
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE,
-                             related_name='addresses',
-                             verbose_name=_('user'))
+        abstract = True
 
     fullname = models.CharField(_('Address|fullname'), max_length=100)
     phone_number = models.CharField(_('phone number'), max_length=30)
@@ -41,3 +35,14 @@ class Address(models.Model):
             self.province,
             self.country
         )
+
+
+class Address(AbstractAddress):
+    class Meta:
+        verbose_name = _('address')
+        verbose_name_plural = _('addresses')
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             related_name='addresses',
+                             verbose_name=_('user'))
