@@ -9,6 +9,8 @@ from django.contrib.auth.password_validation import validate_password
 
 from ..validators import UsernameValidator
 
+__all__ = ['UserInfo']
+
 
 class User(AbstractUser):
     first_name = None

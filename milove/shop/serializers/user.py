@@ -2,8 +2,12 @@ from django.contrib.auth.tokens import default_token_generator
 from rest_framework import serializers
 from rest_framework import exceptions
 
-from ..models import *
+from ..models.user import UserInfo
 from ..auth import User
+
+__all__ = ['UserInfoSerializer', 'UserSerializer',
+           'UserSignupSerializer', 'UserChangePasswordSerializer',
+           'UserSetPasswordSerializer']
 
 
 class UserInfoSerializer(serializers.ModelSerializer):

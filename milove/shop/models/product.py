@@ -12,6 +12,9 @@ from imagekit.processors import ResizeToFill
 
 from ..helpers import get_or_none
 
+__all__ = ['Brand', 'Category', 'Attachment',
+           'ProductImage', 'Product']
+
 
 class Brand(models.Model):
     class Meta:

@@ -11,8 +11,8 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.generics import get_object_or_404
 
 from .. import mail_shortcuts as mail
-from .. import serializers
-from ..models import User
+from ..serializers.user import *
+from ..auth import User
 from .helpers import validate_or_raise
 
 router = DefaultRouter()
@@ -37,17 +37,17 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
                   mixins.UpdateModelMixin,  # this brings PUT and PATCH
                   GenericViewSet):
     queryset = User.objects.all()
-    serializer_class = serializers.UserSerializer
-    permission_classes = [IsCurrentUser]
+    serializer_class = UserSerializer
+    permission_classes = (IsCurrentUser,)
 
     @list_route(methods=['POST'])
     def signup(self, request):
-        serializer = serializers.UserSignupSerializer(data=request.data)
+        serializer = UserSignupSerializer(data=request.data)
         validate_or_raise(serializer)
 
         user = serializer.save()
         mail.notify_signed_up(user)
-        return Response(serializers.UserSerializer(user).data)
+        return Response(UserSerializer(user).data)
 
     @list_route(['POST'])
     def login(self, request):
@@ -61,7 +61,7 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
             raise rest_exceptions.AuthenticationFailed
 
         auth.login(request, user)
-        return Response(serializers.UserSerializer(user).data)
+        return Response(UserSerializer(user).data)
 
     @list_route(['POST'])
     def logout(self, request):
@@ -72,7 +72,7 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
     def change_password(self, request, pk=None):
         user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
-        serializer = serializers.UserChangePasswordSerializer(
+        serializer = UserChangePasswordSerializer(
             instance=user,
             data=request.data
         )
@@ -93,12 +93,12 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
         )
         return Response()
 
-    @detail_route(['POST'], permission_classes=[])
+    @detail_route(['POST'], permission_classes=())
     def set_password(self, request, pk=None):
         user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
 
-        serializer = serializers.UserSetPasswordSerializer(user, request.data)
+        serializer = UserSetPasswordSerializer(user, request.data)
         validate_or_raise(serializer)
         serializer.save()
         return Response()

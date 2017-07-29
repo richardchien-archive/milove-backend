@@ -3,8 +3,8 @@ from rest_framework import viewsets, serializers
 from rest_framework.routers import DefaultRouter
 from rest_framework.pagination import PageNumberPagination
 
-from ..models import *
-from ..serializers import *
+from ..models.product import *
+from ..serializers.product import *
 from .. import rest_filters
 
 router = DefaultRouter()
@@ -78,6 +78,6 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                      'categories__name', 'description')
 
 
-router.register('products', ProductViewSet, base_name='product')
+router.register('products', ProductViewSet)
 
 urlpatterns = router.urls

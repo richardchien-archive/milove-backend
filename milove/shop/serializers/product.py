@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from ..models import *
+from ..models.product import *
+
+__all__ = ['BrandSerializer', 'ProductSerializer']
 
 
 class BrandSerializer(serializers.ModelSerializer):

@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from . import (
     product,
     user,
+    address,
 )
 
 
@@ -60,3 +61,4 @@ urlpatterns = [
 ]
 urlpatterns += product.urlpatterns
 urlpatterns += user.urlpatterns
+urlpatterns += address.urlpatterns
