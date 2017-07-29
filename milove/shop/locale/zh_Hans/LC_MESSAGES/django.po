@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-28 13:47+0800\n"
+"POT-Creation-Date: 2017-07-29 14:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,27 +21,27 @@ msgstr ""
 msgid "Milove Admin"
 msgstr "Milove 后台管理"
 
-#: .\admin\goods.py:37
+#: .\admin\product.py:37
 msgid "total number of products"
 msgstr "商品总数"
 
-#: .\admin\goods.py:44
+#: .\admin\product.py:44
 msgid "number of products for sale"
 msgstr "在售商品数"
 
-#: .\admin\goods.py:79
+#: .\admin\product.py:79
 msgid "image preview"
 msgstr "图片预览"
 
-#: .\admin\goods.py:93
+#: .\admin\product.py:93
 msgid "Product|main image preview"
 msgstr "主图预览"
 
-#: .\admin\goods.py:99 .\models\goods.py:140
+#: .\admin\product.py:99 .\models\product.py:143
 msgid "Product|categories"
 msgstr "分类"
 
-#: .\admin\goods.py:104
+#: .\admin\product.py:104
 msgid "Product|price / original price"
 msgstr "定价 / 原价"
 
@@ -57,7 +57,7 @@ msgstr "重要日期"
 msgid "id"
 msgstr "ID"
 
-#: .\admin\user.py:45 .\models\user.py:19
+#: .\admin\user.py:45 .\models\user.py:21
 msgid "username"
 msgstr "用户名"
 
@@ -65,7 +65,7 @@ msgstr "用户名"
 msgid "email"
 msgstr "邮箱"
 
-#: .\admin\user.py:62 .\models\user.py:64
+#: .\admin\user.py:62 .\models\user.py:66
 msgid "UserInfo|contact"
 msgstr "联系方式"
 
@@ -73,137 +73,53 @@ msgstr "联系方式"
 msgid "Shop"
 msgstr "商店"
 
-#: .\models\goods.py:18
-msgid "brand"
-msgstr "品牌"
+#: .\models\address.py:10
+msgid "address"
+msgstr "地址"
 
-#: .\models\goods.py:19
-msgid "brands"
-msgstr "品牌"
+#: .\models\address.py:11
+msgid "addresses"
+msgstr "地址"
 
-#: .\models\goods.py:22 .\models\goods.py:33 .\models\goods.py:50
-msgid "name"
-msgstr "名称"
+#: .\models\address.py:16 .\models\order.py:33 .\models\user.py:61
+msgid "user"
+msgstr "用户"
 
-#: .\models\goods.py:30
-msgid "category"
-msgstr "分类"
+#: .\models\address.py:18
+msgid "Address|fullname"
+msgstr "姓名"
 
-#: .\models\goods.py:31
-msgid "categories"
-msgstr "分类"
+#: .\models\address.py:19
+msgid "phone number"
+msgstr "电话号码"
 
-#: .\models\goods.py:37
-msgid "super category"
-msgstr "父级分类"
+#: .\models\address.py:24
+msgid "United State"
+msgstr "美国"
 
-#: .\models\goods.py:47
-msgid "attachment"
-msgstr "附件"
+#: .\models\address.py:25
+msgid "Canada"
+msgstr "加拿大"
 
-#: .\models\goods.py:48
-msgid "attachments"
-msgstr "附件"
+#: .\models\address.py:28
+msgid "Address|country"
+msgstr "国家"
 
-#: .\models\goods.py:76
-msgid "product image"
-msgstr "商品图片"
+#: .\models\address.py:31
+msgid "Address|street address"
+msgstr "街道地址"
 
-#: .\models\goods.py:77
-msgid "product images"
-msgstr "商品图片"
+#: .\models\address.py:33
+msgid "Address|city"
+msgstr "城市"
 
-#: .\models\goods.py:80
-msgid "image"
-msgstr "图片"
+#: .\models\address.py:34
+msgid "Address|province"
+msgstr "州／省"
 
-#: .\models\goods.py:84 .\models\goods.py:92 .\models\order.py:16
-msgid "product"
-msgstr "商品"
-
-#: .\models\goods.py:93
-msgid "products"
-msgstr "商品"
-
-#: .\models\goods.py:97
-msgid "Product|publish datetime"
-msgstr "发布时间"
-
-#: .\models\goods.py:98
-msgid "Product|sold"
-msgstr "已出售"
-
-#: .\models\goods.py:100
-msgid "Product|sold datetime"
-msgstr "出售时间"
-
-#: .\models\goods.py:111
-msgid "Product|brand"
-msgstr "品牌"
-
-#: .\models\goods.py:113
-msgid "Product|name"
-msgstr "名称"
-
-#: .\models\goods.py:115
-msgid "Product|style"
-msgstr "款式"
-
-#: .\models\goods.py:117
-msgid "Product|size"
-msgstr "尺码"
-
-#: .\models\goods.py:127
-msgid "ProductCondition|S"
-msgstr "S"
-
-#: .\models\goods.py:128
-msgid "ProductCondition|A+"
-msgstr "A+"
-
-#: .\models\goods.py:129
-msgid "ProductCondition|A"
-msgstr "A"
-
-#: .\models\goods.py:130
-msgid "ProductCondition|B"
-msgstr "B"
-
-#: .\models\goods.py:131
-msgid "ProductCondition|C"
-msgstr "C"
-
-#: .\models\goods.py:132
-msgid "ProductCondition|D"
-msgstr "D"
-
-#: .\models\goods.py:136
-msgid "Product|condition"
-msgstr "成色"
-
-#: .\models\goods.py:142
-msgid "Product|attachments"
-msgstr "附件"
-
-#: .\models\goods.py:144
-msgid "Product|description"
-msgstr "描述"
-
-#: .\models\goods.py:146
-msgid "Product|original price"
-msgstr "原价"
-
-#: .\models\goods.py:149
-msgid "Product|buy back price"
-msgstr "回购价"
-
-#: .\models\goods.py:150
-msgid "Product|price"
-msgstr "定价"
-
-#: .\models\goods.py:154
-msgid "Product|main image"
-msgstr "主图"
+#: .\models\address.py:35
+msgid "Address|ZIP code"
+msgstr "邮政编码"
 
 #: .\models\order.py:12
 msgid "order item"
@@ -212,6 +128,10 @@ msgstr "订单项"
 #: .\models\order.py:13
 msgid "order items"
 msgstr "订单项"
+
+#: .\models\order.py:16 .\models\product.py:87 .\models\product.py:95
+msgid "product"
+msgstr "商品"
 
 #: .\models\order.py:19 .\models\order.py:28
 msgid "order"
@@ -224,10 +144,6 @@ msgstr "成交价"
 #: .\models\order.py:29
 msgid "orders"
 msgstr "订单"
-
-#: .\models\order.py:33 .\models\user.py:59
-msgid "user"
-msgstr "用户"
 
 #: .\models\order.py:34
 msgid "total price"
@@ -281,35 +197,163 @@ msgstr "使用余额"
 msgid "Order|from balance"
 msgstr "从余额支付金额"
 
-#: .\models\user.py:22
+#: .\models\product.py:21
+msgid "brand"
+msgstr "品牌"
+
+#: .\models\product.py:22
+msgid "brands"
+msgstr "品牌"
+
+#: .\models\product.py:25 .\models\product.py:36 .\models\product.py:53
+msgid "name"
+msgstr "名称"
+
+#: .\models\product.py:33
+msgid "category"
+msgstr "分类"
+
+#: .\models\product.py:34
+msgid "categories"
+msgstr "分类"
+
+#: .\models\product.py:40
+msgid "super category"
+msgstr "父级分类"
+
+#: .\models\product.py:50
+msgid "attachment"
+msgstr "附件"
+
+#: .\models\product.py:51
+msgid "attachments"
+msgstr "附件"
+
+#: .\models\product.py:79
+msgid "product image"
+msgstr "商品图片"
+
+#: .\models\product.py:80
+msgid "product images"
+msgstr "商品图片"
+
+#: .\models\product.py:83
+msgid "image"
+msgstr "图片"
+
+#: .\models\product.py:96
+msgid "products"
+msgstr "商品"
+
+#: .\models\product.py:100
+msgid "Product|publish datetime"
+msgstr "发布时间"
+
+#: .\models\product.py:101
+msgid "Product|sold"
+msgstr "已出售"
+
+#: .\models\product.py:103
+msgid "Product|sold datetime"
+msgstr "出售时间"
+
+#: .\models\product.py:114
+msgid "Product|brand"
+msgstr "品牌"
+
+#: .\models\product.py:116
+msgid "Product|name"
+msgstr "名称"
+
+#: .\models\product.py:118
+msgid "Product|style"
+msgstr "款式"
+
+#: .\models\product.py:120
+msgid "Product|size"
+msgstr "尺码"
+
+#: .\models\product.py:130
+msgid "ProductCondition|S"
+msgstr "S"
+
+#: .\models\product.py:131
+msgid "ProductCondition|A+"
+msgstr "A+"
+
+#: .\models\product.py:132
+msgid "ProductCondition|A"
+msgstr "A"
+
+#: .\models\product.py:133
+msgid "ProductCondition|B"
+msgstr "B"
+
+#: .\models\product.py:134
+msgid "ProductCondition|C"
+msgstr "C"
+
+#: .\models\product.py:135
+msgid "ProductCondition|D"
+msgstr "D"
+
+#: .\models\product.py:139
+msgid "Product|condition"
+msgstr "成色"
+
+#: .\models\product.py:145
+msgid "Product|attachments"
+msgstr "附件"
+
+#: .\models\product.py:147
+msgid "Product|description"
+msgstr "描述"
+
+#: .\models\product.py:149
+msgid "Product|original price"
+msgstr "原价"
+
+#: .\models\product.py:152
+msgid "Product|buy back price"
+msgstr "回购价"
+
+#: .\models\product.py:153
+msgid "Product|price"
+msgstr "定价"
+
+#: .\models\product.py:157
+msgid "Product|main image"
+msgstr "主图"
+
+#: .\models\user.py:24
 msgid "Required. 150 characters or fewer. Letters, digits and ./+/-/_ only."
 msgstr "必填。150个字符或者更少。包含字母，数字和仅有的./+/-/_符号。"
 
-#: .\models\user.py:26
+#: .\models\user.py:28
 msgid "A user with that username already exists."
 msgstr "已存在一位使用该名字的用户。"
 
-#: .\models\user.py:30
+#: .\models\user.py:32
 msgid "email address"
 msgstr "电子邮件地址"
 
-#: .\models\user.py:33
+#: .\models\user.py:35
 msgid "A user with that email address already exists."
 msgstr "已存在一位使用该电子邮箱地址的用户。"
 
-#: .\models\user.py:36
+#: .\models\user.py:38
 msgid "password"
 msgstr "密码"
 
-#: .\models\user.py:52 .\models\user.py:53
+#: .\models\user.py:54 .\models\user.py:55
 msgid "user information"
 msgstr "用户信息"
 
-#: .\models\user.py:61
+#: .\models\user.py:63
 msgid "UserInfo|balance"
 msgstr "余额"
 
-#: .\models\user.py:62
+#: .\models\user.py:64
 msgid "UserInfo|point"
 msgstr "积分"
 
