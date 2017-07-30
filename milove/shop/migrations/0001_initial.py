@@ -108,7 +108,7 @@ class Migration(migrations.Migration):
             name='Product',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('publish_dt', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Product|publish datetime')),
+                ('published_dt', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Product|published datetime')),
                 ('sold', models.BooleanField(default=False, verbose_name='Product|sold')),
                 ('sold_dt', models.DateTimeField(blank=True, null=True, verbose_name='Product|sold datetime')),
                 ('name', models.CharField(blank=True, max_length=200, verbose_name='Product|name')),

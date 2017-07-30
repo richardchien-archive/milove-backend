@@ -95,9 +95,9 @@ class Product(models.Model):
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
-    publish_dt = models.DateTimeField(auto_now_add=True,
-                                      verbose_name=_(
-                                          'Product|publish datetime'))
+    published_dt = models.DateTimeField(auto_now_add=True,
+                                        verbose_name=_(
+                                            'Product|published datetime'))
     sold = models.BooleanField(default=False, verbose_name=_('Product|sold'))
     sold_dt = models.DateTimeField(null=True, blank=True,
                                    verbose_name=_('Product|sold datetime'))

@@ -322,7 +322,7 @@ msgid "products"
 msgstr "商品"
 
 #: .\models\product.py:100
-msgid "Product|publish datetime"
+msgid "Product|published datetime"
 msgstr "发布时间"
 
 #: .\models\product.py:101

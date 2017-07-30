@@ -100,8 +100,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='product',
-            name='publish_dt',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='Product|publish datetime'),
+            name='published_dt',
+            field=models.DateTimeField(auto_now_add=True, verbose_name='Product|published datetime'),
         ),
         migrations.AddField(
             model_name='orderstatustransition',

@@ -322,8 +322,8 @@ msgid "products"
 msgstr ""
 
 #: .\models\product.py:100
-msgid "Product|publish datetime"
-msgstr "publish datetime"
+msgid "Product|published datetime"
+msgstr "published datetime"
 
 #: .\models\product.py:101
 msgid "Product|sold"

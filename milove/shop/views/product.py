@@ -48,7 +48,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         page_size = 20
 
     class Filter(django_filters.rest_framework.FilterSet):
-        publish_dt = django_filters.rest_framework.DateFromToRangeFilter()
+        published_dt = django_filters.rest_framework.DateFromToRangeFilter()
         sold = django_filters.rest_framework.BooleanFilter()
         brand = rest_filters.CommaSplitListFilter()
         categories = rest_filters.CommaSplitListFilter()
@@ -58,7 +58,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 
         class Meta:
             model = Product
-            fields = ('publish_dt', 'sold', 'brand', 'categories',
+            fields = ('published_dt', 'sold', 'brand', 'categories',
                       'condition', 'original_price', 'price')
 
     # def get_queryset(self):
@@ -73,7 +73,8 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProductSerializer
     pagination_class = Pagination
     filter_class = Filter
-    ordering = ('sold', '-publish_dt',)  # most recently published unsold first
+    # most recently published unsold first
+    ordering = ('sold', '-published_dt',)
     search_fields = ('brand__name', 'name', 'style', 'size',
                      'categories__name', 'description')
 
