@@ -129,11 +129,11 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('id', 'brand__name', 'name', 'style',
                      'size', 'description')
 
-    fields = ('sold', 'sold_dt', 'brand', 'name', 'style', 'size',
-              'condition', 'categories', 'attachments', 'description',
+    fields = ('publish_dt', 'sold', 'sold_dt', 'brand', 'name', 'style',
+              'size', 'condition', 'categories', 'attachments', 'description',
               'original_price', 'buy_back_price', 'price',
               'main_image', 'get_main_image_preview')
-    readonly_fields = ('sold_dt', 'get_main_image_preview',)
+    readonly_fields = ('publish_dt', 'sold_dt', 'get_main_image_preview',)
     inlines = (ProductImageInline,)
 
     # filter_horizontal = ('categories', 'attachments')

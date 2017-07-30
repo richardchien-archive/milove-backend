@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-29 21:50+0800\n"
+"POT-Creation-Date: 2017-07-30 19:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,86 +117,140 @@ msgstr ""
 msgid "addresses"
 msgstr ""
 
-#: .\models\address.py:48 .\models\order.py:33 .\models\payment_method.py:17
+#: .\models\address.py:48 .\models\order.py:45 .\models\payment_method.py:17
 #: .\models\user.py:61
 msgid "user"
 msgstr ""
 
-#: .\models\order.py:12
+#: .\models\order.py:13
 msgid "order item"
 msgstr ""
 
-#: .\models\order.py:13
+#: .\models\order.py:14
 msgid "order items"
 msgstr ""
 
-#: .\models\order.py:16 .\models\product.py:87 .\models\product.py:95
+#: .\models\order.py:17 .\models\product.py:87 .\models\product.py:95
 msgid "product"
 msgstr ""
 
-#: .\models\order.py:19 .\models\order.py:28
+#: .\models\order.py:20 .\models\order.py:34 .\models\order.py:39
+#: .\models\order.py:115
 msgid "order"
 msgstr ""
 
-#: .\models\order.py:20
+#: .\models\order.py:21
 msgid "strike price"
 msgstr ""
 
 #: .\models\order.py:29
+msgid "shipping address"
+msgstr ""
+
+#: .\models\order.py:30
+msgid "shipping addresses"
+msgstr ""
+
+#: .\models\order.py:40
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:34
+#: .\models\order.py:46
 msgid "total price"
 msgstr ""
 
-#: .\models\order.py:43
+#: .\models\order.py:47
+msgid "created datetime"
+msgstr "created datetime"
+
+#: .\models\order.py:60
 msgid "OrderStatus|unpaid"
 msgstr "unpaid"
 
-#: .\models\order.py:44
+#: .\models\order.py:61
 msgid "OrderStatus|paid"
 msgstr "paid"
 
-#: .\models\order.py:45
+#: .\models\order.py:62
 msgid "OrderStatus|shipping"
 msgstr "shipping"
 
-#: .\models\order.py:46
+#: .\models\order.py:63
 msgid "OrderStatus|done"
 msgstr "done"
 
-#: .\models\order.py:47
+#: .\models\order.py:64
+msgid "OrderStatus|canceling"
+msgstr "canceling"
+
+#: .\models\order.py:65
 msgid "OrderStatus|canceled"
 msgstr "canceled"
 
-#: .\models\order.py:52
+#: .\models\order.py:66
+msgid "OrderStatus|return requested"
+msgstr "return requested"
+
+#: .\models\order.py:67
+msgid "OrderStatus|returning"
+msgstr "returning"
+
+#: .\models\order.py:68
+msgid "OrderStatus|returned"
+msgstr "returned"
+
+#: .\models\order.py:71
 msgid "status"
 msgstr ""
 
-#: .\models\order.py:59
-msgid "PaymentMethod|balance"
-msgstr "balance"
-
-#: .\models\order.py:60
-msgid "PaymentMethod|paypal"
-msgstr "PayPal"
-
-#: .\models\order.py:61
-msgid "PaymentMethod|stripe"
-msgstr "Stripe"
-
-#: .\models\order.py:65 .\models\payment_method.py:11
-msgid "payment method"
+#: .\models\order.py:73
+msgid "last status"
 msgstr ""
 
-#: .\models\order.py:66
-msgid "Order|use balance"
-msgstr "use balance"
+#: .\models\order.py:84
+msgid "express company"
+msgstr ""
 
-#: .\models\order.py:68
-msgid "Order|from balance"
-msgstr "from balance"
+#: .\models\order.py:86
+msgid "tracking number"
+msgstr ""
+
+#: .\models\order.py:94
+msgid "return express company"
+msgstr ""
+
+#: .\models\order.py:97
+msgid "return tracking number"
+msgstr ""
+
+#: .\models\order.py:105
+#, python-format
+msgid "Order #%(id)s"
+msgstr ""
+
+#: .\models\order.py:110
+msgid "order status transition"
+msgstr ""
+
+#: .\models\order.py:111
+msgid "order status transitions"
+msgstr ""
+
+#: .\models\order.py:116
+msgid "happened datetime"
+msgstr ""
+
+#: .\models\order.py:118
+msgid "source status"
+msgstr ""
+
+#: .\models\order.py:120
+msgid "destination status"
+msgstr ""
+
+#: .\models\payment_method.py:11
+msgid "payment method"
+msgstr ""
 
 #: .\models\payment_method.py:12
 msgid "payment methods"
@@ -379,15 +433,15 @@ msgstr "balance"
 msgid "UserInfo|point"
 msgstr "point"
 
-#: .\serializers\payment_method.py:22
+#: .\serializers\payment_method.py:32
 msgid "This field must be a JSON object."
 msgstr ""
 
-#: .\serializers\payment_method.py:27
+#: .\serializers\payment_method.py:37
 msgid "Payment method failed to pass check."
 msgstr ""
 
-#: .\serializers\payment_method.py:56
+#: .\serializers\payment_method.py:69
 #, python-format
 msgid "Value of \"%(field_name)s\" field is not valid."
 msgstr ""
@@ -402,3 +456,18 @@ msgid ""
 "Enter a valid username. This value may contain only letters, numbers, and ./"
 "+/-/_ characters."
 msgstr ""
+
+#~ msgid "PaymentMethod|balance"
+#~ msgstr "balance"
+
+#~ msgid "PaymentMethod|paypal"
+#~ msgstr "PayPal"
+
+#~ msgid "PaymentMethod|stripe"
+#~ msgstr "Stripe"
+
+#~ msgid "Order|use balance"
+#~ msgstr "use balance"
+
+#~ msgid "Order|from balance"
+#~ msgstr "from balance"

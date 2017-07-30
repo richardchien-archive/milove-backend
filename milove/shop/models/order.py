@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.conf import settings
 
 from .product import Product
+from .address import AbstractAddress
 
 
 class OrderItem(models.Model):
@@ -23,62 +24,107 @@ class OrderItem(models.Model):
         return str(self.product)
 
 
+class ShippingAddress(AbstractAddress):
+    class Meta:
+        verbose_name = _('shipping address')
+        verbose_name_plural = _('shipping addresses')
+
+    order = models.OneToOneField('Order', on_delete=models.CASCADE,
+                                 related_name='shipping_address',
+                                 verbose_name=_('order'))
+
+
 class Order(models.Model):
     class Meta:
         verbose_name = _('order')
         verbose_name_plural = _('orders')
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,
+    # basic information
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
                              related_name='orders',
                              on_delete=models.SET_NULL, verbose_name=_('user'))
-    total_price = models.FloatField(verbose_name=_('total price'))
+    total_price = models.FloatField(_('total price'))
+    created_dt = models.DateTimeField(_('created datetime'), auto_now_add=True)
 
     STATUS_UNPAID = 'unpaid'
     STATUS_PAID = 'paid'
     STATUS_SHIPPING = 'shipping'
     STATUS_DONE = 'done'
+    STATUS_CANCELING = 'canceling'
     STATUS_CANCELED = 'canceled'
+    STATUS_RETURN_REQUESTED = 'return-requested'
+    STATUS_RETURNING = 'returning'
+    STATUS_RETURNED = 'returned'
 
     STATUSES = (
         (STATUS_UNPAID, _('OrderStatus|unpaid')),
         (STATUS_PAID, _('OrderStatus|paid')),
         (STATUS_SHIPPING, _('OrderStatus|shipping')),
         (STATUS_DONE, _('OrderStatus|done')),
+        (STATUS_CANCELING, _('OrderStatus|canceling')),
         (STATUS_CANCELED, _('OrderStatus|canceled')),
+        (STATUS_RETURN_REQUESTED, _('OrderStatus|return requested')),
+        (STATUS_RETURNING, _('OrderStatus|returning')),
+        (STATUS_RETURNED, _('OrderStatus|returned')),
     )
 
-    status = models.CharField(max_length=20, choices=STATUSES,
-                              default=STATUS_UNPAID,
-                              verbose_name=_('status'))
+    status = models.CharField(_('status'), max_length=20, choices=STATUSES,
+                              default=STATUS_UNPAID)
+    last_status = models.CharField(_('last status'), max_length=20,
+                                   choices=STATUSES, null=True, blank=True)
 
-    PAYMENT_BALANCE = 'balance'
-    PAYMENT_PAYPAL = 'paypal'
-    PAYMENT_STRIPE = 'stripe'
+    # paid_dt = models.DateTimeField(_('paid datetime'), null=True, blank=True)
+    # canceled_dt = models.DateTimeField(_('canceled datetime'), null=True,
+    #                                    blank=True)
 
-    PAYMENT_METHODS = (
-        (PAYMENT_BALANCE, _('PaymentMethod|balance')),
-        (PAYMENT_PAYPAL, _('PaymentMethod|paypal')),
-        (PAYMENT_STRIPE, _('PaymentMethod|stripe')),
-    )
+    # ship information
+    # shipping_address = models.OneToOneField(ShippingAddress,
+    #                                         on_delete=models.PROTECT,
+    #                                         verbose_name=_('shipping address'))
+    express_company = models.CharField(_('express company'),
+                                       null=True, blank=True, max_length=60)
+    tracking_number = models.CharField(_('tracking number'),
+                                       null=True, blank=True, max_length=30)
+    # shipped_dt = models.DateTimeField(_('shipped datetime'),
+    #                                   null=True, blank=True)
 
-    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS,
-                                      verbose_name=_('payment method'))
-    use_balance = models.BooleanField(verbose_name=_('Order|use balance'))
-    from_balance = models.FloatField(
-        verbose_name=_('Order|from balance'))  # money paid from balance
+    # done_dt = models.DateTimeField(_('done datetime'), null=True, blank=True)
 
-    # transaction id for 3rd party payment methods
-    # transaction_id = models.CharField(max_length=200, verbose_name=_('transaction id'))
+    # return information
+    return_express_company = models.CharField(_('return express company'),
+                                              null=True, blank=True,
+                                              max_length=60)
+    return_tracking_number = models.CharField(_('return tracking number'),
+                                              null=True, blank=True,
+                                              max_length=30)
+
+    # returned_dt = models.DateTimeField(_('returned datetime'), null=True,
+    #                                    blank=True)
 
     def __str__(self):
-        return 'Order #{}'.format(self.id)
+        return _('Order #%(id)s') % {'id': self.id}
 
 
-@receiver(signals.pre_save, sender=Order)
-def handle(instance, **_):
-    if instance.status == Order.STATUS_CANCELED:
-        # cancel an order
-        with transaction.atomic():
-            for item in instance.items.all():
-                item.product.sold = False
-                item.product.save()
+class OrderStatusTransition(models.Model):
+    class Meta:
+        verbose_name = _('order status transition')
+        verbose_name_plural = _('order status transitions')
+
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,
+                              related_name='status_transitions',
+                              verbose_name=_('order'))
+    happened_dt = models.DateTimeField(_('happened datetime'),
+                                       auto_now_add=True)
+    src_status = models.CharField(_('source status'), max_length=20,
+                                  choices=Order.STATUSES)
+    dst_status = models.CharField(_('destination status'), max_length=20,
+                                  choices=Order.STATUSES)
+
+# @receiver(signals.pre_save, sender=Order)
+# def handle(instance, **_):
+#     if instance.status == Order.STATUS_CANCELED:
+#         # cancel an order
+#         with transaction.atomic():
+#             for item in instance.items.all():
+#                 item.product.sold = False
+#                 item.product.save()

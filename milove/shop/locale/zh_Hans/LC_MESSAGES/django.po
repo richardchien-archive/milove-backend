@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-29 21:50+0800\n"
+"POT-Creation-Date: 2017-07-30 19:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,86 +117,140 @@ msgstr "地址"
 msgid "addresses"
 msgstr "地址"
 
-#: .\models\address.py:48 .\models\order.py:33 .\models\payment_method.py:17
+#: .\models\address.py:48 .\models\order.py:45 .\models\payment_method.py:17
 #: .\models\user.py:61
 msgid "user"
 msgstr "用户"
 
-#: .\models\order.py:12
+#: .\models\order.py:13
 msgid "order item"
 msgstr "订单项"
 
-#: .\models\order.py:13
+#: .\models\order.py:14
 msgid "order items"
 msgstr "订单项"
 
-#: .\models\order.py:16 .\models\product.py:87 .\models\product.py:95
+#: .\models\order.py:17 .\models\product.py:87 .\models\product.py:95
 msgid "product"
 msgstr "商品"
 
-#: .\models\order.py:19 .\models\order.py:28
+#: .\models\order.py:20 .\models\order.py:34 .\models\order.py:39
+#: .\models\order.py:115
 msgid "order"
 msgstr "订单"
 
-#: .\models\order.py:20
+#: .\models\order.py:21
 msgid "strike price"
 msgstr "成交价"
 
 #: .\models\order.py:29
+msgid "shipping address"
+msgstr "收货地址"
+
+#: .\models\order.py:30
+msgid "shipping addresses"
+msgstr "收货地址"
+
+#: .\models\order.py:40
 msgid "orders"
 msgstr "订单"
 
-#: .\models\order.py:34
+#: .\models\order.py:46
 msgid "total price"
 msgstr "总价"
 
-#: .\models\order.py:43
+#: .\models\order.py:47
+msgid "created datetime"
+msgstr "创建时间"
+
+#: .\models\order.py:60
 msgid "OrderStatus|unpaid"
 msgstr "待付款"
 
-#: .\models\order.py:44
+#: .\models\order.py:61
 msgid "OrderStatus|paid"
 msgstr "已付款"
 
-#: .\models\order.py:45
+#: .\models\order.py:62
 msgid "OrderStatus|shipping"
 msgstr "待收货"
 
-#: .\models\order.py:46
+#: .\models\order.py:63
 msgid "OrderStatus|done"
 msgstr "已完成"
 
-#: .\models\order.py:47
+#: .\models\order.py:64
+msgid "OrderStatus|canceling"
+msgstr "取消中"
+
+#: .\models\order.py:65
 msgid "OrderStatus|canceled"
 msgstr "已取消"
 
-#: .\models\order.py:52
+#: .\models\order.py:66
+msgid "OrderStatus|return requested"
+msgstr "已申请退货"
+
+#: .\models\order.py:67
+msgid "OrderStatus|returning"
+msgstr "退货中"
+
+#: .\models\order.py:68
+msgid "OrderStatus|returned"
+msgstr "已退货"
+
+#: .\models\order.py:71
 msgid "status"
 msgstr "状态"
 
-#: .\models\order.py:59
-msgid "PaymentMethod|balance"
-msgstr "余额"
+#: .\models\order.py:73
+msgid "last status"
+msgstr "上一个状态"
 
-#: .\models\order.py:60
-msgid "PaymentMethod|paypal"
-msgstr "PayPal"
+#: .\models\order.py:84
+msgid "express company"
+msgstr "快递公司"
 
-#: .\models\order.py:61
-msgid "PaymentMethod|stripe"
-msgstr "Stripe"
+#: .\models\order.py:86
+msgid "tracking number"
+msgstr "运单号"
 
-#: .\models\order.py:65 .\models\payment_method.py:11
+#: .\models\order.py:94
+msgid "return express company"
+msgstr "退货快递公司"
+
+#: .\models\order.py:97
+msgid "return tracking number"
+msgstr "退货运单号"
+
+#: .\models\order.py:105
+#, python-format
+msgid "Order #%(id)s"
+msgstr "订单#%(id)s"
+
+#: .\models\order.py:110
+msgid "order status transition"
+msgstr "订单状态转移"
+
+#: .\models\order.py:111
+msgid "order status transitions"
+msgstr "订单状态转移"
+
+#: .\models\order.py:116
+msgid "happened datetime"
+msgstr "发生时间"
+
+#: .\models\order.py:118
+msgid "source status"
+msgstr "源状态"
+
+#: .\models\order.py:120
+msgid "destination status"
+msgstr "目标状态"
+
+#: .\models\payment_method.py:11
 msgid "payment method"
 msgstr "支付方式"
-
-#: .\models\order.py:66
-msgid "Order|use balance"
-msgstr "使用余额"
-
-#: .\models\order.py:68
-msgid "Order|from balance"
-msgstr "从余额支付金额"
 
 #: .\models\payment_method.py:12
 msgid "payment methods"
@@ -379,15 +433,15 @@ msgstr "余额"
 msgid "UserInfo|point"
 msgstr "积分"
 
-#: .\serializers\payment_method.py:22
+#: .\serializers\payment_method.py:32
 msgid "This field must be a JSON object."
 msgstr "该字段必须是JSON对象。"
 
-#: .\serializers\payment_method.py:27
+#: .\serializers\payment_method.py:37
 msgid "Payment method failed to pass check."
 msgstr "支付方式没有通过校验。"
 
-#: .\serializers\payment_method.py:56
+#: .\serializers\payment_method.py:69
 #, python-format
 msgid "Value of \"%(field_name)s\" field is not valid."
 msgstr "“%(field_name)s”字段的值无效。"
@@ -402,6 +456,21 @@ msgid ""
 "Enter a valid username. This value may contain only letters, numbers, and ./"
 "+/-/_ characters."
 msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/_字符。"
+
+#~ msgid "PaymentMethod|balance"
+#~ msgstr "余额"
+
+#~ msgid "PaymentMethod|paypal"
+#~ msgstr "PayPal"
+
+#~ msgid "PaymentMethod|stripe"
+#~ msgstr "Stripe"
+
+#~ msgid "Order|use balance"
+#~ msgstr "使用余额"
+
+#~ msgid "Order|from balance"
+#~ msgstr "从余额支付金额"
 
 #~ msgid "nickname"
 #~ msgstr "昵称"
