@@ -14,6 +14,16 @@ class PaymentMethodSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentMethod
         exclude = ('user', 'secret')
+        extra_kwargs = {
+            'method': {
+                'read_only': True
+            }
+        }
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
 
 
 def is_json_object(value):
@@ -39,11 +49,13 @@ class PaymentMethodAddSerializer(PaymentMethodSerializer):
             },
             'name': {
                 'required': False
+            },
+            'method': {
+                'read_only': False
             }
         }
 
     def create(self, validated_data):
-        print(validated_data)
         if validated_data['method'] == PaymentMethod.CREDIT_CARD:
             token = validated_data['data'].get('token')
             try:
@@ -53,24 +65,22 @@ class PaymentMethodAddSerializer(PaymentMethodSerializer):
             except AssertionError:
                 raise exceptions.ValidationError(detail={
                     'data': {
-                        'token': _('Value of "%(field_name)s" '
-                                   'field is not valid.') % {
-                                     'field_name': 'token'}
+                        'token': [
+                            _('Value of "%(field_name)s" '
+                              'field is not valid.') % {
+                                'field_name': 'token'}
+                        ]
                     }
                 })
             try:
                 customer = stripe.Customer.create(source=token['id'])
-                print(customer)
                 card = customer.get('sources', {}).get('data', [{}])[0]
-                print(card)
                 payment_method = PaymentMethod()
                 payment_method.user = validated_data['user']
                 if 'name' in validated_data:
                     payment_method.name = validated_data['name']
                 else:
-                    payment_method.name = '{} (**** {})'.format(
-                        card.get('brand'), card.get('last4')
-                    )
+                    payment_method.name = card.get('brand')
                 payment_method.method = validated_data['method']
                 payment_method.info = {}
                 for k in ('brand', 'country', 'exp_month', 'exp_year',
