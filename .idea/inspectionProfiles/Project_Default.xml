@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="imagekit.models.fields.ImageSpecField.url" />
+          <option value="set.all" />
         </list>
       </option>
     </inspection_tool>

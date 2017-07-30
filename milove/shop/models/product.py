@@ -167,3 +167,19 @@ def product_pre_save(sender, instance: Product, **_):
     old = get_or_none(sender, pk=instance.pk)
     if old is None or old.sold != instance.sold:
         instance.sold_changed(old, instance)
+
+
+@receiver(signals.m2m_changed, sender=Product.categories.through)
+def product_categories_changed(instance, action, **_):
+    if action not in ('post_add', 'post_remove'):
+        return
+
+    # include all possible super categories
+    categories_set = set(instance.categories.all())
+    old_set = categories_set.copy()
+    for cat in instance.categories.all():
+        while cat.super_category:
+            categories_set.add(cat.super_category)
+            cat = cat.super_category
+    if categories_set != old_set:
+        instance.categories = categories_set

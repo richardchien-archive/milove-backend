@@ -151,9 +151,6 @@ class ProductAdmin(admin.ModelAdmin):
             fields = '__all__'
 
     form = Form
-    formfield_overrides = {
-        db_models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
-    }
 
 
 admin.site.register(Product, ProductAdmin)
