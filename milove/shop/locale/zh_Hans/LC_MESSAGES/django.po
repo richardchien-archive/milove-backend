@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-30 19:29+0800\n"
+"POT-Creation-Date: 2017-07-31 22:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,27 +45,27 @@ msgstr "分类"
 msgid "Product|price / original price"
 msgstr "定价 / 原价"
 
-#: .\admin\user.py:26
+#: .\admin\user.py:27
 msgid "Permissions"
 msgstr "权限"
 
-#: .\admin\user.py:28
+#: .\admin\user.py:29
 msgid "Important dates"
 msgstr "重要日期"
 
-#: .\admin\user.py:39
+#: .\admin\user.py:40
 msgid "id"
 msgstr "ID"
 
-#: .\admin\user.py:45 .\models\user.py:21
+#: .\admin\user.py:46 .\models\user.py:21
 msgid "username"
 msgstr "用户名"
 
-#: .\admin\user.py:51
+#: .\admin\user.py:52
 msgid "email"
 msgstr "邮箱"
 
-#: .\admin\user.py:62 .\models\user.py:66
+#: .\admin\user.py:63 .\models\user.py:66
 msgid "UserInfo|contact"
 msgstr "联系方式"
 
@@ -117,134 +117,142 @@ msgstr "地址"
 msgid "addresses"
 msgstr "地址"
 
-#: .\models\address.py:48 .\models\order.py:45 .\models\payment_method.py:17
+#: .\models\address.py:48 .\models\order.py:47 .\models\payment_method.py:17
 #: .\models\user.py:61
 msgid "user"
 msgstr "用户"
 
-#: .\models\order.py:13
+#: .\models\order.py:15
 msgid "order item"
 msgstr "订单项"
 
-#: .\models\order.py:14
+#: .\models\order.py:16
 msgid "order items"
 msgstr "订单项"
 
-#: .\models\order.py:17 .\models\product.py:87 .\models\product.py:95
+#: .\models\order.py:19 .\models\product.py:87 .\models\product.py:95
 msgid "product"
 msgstr "商品"
 
-#: .\models\order.py:20 .\models\order.py:34 .\models\order.py:39
-#: .\models\order.py:115
+#: .\models\order.py:22 .\models\order.py:36 .\models\order.py:41
+#: .\models\order.py:106
 msgid "order"
 msgstr "订单"
 
-#: .\models\order.py:21
+#: .\models\order.py:23
 msgid "strike price"
 msgstr "成交价"
 
-#: .\models\order.py:29
+#: .\models\order.py:31
 msgid "shipping address"
 msgstr "收货地址"
 
-#: .\models\order.py:30
+#: .\models\order.py:32
 msgid "shipping addresses"
 msgstr "收货地址"
 
-#: .\models\order.py:40
+#: .\models\order.py:42
 msgid "orders"
 msgstr "订单"
 
-#: .\models\order.py:46
+#: .\models\order.py:48
 msgid "total price"
 msgstr "总价"
 
-#: .\models\order.py:47
+#: .\models\order.py:49
+msgid "discount amount"
+msgstr "折扣金额"
+
+#: .\models\order.py:51
 msgid "created datetime"
 msgstr "创建时间"
 
-#: .\models\order.py:60
+#: .\models\order.py:52
+msgid "Order|comment"
+msgstr "买家留言"
+
+#: .\models\order.py:65
 msgid "OrderStatus|unpaid"
 msgstr "待付款"
 
-#: .\models\order.py:61
+#: .\models\order.py:66
 msgid "OrderStatus|paid"
 msgstr "已付款"
 
-#: .\models\order.py:62
+#: .\models\order.py:67
 msgid "OrderStatus|shipping"
 msgstr "待收货"
 
-#: .\models\order.py:63
+#: .\models\order.py:68
 msgid "OrderStatus|done"
 msgstr "已完成"
 
-#: .\models\order.py:64
-msgid "OrderStatus|canceling"
+#: .\models\order.py:69
+msgid "OrderStatus|cancelling"
 msgstr "取消中"
 
-#: .\models\order.py:65
-msgid "OrderStatus|canceled"
+#: .\models\order.py:70
+msgid "OrderStatus|cancelled"
 msgstr "已取消"
 
-#: .\models\order.py:66
+#: .\models\order.py:71
 msgid "OrderStatus|return requested"
 msgstr "已申请退货"
 
-#: .\models\order.py:67
+#: .\models\order.py:72
 msgid "OrderStatus|returning"
 msgstr "退货中"
 
-#: .\models\order.py:68
+#: .\models\order.py:73
 msgid "OrderStatus|returned"
 msgstr "已退货"
 
-#: .\models\order.py:71
+#: .\models\order.py:76
 msgid "status"
 msgstr "状态"
 
-#: .\models\order.py:73
+#: .\models\order.py:78
 msgid "last status"
 msgstr "上一个状态"
 
-#: .\models\order.py:84
+#: .\models\order.py:82
 msgid "express company"
 msgstr "快递公司"
 
-#: .\models\order.py:86
+#: .\models\order.py:84
 msgid "tracking number"
 msgstr "运单号"
 
-#: .\models\order.py:94
+#: .\models\order.py:88
 msgid "return express company"
 msgstr "退货快递公司"
 
-#: .\models\order.py:97
+#: .\models\order.py:91
 msgid "return tracking number"
 msgstr "退货运单号"
 
-#: .\models\order.py:105
+#: .\models\order.py:96
 #, python-format
 msgid "Order #%(id)s"
 msgstr "订单#%(id)s"
 
-#: .\models\order.py:110
+#: .\models\order.py:101
 msgid "order status transition"
 msgstr "订单状态转移"
 
-#: .\models\order.py:111
+#: .\models\order.py:102
 msgid "order status transitions"
 msgstr "订单状态转移"
 
-#: .\models\order.py:116
+#: .\models\order.py:107
 msgid "happened datetime"
 msgstr "发生时间"
 
-#: .\models\order.py:118
+#: .\models\order.py:109
 msgid "source status"
 msgstr "源状态"
 
-#: .\models\order.py:120
+#: .\models\order.py:111
 msgid "destination status"
 msgstr "目标状态"
 

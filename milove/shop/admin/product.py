@@ -126,8 +126,7 @@ class ProductAdmin(admin.ModelAdmin):
         ('categories', RelatedFieldDropdownFilter),
         ('attachments', RelatedFieldDropdownFilter)
     )
-    search_fields = ('id', 'brand__name', 'name', 'style',
-                     'size', 'description')
+    search_fields = ('brand__name', 'name', 'style', 'size', 'description')
 
     fields = ('published_dt', 'sold', 'sold_dt', 'brand', 'name', 'style',
               'size', 'condition', 'categories', 'attachments', 'description',

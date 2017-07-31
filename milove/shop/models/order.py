@@ -55,8 +55,8 @@ class Order(models.Model):
     STATUS_PAID = 'paid'
     STATUS_SHIPPING = 'shipping'
     STATUS_DONE = 'done'
-    STATUS_CANCELING = 'canceling'
-    STATUS_CANCELED = 'canceled'
+    STATUS_CANCELLING = 'cancelling'
+    STATUS_CANCELLED = 'cancelled'
     STATUS_RETURN_REQUESTED = 'return-requested'
     STATUS_RETURNING = 'returning'
     STATUS_RETURNED = 'returned'
@@ -66,8 +66,8 @@ class Order(models.Model):
         (STATUS_PAID, _('OrderStatus|paid')),
         (STATUS_SHIPPING, _('OrderStatus|shipping')),
         (STATUS_DONE, _('OrderStatus|done')),
-        (STATUS_CANCELING, _('OrderStatus|canceling')),
-        (STATUS_CANCELED, _('OrderStatus|canceled')),
+        (STATUS_CANCELLING, _('OrderStatus|cancelling')),
+        (STATUS_CANCELLED, _('OrderStatus|cancelled')),
         (STATUS_RETURN_REQUESTED, _('OrderStatus|return requested')),
         (STATUS_RETURNING, _('OrderStatus|returning')),
         (STATUS_RETURNED, _('OrderStatus|returned')),

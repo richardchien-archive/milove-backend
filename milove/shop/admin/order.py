@@ -33,6 +33,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     inlines = (OrderItemInline, ShippingAddressInline)
     ordering = ('-created_dt',)
+    search_fields = ('id', 'user__username', 'comment',
+                     'tracking_number', 'return_tracking_number')
 
     fields = ('user', 'total_price', 'discount_amount', 'comment',
               'status', 'last_status',

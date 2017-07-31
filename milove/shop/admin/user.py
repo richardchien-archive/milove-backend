@@ -14,6 +14,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups',
                    'date_joined', 'last_login')
     ordering = ('id',)
+    search_fields = ('username', 'email')
 
     add_fieldsets = (
         (None, {
