@@ -3,7 +3,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django import forms
 from rest_framework import exceptions as rest_exceptions
 from rest_framework.decorators import list_route, detail_route
-from rest_framework.viewsets import GenericViewSet, mixins
+from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 from rest_framework.permissions import BasePermission
 from rest_framework.routers import DefaultRouter
@@ -34,19 +34,21 @@ class IsCurrentUser(BasePermission):
 
 class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
                   mixins.UpdateModelMixin,  # this brings PUT and PATCH
-                  GenericViewSet):
+                  viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsCurrentUser,)
 
     @list_route(methods=['POST'])
     def signup(self, request):
+        # TODO: 可以换成 create 方法，更标准
         serializer = UserSignupSerializer(data=request.data)
         validate_or_raise(serializer)
 
         user = serializer.save()
-        mail.notify_signed_up(user)
-        return Response(UserSerializer(user).data)
+        mail.notify_signed_up(user)  # TODO: 可以放在 User 的 post_add 里
+        return Response(UserSerializer(user).data,
+                        status=status.HTTP_201_CREATED)
 
     @list_route(['POST'])
     def login(self, request):

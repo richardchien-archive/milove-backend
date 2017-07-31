@@ -1,4 +1,4 @@
-from rest_framework.viewsets import ReadOnlyModelViewSet, mixins
+from rest_framework import viewsets, mixins
 from rest_framework.routers import DefaultRouter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -12,8 +12,7 @@ router = DefaultRouter()
 
 class PaymentMethodViewSet(mixins.CreateModelMixin,
                            mixins.DestroyModelMixin,
-                           ReadOnlyModelViewSet):
-    serializer_class = PaymentMethodSerializer
+                           viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):

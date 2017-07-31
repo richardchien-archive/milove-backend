@@ -7,6 +7,8 @@ from django.conf import settings
 from .product import Product
 from .address import AbstractAddress
 
+__all__ = ['OrderItem', 'ShippingAddress', 'Order', 'OrderStatusTransition']
+
 
 class OrderItem(models.Model):
     class Meta:
@@ -44,7 +46,10 @@ class Order(models.Model):
                              related_name='orders',
                              on_delete=models.SET_NULL, verbose_name=_('user'))
     total_price = models.FloatField(_('total price'))
+    discount_amount = models.FloatField(_('discount amount'), default=0.0,
+                                        blank=True)
     created_dt = models.DateTimeField(_('created datetime'), auto_now_add=True)
+    comment = models.TextField(_('Order|comment'), blank=True)
 
     STATUS_UNPAID = 'unpaid'
     STATUS_PAID = 'paid'
@@ -73,22 +78,11 @@ class Order(models.Model):
     last_status = models.CharField(_('last status'), max_length=20,
                                    choices=STATUSES, null=True, blank=True)
 
-    # paid_dt = models.DateTimeField(_('paid datetime'), null=True, blank=True)
-    # canceled_dt = models.DateTimeField(_('canceled datetime'), null=True,
-    #                                    blank=True)
-
     # ship information
-    # shipping_address = models.OneToOneField(ShippingAddress,
-    #                                         on_delete=models.PROTECT,
-    #                                         verbose_name=_('shipping address'))
     express_company = models.CharField(_('express company'),
                                        null=True, blank=True, max_length=60)
     tracking_number = models.CharField(_('tracking number'),
                                        null=True, blank=True, max_length=30)
-    # shipped_dt = models.DateTimeField(_('shipped datetime'),
-    #                                   null=True, blank=True)
-
-    # done_dt = models.DateTimeField(_('done datetime'), null=True, blank=True)
 
     # return information
     return_express_company = models.CharField(_('return express company'),
@@ -97,9 +91,6 @@ class Order(models.Model):
     return_tracking_number = models.CharField(_('return tracking number'),
                                               null=True, blank=True,
                                               max_length=30)
-
-    # returned_dt = models.DateTimeField(_('returned datetime'), null=True,
-    #                                    blank=True)
 
     def __str__(self):
         return _('Order #%(id)s') % {'id': self.id}

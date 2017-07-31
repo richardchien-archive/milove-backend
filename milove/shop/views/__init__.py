@@ -16,6 +16,7 @@ from . import (
     user,
     address,
     payment_method,
+    order,
 )
 
 
@@ -64,3 +65,4 @@ urlpatterns += product.urlpatterns
 urlpatterns += user.urlpatterns
 urlpatterns += address.urlpatterns
 urlpatterns += payment_method.urlpatterns
+urlpatterns += order.urlpatterns
