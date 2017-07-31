@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -7,7 +7,7 @@ from ..models.order import *
 from ..serializers.order import *
 from .helpers import validate_or_raise
 
-router = DefaultRouter()
+router = SimpleRouter()
 
 
 class OrderViewSet(viewsets.ReadOnlyModelViewSet):

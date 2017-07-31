@@ -6,7 +6,7 @@ from rest_framework.decorators import list_route, detail_route
 from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 from rest_framework.permissions import BasePermission
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from rest_framework.generics import get_object_or_404
 
 from .. import mail_shortcuts as mail
@@ -14,7 +14,7 @@ from ..serializers.user import *
 from ..auth import User
 from .helpers import validate_or_raise
 
-router = DefaultRouter()
+router = SimpleRouter()
 
 
 class LoginForm(forms.Form):

@@ -1,13 +1,13 @@
 import django_filters.rest_framework
 from rest_framework import viewsets, serializers
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from rest_framework.pagination import PageNumberPagination
 
 from ..models.product import *
 from ..serializers.product import *
 from .. import rest_filters
 
-router = DefaultRouter()
+router = SimpleRouter()
 
 
 class BrandViewSet(viewsets.ReadOnlyModelViewSet):

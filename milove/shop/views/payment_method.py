@@ -1,5 +1,5 @@
 from rest_framework import viewsets, mixins
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -7,7 +7,7 @@ from ..models.payment_method import *
 from ..serializers.payment_method import *
 from .helpers import validate_or_raise
 
-router = DefaultRouter()
+router = SimpleRouter()
 
 
 class PaymentMethodViewSet(mixins.CreateModelMixin,

@@ -1,11 +1,11 @@
 from rest_framework import viewsets
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from rest_framework.permissions import IsAuthenticated
 
 from ..models.address import *
 from ..serializers.address import *
 
-router = DefaultRouter()
+router = SimpleRouter()
 
 
 class AddressViewSet(viewsets.ModelViewSet):
