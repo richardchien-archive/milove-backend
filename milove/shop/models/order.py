@@ -78,6 +78,21 @@ class Order(models.Model):
     last_status = models.CharField(_('last status'), max_length=20,
                                    choices=STATUSES, null=True, blank=True)
 
+    def status_changed(self, old_obj, new_obj):
+        new_obj.last_status = old_obj.status
+        OrderStatusTransition.objects.create(
+            order=new_obj,
+            src_status=new_obj.last_status,
+            dst_status=new_obj.status
+        )
+
+        if new_obj.status == Order.STATUS_CANCELLED:
+            # cancel an order, restore all products related
+            with transaction.atomic():
+                for item in new_obj.items.all():
+                    item.product.sold = False
+                    item.product.save()
+
     # shipping information
     express_company = models.CharField(_('express company'),
                                        null=True, blank=True, max_length=60)
@@ -106,9 +121,10 @@ class OrderStatusTransition(models.Model):
 
 @receiver(signals.pre_save, sender=Order)
 def order_pre_save(instance, **_):
-    if instance.status == Order.STATUS_CANCELLED:
-        # cancel an order, restore all products related
-        with transaction.atomic():
-            for item in instance.items.all():
-                item.product.sold = False
-                item.product.save()
+    old_instance = None
+    if instance.pk:
+        old_instance = Order.objects.get(pk=instance.pk)
+
+    if old_instance and old_instance.status != instance.status:
+        # log last status and status transition
+        instance.status_changed(old_instance, instance)
