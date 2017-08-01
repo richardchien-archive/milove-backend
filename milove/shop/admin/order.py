@@ -108,10 +108,11 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('id', 'user__username', 'comment', 'tracking_number')
 
     form = OrderForm
-    fields = ('user', 'total_price', 'discount_amount', 'comment',
-              'status', 'last_status',
+    fields = ('created_dt', 'user', 'total_price', 'discount_amount',
+              'comment', 'status', 'last_status',
               'express_company', 'tracking_number')
-    readonly_fields = ('user', 'total_price', 'comment', 'last_status')
+    readonly_fields = ('created_dt', 'user', 'total_price', 'comment',
+                       'last_status')
 
     def has_add_permission(self, request):
         # only users can create orders

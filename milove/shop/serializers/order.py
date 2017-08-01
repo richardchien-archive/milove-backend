@@ -7,6 +7,7 @@ from ..models.order import *
 from ..models.product import Product
 from ..models.address import Address
 from ..models.coupon import Coupon
+from ..serializers.product import ProductSerializer
 from .helpers import PrimaryKeyRelatedFieldFilterByUser
 
 __all__ = ['ShippingAddressSerializer',
@@ -19,7 +20,16 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
         exclude = ('id', 'order')
 
 
+class OrderItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+
+    class Meta:
+        model = OrderItem
+        exclude = ('id', 'order')
+
+
 class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(read_only=True, many=True)
     shipping_address = ShippingAddressSerializer(read_only=True)
 
     class Meta:
