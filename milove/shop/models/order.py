@@ -103,11 +103,12 @@ class OrderStatusTransition(models.Model):
     dst_status = models.CharField(_('destination status'), max_length=20,
                                   choices=Order.STATUSES)
 
-# @receiver(signals.pre_save, sender=Order)
-# def handle(instance, **_):
-#     if instance.status == Order.STATUS_CANCELED:
-#         # cancel an order
-#         with transaction.atomic():
-#             for item in instance.items.all():
-#                 item.product.sold = False
-#                 item.product.save()
+
+@receiver(signals.pre_save, sender=Order)
+def order_pre_save(instance, **_):
+    if instance.status == Order.STATUS_CANCELLED:
+        # cancel an order, restore all products related
+        with transaction.atomic():
+            for item in instance.items.all():
+                item.product.sold = False
+                item.product.save()

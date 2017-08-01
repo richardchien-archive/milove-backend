@@ -40,6 +40,10 @@ class OrderAdmin(admin.ModelAdmin):
               'express_company', 'tracking_number')
     readonly_fields = ('user', 'total_price', 'comment', 'last_status')
 
+    def has_add_permission(self, request):
+        # only users can create orders
+        return False
+
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderStatusTransition)

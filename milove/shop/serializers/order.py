@@ -44,7 +44,7 @@ class OrderAddSerializer(serializers.ModelSerializer):
         many=True,
     )
 
-    # this is actually a "Address", not a "ShippingAddress"
+    # this is actually an "Address", not a "ShippingAddress"
     shipping_address = PrimaryKeyRelatedFieldFilterByUser(
         queryset=Address.objects.all()
     )
@@ -75,6 +75,8 @@ class OrderAddSerializer(serializers.ModelSerializer):
                     price=prod.price
                 ))
                 total_price += prod.price
+                prod.sold = True
+                prod.save()
 
             order = Order.objects.create(
                 user=user,
