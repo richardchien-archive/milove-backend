@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django import forms
 from django.core import exceptions
+from django.conf import settings
 
 from ..models.order import *
 
@@ -116,6 +117,13 @@ class OrderAdmin(admin.ModelAdmin):
         # only users can create orders
         return False
 
+    def has_delete_permission(self, request, obj=None):
+        if settings.DEBUG:
+            return super().has_delete_permission(request, obj)
+        else:
+            # no one can delete orders
+            return False
+
     def get_form(self, request, obj=None, **kwargs):
         # inject "request" object to form
         # https://stackoverflow.com/questions/2683689/django-access-request-object-from-admins-form-clean
@@ -131,4 +139,3 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order, OrderAdmin)
-admin.site.register(OrderStatusTransition)

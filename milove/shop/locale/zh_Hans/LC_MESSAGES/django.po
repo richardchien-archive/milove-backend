@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-31 22:29+0800\n"
+"POT-Creation-Date: 2017-08-01 14:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,15 @@ msgstr ""
 #: .\admin\__init__.py:6
 msgid "Milove Admin"
 msgstr "Milove 后台管理"
+
+#: .\admin\coupon.py:14 .\models\coupon.py:24
+msgid "Coupon|discount"
+msgstr "折扣"
+
+#: .\admin\order.py:91
+#, python-format
+msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
+msgstr "订单状态不可以从“%(src_status)s”切换到“%(dst_status)s”。"
 
 #: .\admin\product.py:37
 msgid "total number of products"
@@ -117,10 +126,42 @@ msgstr "地址"
 msgid "addresses"
 msgstr "地址"
 
-#: .\models\address.py:48 .\models\order.py:47 .\models\payment_method.py:17
+#: .\models\address.py:48 .\models\order.py:51 .\models\payment_method.py:17
 #: .\models\user.py:61
 msgid "user"
 msgstr "用户"
+
+#: .\models\coupon.py:9
+msgid "coupon"
+msgstr "优惠券"
+
+#: .\models\coupon.py:10
+msgid "coupons"
+msgstr "优惠券"
+
+#: .\models\coupon.py:12
+msgid "Coupon|code"
+msgstr "代码"
+
+#: .\models\coupon.py:17
+msgid "Coupon|rate"
+msgstr "按百分比"
+
+#: .\models\coupon.py:18
+msgid "Coupon|amount"
+msgstr "按金额"
+
+#: .\models\coupon.py:21
+msgid "type"
+msgstr "类型"
+
+#: .\models\coupon.py:23
+msgid "Coupon|price required"
+msgstr "订单总价需满"
+
+#: .\models\coupon.py:25
+msgid "Coupon|is valid"
+msgstr "有效"
 
 #: .\models\order.py:15
 msgid "order item"
@@ -135,7 +176,7 @@ msgid "product"
 msgstr "商品"
 
 #: .\models\order.py:22 .\models\order.py:36 .\models\order.py:41
-#: .\models\order.py:106
+#: .\models\order.py:118
 msgid "order"
 msgstr "订单"
 
@@ -155,104 +196,96 @@ msgstr "收货地址"
 msgid "orders"
 msgstr "订单"
 
-#: .\models\order.py:48
+#: .\models\order.py:52
 msgid "total price"
 msgstr "总价"
 
-#: .\models\order.py:49
+#: .\models\order.py:53
 msgid "discount amount"
 msgstr "折扣金额"
 
-#: .\models\order.py:51
+#: .\models\order.py:55
 msgid "created datetime"
 msgstr "创建时间"
 
-#: .\models\order.py:52
+#: .\models\order.py:56
 msgid "Order|comment"
 msgstr "买家留言"
 
-#: .\models\order.py:65
+#: .\models\order.py:69
 msgid "OrderStatus|unpaid"
 msgstr "待付款"
 
-#: .\models\order.py:66
+#: .\models\order.py:70
 msgid "OrderStatus|paid"
 msgstr "已付款"
 
-#: .\models\order.py:67
-msgid "OrderStatus|shipping"
-msgstr "待收货"
-
-#: .\models\order.py:68
-msgid "OrderStatus|done"
-msgstr "已完成"
-
-#: .\models\order.py:69
+#: .\models\order.py:71
 msgid "OrderStatus|cancelling"
 msgstr "取消中"
 
-#: .\models\order.py:70
+#: .\models\order.py:72
 msgid "OrderStatus|cancelled"
 msgstr "已取消"
 
-#: .\models\order.py:71
+#: .\models\order.py:73
+msgid "OrderStatus|shipping"
+msgstr "待收货"
+
+#: .\models\order.py:74
+msgid "OrderStatus|done"
+msgstr "已完成"
+
+#: .\models\order.py:75
 msgid "OrderStatus|return requested"
 msgstr "已申请退货"
 
-#: .\models\order.py:72
+#: .\models\order.py:76
 msgid "OrderStatus|returning"
 msgstr "退货中"
 
-#: .\models\order.py:73
+#: .\models\order.py:77
 msgid "OrderStatus|returned"
 msgstr "已退货"
 
-#: .\models\order.py:76
+#: .\models\order.py:80
 msgid "status"
 msgstr "状态"
 
-#: .\models\order.py:78
+#: .\models\order.py:82
 msgid "last status"
 msgstr "上一个状态"
 
-#: .\models\order.py:82
+#: .\models\order.py:102
 msgid "express company"
 msgstr "快递公司"
 
-#: .\models\order.py:84
+#: .\models\order.py:104
 msgid "tracking number"
 msgstr "运单号"
 
-#: .\models\order.py:88
-msgid "return express company"
-msgstr "退货快递公司"
-
-#: .\models\order.py:91
-msgid "return tracking number"
-msgstr "退货运单号"
-
-#: .\models\order.py:96
+#: .\models\order.py:108
 #, python-format
 msgid "Order #%(id)s"
 msgstr "订单#%(id)s"
 
-#: .\models\order.py:101
+#: .\models\order.py:113
 msgid "order status transition"
 msgstr "订单状态转移"
 
-#: .\models\order.py:102
+#: .\models\order.py:114
 msgid "order status transitions"
 msgstr "订单状态转移"
 
-#: .\models\order.py:107
+#: .\models\order.py:119
 msgid "happened datetime"
 msgstr "发生时间"
 
-#: .\models\order.py:109
+#: .\models\order.py:121
 msgid "source status"
 msgstr "源状态"
 
-#: .\models\order.py:111
+#: .\models\order.py:123
 msgid "destination status"
 msgstr "目标状态"
 
@@ -464,6 +497,12 @@ msgid ""
 "Enter a valid username. This value may contain only letters, numbers, and ./"
 "+/-/_ characters."
 msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/_字符。"
+
+#~ msgid "return express company"
+#~ msgstr "退货快递公司"
+
+#~ msgid "return tracking number"
+#~ msgstr "退货运单号"
 
 #~ msgid "PaymentMethod|balance"
 #~ msgstr "余额"

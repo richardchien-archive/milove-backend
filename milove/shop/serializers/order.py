@@ -6,6 +6,7 @@ from rest_framework import serializers
 from ..models.order import *
 from ..models.product import Product
 from ..models.address import Address
+from ..models.coupon import Coupon
 from .helpers import PrimaryKeyRelatedFieldFilterByUser
 
 __all__ = ['ShippingAddressSerializer',
@@ -49,9 +50,14 @@ class OrderAddSerializer(serializers.ModelSerializer):
         queryset=Address.objects.all()
     )
 
+    coupon = serializers.CharField(
+        required=False,
+        write_only=True
+    )
+
     class Meta:
         model = Order
-        fields = ('user', 'products', 'shipping_address', 'comment')
+        fields = ('user', 'products', 'shipping_address', 'comment', 'coupon')
         extra_kwargs = {
             'user': {
                 'write_only': True,
@@ -78,9 +84,19 @@ class OrderAddSerializer(serializers.ModelSerializer):
                 prod.sold = True
                 prod.save()
 
+            discount_amount = 0.0
+            if 'coupon' in validated_data:
+                # apply coupon if valid
+                coupon = Coupon.objects.filter(
+                    code=validated_data['coupon'], is_valid=True).first()
+                if coupon:
+                    discount_amount = coupon.calculate_discount_amount(
+                        total_price)
+
             order = Order.objects.create(
                 user=user,
                 total_price=total_price,
+                discount_amount=discount_amount,
                 comment=comment
             )
 
