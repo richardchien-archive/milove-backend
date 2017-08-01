@@ -167,7 +167,7 @@ X_FRAME_OPTIONS = 'DENY'
 # Mail
 
 EMAIL_BACKEND = 'milove.mail.backends.HybridEmailBackend'
-DEFAULT_FROM_EMAIL = 'no-reply@notifications.milove.com'
+DEFAULT_FROM_EMAIL = 'no-reply@notification.milove.com'
 MAIL_FROM_NAME = 'Milove'
 SENDGRID_API_KEY = ''
 SENDCLOUD_API_USER = ''
