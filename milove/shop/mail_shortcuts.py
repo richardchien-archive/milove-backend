@@ -15,62 +15,51 @@ def async_send_mail(subject, html, to):
     async_run(send_mail, subject=subject, html=html, to=to, fail_silently=True)
 
 
-def notify_signed_up(user):
-    async_send_mail(subject='注册成功',
-                    html=render_to_string('shop/mails/signed_up.html',
-                                          context=locals()),
-                    to=[user.email])
+def _send_ignore_failure(subject, to, template_name, context=None):
+    try:
+        async_send_mail(
+            subject=subject, to=to,
+            html=render_to_string(
+                template_name=template_name,
+                context=context)
+        )
+    except TemplateDoesNotExist:
+        pass
 
 
-def notify_reset_password(user, token):
-    async_send_mail(subject='重置密码',
-                    html=render_to_string('shop/mails/reset_password.html',
-                                          context=locals()),
-                    to=[user.email])
+def notify_user_signed_up(user):
+    _send_ignore_failure('注册成功', [user.email],
+                         'shop/mails/user_signed_up.html',
+                         context=locals())
+
+
+def notify_user_reset_password(user, token):
+    _send_ignore_failure('重置密码', [user.email],
+                         'shop/mails/user_reset_password.html',
+                         context=locals())
 
 
 def notify_order_created(order):
-    try:
-        async_send_mail(subject='订单创建成功',
-                        html=render_to_string(
-                            'shop/mails/order_created.html',
-                            context=locals()),
-                        to=[order.user.email])
-    except TemplateDoesNotExist:
-        pass
+    _send_ignore_failure('订单创建成功', [order.user.email],
+                         'shop/mails/order_created.html',
+                         context=locals())
 
     staffs = User.objects.filter(
         groups__name=settings.ORDER_NOTIFICATION_GROUP_NAME)
-    try:
-        async_send_mail(subject='有新的订单',
-                        html=render_to_string(
-                            'shop/mails/order_created_staff.html',
-                            context=locals()
-                        ),
-                        to=[staff.email for staff in staffs])
-    except TemplateDoesNotExist:
-        pass
+    _send_ignore_failure('有新的订单', [staff.email for staff in staffs],
+                         'shop/mails/order_created_staff.html',
+                         context=locals())
 
 
 def notify_order_status_changed(order):
     status = order.status.replace('-', '_')
-    try:
-        async_send_mail(subject='订单状态变更',
-                        html=render_to_string(
-                            'shop/mails/order_%s.html' % status,
-                            context=locals()),
-                        to=[order.user.email])
-    except TemplateDoesNotExist:
-        pass
+    _send_ignore_failure('订单状态变更', [order.user.email],
+                         'shop/mails/order_%s.html' % status,
+                         context=locals())
 
     staffs = User.objects.filter(
         groups__name=settings.ORDER_NOTIFICATION_GROUP_NAME)
-    try:
-        async_send_mail(subject='订单#%s状态变更为%s' % (order.pk, order.status),
-                        html=render_to_string(
-                            'shop/mails/order_%s_staff.html' % status,
-                            context=locals()
-                        ),
-                        to=[staff.email for staff in staffs])
-    except TemplateDoesNotExist:
-        pass
+    _send_ignore_failure('订单#%s状态变更为%s' % (order.pk, order.status),
+                         [staff.email for staff in staffs],
+                         'shop/mails/order_%s_staff.html' % status,
+                         context=locals())

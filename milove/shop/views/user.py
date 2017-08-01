@@ -46,7 +46,7 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
         validate_or_raise(serializer)
 
         user = serializer.save()
-        mail.notify_signed_up(user)  # TODO: 可以放在 User 的 post_add 里
+        mail.notify_user_signed_up(user)  # TODO: 可以放在 User 的 post_add 里
         return Response(UserSerializer(user).data,
                         status=status.HTTP_201_CREATED)
 
@@ -88,7 +88,7 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
         validate_or_raise(form)
 
         user = get_object_or_404(User, email=form.cleaned_data['email'])
-        mail.notify_reset_password(
+        mail.notify_user_reset_password(
             user=user,
             token=default_token_generator.make_token(user)
         )
