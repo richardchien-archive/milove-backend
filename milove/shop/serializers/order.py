@@ -33,16 +33,6 @@ class OrderSerializer(serializers.ModelSerializer):
         if instance.status in (Order.STATUS_UNPAID, Order.STATUS_PAID):
             # in "unpaid" or "paid" status, can update comment
             instance.comment = validated_data.get('comment', instance.comment)
-        if instance.status == Order.STATUS_RETURNING:
-            # in "returning" status, can update return information
-            instance.return_express_company = validated_data.get(
-                'return_express_company',
-                instance.return_express_company
-            )
-            instance.return_tracking_number = validated_data.get(
-                'return_tracking_number',
-                instance.return_tracking_number
-            )
         instance.save()
         return instance
 

@@ -78,19 +78,11 @@ class Order(models.Model):
     last_status = models.CharField(_('last status'), max_length=20,
                                    choices=STATUSES, null=True, blank=True)
 
-    # ship information
+    # shipping information
     express_company = models.CharField(_('express company'),
                                        null=True, blank=True, max_length=60)
     tracking_number = models.CharField(_('tracking number'),
                                        null=True, blank=True, max_length=30)
-
-    # return information
-    return_express_company = models.CharField(_('return express company'),
-                                              null=True, blank=True,
-                                              max_length=60)
-    return_tracking_number = models.CharField(_('return tracking number'),
-                                              null=True, blank=True,
-                                              max_length=30)
 
     def __str__(self):
         return _('Order #%(id)s') % {'id': self.id}

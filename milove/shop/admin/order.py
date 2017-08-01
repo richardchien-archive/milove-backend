@@ -33,16 +33,12 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     inlines = (OrderItemInline, ShippingAddressInline)
     ordering = ('-created_dt',)
-    search_fields = ('id', 'user__username', 'comment',
-                     'tracking_number', 'return_tracking_number')
+    search_fields = ('id', 'user__username', 'comment', 'tracking_number')
 
     fields = ('user', 'total_price', 'discount_amount', 'comment',
               'status', 'last_status',
-              'express_company', 'tracking_number',
-              'return_express_company', 'return_tracking_number')
-
-    readonly_fields = ('user', 'total_price', 'comment', 'last_status',
-                       'return_express_company', 'return_tracking_number')
+              'express_company', 'tracking_number')
+    readonly_fields = ('user', 'total_price', 'comment', 'last_status')
 
 
 admin.site.register(Order, OrderAdmin)
