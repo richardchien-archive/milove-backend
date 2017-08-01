@@ -26,7 +26,8 @@ DEBUG = True
 
 ADMINS = []
 
-STAFFS = []
+# STAFFS = []
+ORDER_NOTIFICATION_GROUP_NAME = '订单管理员'
 
 ALLOWED_HOSTS = []
 

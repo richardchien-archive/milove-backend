@@ -6,6 +6,7 @@ from django.conf import settings
 
 from .product import Product
 from .address import AbstractAddress
+from .. import mail_shortcuts as mail
 
 __all__ = ['OrderItem', 'ShippingAddress', 'Order', 'OrderStatusTransition']
 
@@ -21,6 +22,16 @@ class OrderItem(models.Model):
                               on_delete=models.CASCADE,
                               verbose_name=_('order'))
     price = models.FloatField(verbose_name=_('strike price'))
+
+    def get_product_main_image_preview(self):
+        if self.product.main_image_thumb:
+            return '<img src="%s" width="120" />' \
+                   % self.product.main_image_thumb.url
+        return '-'
+
+    get_product_main_image_preview.short_description = _(
+        'Product|main image preview')
+    get_product_main_image_preview.allow_tags = True
 
     def __str__(self):
         return str(self.product)
@@ -132,3 +143,6 @@ def order_pre_save(instance, **_):
 
     if old_instance and old_instance.status != instance.status:
         instance.status_changed(old_instance, instance)
+
+        # notify related user and staffs
+        mail.notify_order_status_changed(instance)

@@ -9,6 +9,7 @@ from ..models.address import Address
 from ..models.coupon import Coupon
 from ..serializers.product import ProductSerializer
 from .helpers import PrimaryKeyRelatedFieldFilterByUser
+from .. import mail_shortcuts as mail
 
 __all__ = ['ShippingAddressSerializer',
            'OrderSerializer', 'OrderAddSerializer']
@@ -126,4 +127,8 @@ class OrderAddSerializer(serializers.ModelSerializer):
                 province=address.province,
                 zip_code=address.zip_code
             )
+
+        # notify related user and staffs
+        mail.notify_order_created(order)
+
         return order

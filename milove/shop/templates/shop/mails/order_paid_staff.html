@@ -1,0 +1,32 @@
+{% extends 'shop/mails/base.html' %}
+{% load mathfilters %}
+{% block content %}
+  <h2>订单号#{{ order.pk }}</h2>
+  <p>
+    该订单已支付成功，简要信息如下：
+  </p>
+  <ol>
+    {% for item in order.items.all %}
+      <li>{{ item.product.brand.name }} {{ item.product.name }} x1</li>
+    {% endfor %}
+  </ol>
+  <p>
+    总计：${{ order.total_price }}<br>
+    折扣：${{ order.discount_amount }}<br>
+    实际支付：${{ order.total_price|sub:order.discount_amount }}
+    {# TODO: 这里换成实际支付的金额 #}
+  </p>
+  {% with address=order.shipping_address %}
+    <p>
+      收货地址：<br>
+      {{ address.fullname }}<br>
+      {{ address.street_address }}<br>
+      {{ address.city }}, {{ address.province }} {{ address.zip_code }}<br>
+      {{ address.country }}<br>
+      电话号码：{{ address.phone_number }}
+    </p>
+  {% endwith %}
+  <p>
+    详细信息见<a href="http://www.milove.com/admin/shop/order/{{ order.pk }}/change/">这里</a>。
+  </p>
+{% endblock %}

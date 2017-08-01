@@ -9,8 +9,9 @@ from ..models.order import *
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
-    fields = ('product', 'price')
-    readonly_fields = ('product', 'price')  # order item should not be edited
+    fields = ('get_product_main_image_preview', 'product', 'price')
+    # order item should not be edited
+    readonly_fields = ('get_product_main_image_preview', 'product', 'price')
     extra = 0
 
     def has_add_permission(self, request, obj=None):

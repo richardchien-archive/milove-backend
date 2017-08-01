@@ -1,0 +1,11 @@
+{% extends 'shop/mails/base.html' %}
+{% load mathfilters %}
+{% block content %}
+  <h2>订单号#{{ order.pk }}</h2>
+  <p>
+    该订单已取消。
+  </p>
+  <p>
+    详细信息见<a href="http://www.milove.com/admin/shop/order/{{ order.pk }}/change/">这里</a>。
+  </p>
+{% endblock %}
