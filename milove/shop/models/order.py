@@ -40,6 +40,10 @@ class Order(models.Model):
     class Meta:
         verbose_name = _('order')
         verbose_name_plural = _('orders')
+        permissions = (
+            ('randomly_switch_order_status',
+             'Can randomly switch order status'),
+        )
 
     # basic information
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
@@ -53,10 +57,10 @@ class Order(models.Model):
 
     STATUS_UNPAID = 'unpaid'
     STATUS_PAID = 'paid'
-    STATUS_SHIPPING = 'shipping'
-    STATUS_DONE = 'done'
     STATUS_CANCELLING = 'cancelling'
     STATUS_CANCELLED = 'cancelled'
+    STATUS_SHIPPING = 'shipping'
+    STATUS_DONE = 'done'
     STATUS_RETURN_REQUESTED = 'return-requested'
     STATUS_RETURNING = 'returning'
     STATUS_RETURNED = 'returned'
@@ -64,10 +68,10 @@ class Order(models.Model):
     STATUSES = (
         (STATUS_UNPAID, _('OrderStatus|unpaid')),
         (STATUS_PAID, _('OrderStatus|paid')),
-        (STATUS_SHIPPING, _('OrderStatus|shipping')),
-        (STATUS_DONE, _('OrderStatus|done')),
         (STATUS_CANCELLING, _('OrderStatus|cancelling')),
         (STATUS_CANCELLED, _('OrderStatus|cancelled')),
+        (STATUS_SHIPPING, _('OrderStatus|shipping')),
+        (STATUS_DONE, _('OrderStatus|done')),
         (STATUS_RETURN_REQUESTED, _('OrderStatus|return requested')),
         (STATUS_RETURNING, _('OrderStatus|returning')),
         (STATUS_RETURNED, _('OrderStatus|returned')),
@@ -79,6 +83,7 @@ class Order(models.Model):
                                    choices=STATUSES, null=True, blank=True)
 
     def status_changed(self, old_obj, new_obj):
+        # log status changes
         new_obj.last_status = old_obj.status
         OrderStatusTransition.objects.create(
             order=new_obj,
@@ -126,5 +131,4 @@ def order_pre_save(instance, **_):
         old_instance = Order.objects.get(pk=instance.pk)
 
     if old_instance and old_instance.status != instance.status:
-        # log last status and status transition
         instance.status_changed(old_instance, instance)
