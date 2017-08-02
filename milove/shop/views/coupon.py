@@ -16,7 +16,9 @@ class CouponViewSet(viewsets.GenericViewSet):
     @list_route(['GET'])
     def check(self, request):
         result = {
-            'discount_amount': 0.0
+            'discount_amount': 0.0,
+            'price_required': 0.0,
+            'is_valid': False
         }
 
         try:
@@ -24,6 +26,8 @@ class CouponViewSet(viewsets.GenericViewSet):
             price = float(request.GET['price'])
             coupon = self.get_queryset().filter(code=code).first()
             result['discount_amount'] = coupon.calculate_discount_amount(price)
+            result['price_required'] = coupon.price_required
+            result['is_valid'] = True
         finally:
             return Response(result)
 
