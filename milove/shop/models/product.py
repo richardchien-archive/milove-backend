@@ -163,14 +163,14 @@ class Product(models.Model):
 
 
 @receiver(signals.pre_save, sender=Product)
-def product_pre_save(sender, instance: Product, **_):
+def product_pre_save(sender, instance: Product, **kwargs):
     old = get_or_none(sender, pk=instance.pk)
     if old is None or old.sold != instance.sold:
         instance.sold_changed(old, instance)
 
 
 @receiver(signals.m2m_changed, sender=Product.categories.through)
-def product_categories_changed(instance, action, **_):
+def product_categories_changed(instance, action, **kwargs):
     if action not in ('post_add', 'post_remove'):
         return
 

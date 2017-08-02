@@ -53,7 +53,7 @@ class OrderViewSet(PartialUpdateModelMixin,
                         status=status.HTTP_201_CREATED)
 
     @detail_route(methods=['PUT'])
-    def cancellation(self, request, **_):
+    def cancellation(self, request, **kwargs):
         order = self.get_object()
         if order.status not in (Order.STATUS_UNPAID, Order.STATUS_PAID,
                                 Order.STATUS_CANCELLING,
@@ -74,7 +74,7 @@ class OrderViewSet(PartialUpdateModelMixin,
         return Response(self.get_serializer(order).data)
 
     @detail_route(methods=['PUT'])
-    def receipt_confirmation(self, request, **_):
+    def receipt_confirmation(self, request, **kwargs):
         order = self.get_object()
         if order.status not in (Order.STATUS_SHIPPING, Order.STATUS_DONE):
             raise exceptions.PermissionDenied
@@ -84,7 +84,7 @@ class OrderViewSet(PartialUpdateModelMixin,
         return Response(self.get_serializer(order).data)
 
     @detail_route(methods=['PUT', 'DELETE'])
-    def return_request(self, request, **_):
+    def return_request(self, request, **kwargs):
         order = self.get_object()
         if order.status not in (Order.STATUS_DONE,
                                 Order.STATUS_RETURN_REQUESTED):

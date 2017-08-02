@@ -57,13 +57,13 @@ class Order(models.Model):
         )
 
     # basic information
+    created_dt = models.DateTimeField(_('created datetime'), auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
                              related_name='orders',
                              on_delete=models.SET_NULL, verbose_name=_('user'))
     total_price = models.FloatField(_('total price'))
     discount_amount = models.FloatField(_('discount amount'), default=0.0,
                                         blank=True)
-    created_dt = models.DateTimeField(_('created datetime'), auto_now_add=True)
     comment = models.TextField(_('Order|comment'), blank=True)
 
     STATUS_UNPAID = 'unpaid'
@@ -95,7 +95,8 @@ class Order(models.Model):
     last_status = models.CharField(_('last status'), max_length=20,
                                    choices=STATUSES, null=True, blank=True)
 
-    def status_changed(self, old_obj, new_obj):
+    @staticmethod
+    def status_changed(old_obj, new_obj):
         # log status changes
         new_obj.last_status = old_obj.status
         OrderStatusTransition.objects.create(
@@ -111,6 +112,10 @@ class Order(models.Model):
                 for item in new_obj.items.all():
                     item.product.sold = False
                     item.product.save()
+        if new_obj.status == Order.STATUS_DONE:
+            # thr order is done, give the user some points
+            # new_obj.user.info.point +=
+            pass
 
     # shipping information
     express_company = models.CharField(_('express company'),
@@ -119,7 +124,7 @@ class Order(models.Model):
                                        null=True, blank=True, max_length=30)
 
     def __str__(self):
-        return _('Order #%(id)s') % {'id': self.id}
+        return _('Order #%(pk)s') % {'pk': self.pk}
 
 
 class OrderStatusTransition(models.Model):
@@ -139,7 +144,7 @@ class OrderStatusTransition(models.Model):
 
 
 @receiver(signals.pre_save, sender=Order)
-def order_pre_save(instance, **_):
+def order_pre_save(instance, **kwargs):
     old_instance = None
     if instance.pk:
         old_instance = Order.objects.get(pk=instance.pk)

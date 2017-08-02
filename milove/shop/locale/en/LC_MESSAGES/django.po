@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-02 10:15+0800\n"
+"POT-Creation-Date: 2017-08-02 21:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Coupon|discount"
 msgstr "discount"
 
-#: .\admin\order.py:93
+#: .\admin\order.py:95
 #, python-format
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr ""
@@ -126,7 +126,7 @@ msgstr ""
 msgid "addresses"
 msgstr ""
 
-#: .\models\address.py:48 .\models\order.py:62 .\models\payment_method.py:17
+#: .\models\address.py:48 .\models\order.py:63 .\models\payment_method.py:17
 #: .\models\user.py:61
 msgid "user"
 msgstr ""
@@ -176,7 +176,7 @@ msgid "product"
 msgstr ""
 
 #: .\models\order.py:23 .\models\order.py:47 .\models\order.py:52
-#: .\models\order.py:132
+#: .\models\order.py:137 .\models\payment.py:32
 msgid "order"
 msgstr ""
 
@@ -196,17 +196,17 @@ msgstr ""
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:63
-msgid "total price"
+#: .\models\order.py:60 .\models\payment.py:30
+msgid "created datetime"
 msgstr ""
 
 #: .\models\order.py:64
-msgid "discount amount"
+msgid "total price"
 msgstr ""
 
-#: .\models\order.py:66
-msgid "created datetime"
-msgstr "created datetime"
+#: .\models\order.py:65
+msgid "discount amount"
+msgstr ""
 
 #: .\models\order.py:67
 msgid "Order|comment"
@@ -252,7 +252,7 @@ msgstr "returning"
 msgid "OrderStatus|returned"
 msgstr "returned"
 
-#: .\models\order.py:93
+#: .\models\order.py:93 .\models\payment.py:67
 msgid "status"
 msgstr ""
 
@@ -260,37 +260,118 @@ msgstr ""
 msgid "last status"
 msgstr ""
 
-#: .\models\order.py:116
+#: .\models\order.py:121
 msgid "express company"
 msgstr ""
 
-#: .\models\order.py:118
+#: .\models\order.py:123
 msgid "tracking number"
 msgstr ""
 
-#: .\models\order.py:122
+#: .\models\order.py:127
 #, python-format
-msgid "Order #%(id)s"
+msgid "Order #%(pk)s"
 msgstr ""
 
-#: .\models\order.py:127
+#: .\models\order.py:132
 msgid "order status transition"
 msgstr ""
 
-#: .\models\order.py:128
+#: .\models\order.py:133
 msgid "order status transitions"
 msgstr ""
 
-#: .\models\order.py:133
+#: .\models\order.py:138
 msgid "happened datetime"
 msgstr ""
 
-#: .\models\order.py:135
+#: .\models\order.py:140
 msgid "source status"
 msgstr ""
 
-#: .\models\order.py:137
+#: .\models\order.py:142
 msgid "destination status"
+msgstr ""
+
+#: .\models\payment.py:17
+msgid "billing address"
+msgstr ""
+
+#: .\models\payment.py:18
+msgid "billing addresses"
+msgstr ""
+
+#: .\models\payment.py:22 .\models\payment.py:27
+msgid "payment"
+msgstr ""
+
+#: .\models\payment.py:28
+msgid "payments"
+msgstr ""
+
+#: .\models\payment.py:33
+msgid "Payment|amount"
+msgstr "amount"
+
+#: .\models\payment.py:35
+msgid "Payment|use balance"
+msgstr "use balance"
+
+#: .\models\payment.py:36
+msgid "Payment|amount from balance"
+msgstr "amount from balance"
+
+#: .\models\payment.py:39
+msgid "Payment|use point"
+msgstr "use point"
+
+#: .\models\payment.py:40
+msgid "Payment|amount from point"
+msgstr "amount from point"
+
+#: .\models\payment.py:42
+msgid "Payment|point used"
+msgstr "point used"
+
+#: .\models\payment.py:45
+msgid "PayPal"
+msgstr ""
+
+#: .\models\payment.py:46 .\models\payment_method.py:27
+msgid "credit card"
+msgstr ""
+
+#: .\models\payment.py:49
+msgid "Payment|method"
+msgstr "method"
+
+#: .\models\payment.py:51
+msgid "Payment|vendor payment ID"
+msgstr "vendor payment ID"
+
+#: .\models\payment.py:53
+msgid "extra information"
+msgstr ""
+
+#: .\models\payment.py:61
+msgid "PaymentStatus|pending"
+msgstr "pending"
+
+#: .\models\payment.py:62
+msgid "PaymentStatus|closed"
+msgstr "closed"
+
+#: .\models\payment.py:63
+msgid "PaymentStatus|failed"
+msgstr "failed"
+
+#: .\models\payment.py:64
+msgid "PaymentStatus|succeeded"
+msgstr "succeeded"
+
+#: .\models\payment.py:75
+#, python-format
+msgid "Payment #%(pk)s"
 msgstr ""
 
 #: .\models\payment_method.py:11
@@ -304,10 +385,6 @@ msgstr ""
 #: .\models\payment_method.py:19 .\models\product.py:25 .\models\product.py:36
 #: .\models\product.py:53
 msgid "name"
-msgstr ""
-
-#: .\models\payment_method.py:27
-msgid "credit card"
 msgstr ""
 
 #: .\models\payment_method.py:30
@@ -478,11 +555,15 @@ msgstr "balance"
 msgid "UserInfo|point"
 msgstr "point"
 
-#: .\serializers\payment_method.py:32
+#: .\serializers\payment.py:18
+msgid "The payment is failed."
+msgstr ""
+
+#: .\serializers\payment_method.py:30
 msgid "This field must be a JSON object."
 msgstr ""
 
-#: .\serializers\payment_method.py:37
+#: .\serializers\payment_method.py:35
 msgid "Payment method failed to pass check."
 msgstr ""
 
@@ -502,8 +583,11 @@ msgid ""
 "+/-/_ characters."
 msgstr ""
 
-#~ msgid "PaymentMethod|balance"
-#~ msgstr "balance"
+#: .\views\payment.py:58
+#, python-format
+msgid ""
+"The \"%(field_name)s\" is required for payment method \"%(payment_method)s\"."
+msgstr ""
 
 #~ msgid "PaymentMethod|paypal"
 #~ msgstr "PayPal"

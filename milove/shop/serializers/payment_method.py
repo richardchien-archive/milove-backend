@@ -1,5 +1,3 @@
-import stripe
-import stripe.error
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, exceptions, status
 
@@ -58,6 +56,8 @@ class PaymentMethodAddSerializer(PaymentMethodSerializer):
     def create(self, validated_data):
         if validated_data['method'] == PaymentMethod.CREDIT_CARD:
             token = validated_data['data'].get('token')
+            import stripe
+
             try:
                 assert token and isinstance(token, dict)
                 assert token.get('type') == 'card'
@@ -72,6 +72,7 @@ class PaymentMethodAddSerializer(PaymentMethodSerializer):
                         ]
                     }
                 })
+
             try:
                 customer = stripe.Customer.create(source=token['id'])
                 card = customer.get('sources', {}).get('data', [{}])[0]

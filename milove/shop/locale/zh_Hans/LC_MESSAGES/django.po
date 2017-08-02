@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-02 10:15+0800\n"
+"POT-Creation-Date: 2017-08-02 21:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr "Milove 后台管理"
 msgid "Coupon|discount"
 msgstr "折扣"
 
-#: .\admin\order.py:93
+#: .\admin\order.py:95
 #, python-format
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr "订单状态不可以从“%(src_status)s”切换到“%(dst_status)s”。"
@@ -126,7 +126,7 @@ msgstr "地址"
 msgid "addresses"
 msgstr "地址"
 
-#: .\models\address.py:48 .\models\order.py:62 .\models\payment_method.py:17
+#: .\models\address.py:48 .\models\order.py:63 .\models\payment_method.py:17
 #: .\models\user.py:61
 msgid "user"
 msgstr "用户"
@@ -176,7 +176,7 @@ msgid "product"
 msgstr "商品"
 
 #: .\models\order.py:23 .\models\order.py:47 .\models\order.py:52
-#: .\models\order.py:132
+#: .\models\order.py:137 .\models\payment.py:32
 msgid "order"
 msgstr "订单"
 
@@ -196,17 +196,17 @@ msgstr "收货地址"
 msgid "orders"
 msgstr "订单"
 
-#: .\models\order.py:63
+#: .\models\order.py:60 .\models\payment.py:30
+msgid "created datetime"
+msgstr "创建时间"
+
+#: .\models\order.py:64
 msgid "total price"
 msgstr "总价"
 
-#: .\models\order.py:64
+#: .\models\order.py:65
 msgid "discount amount"
 msgstr "折扣金额"
-
-#: .\models\order.py:66
-msgid "created datetime"
-msgstr "创建时间"
 
 #: .\models\order.py:67
 msgid "Order|comment"
@@ -252,7 +252,7 @@ msgstr "退货中"
 msgid "OrderStatus|returned"
 msgstr "已退货"
 
-#: .\models\order.py:93
+#: .\models\order.py:93 .\models\payment.py:67
 msgid "status"
 msgstr "状态"
 
@@ -260,38 +260,119 @@ msgstr "状态"
 msgid "last status"
 msgstr "上一个状态"
 
-#: .\models\order.py:116
+#: .\models\order.py:121
 msgid "express company"
 msgstr "快递公司"
 
-#: .\models\order.py:118
+#: .\models\order.py:123
 msgid "tracking number"
 msgstr "运单号"
 
-#: .\models\order.py:122
-#, python-format
-msgid "Order #%(id)s"
-msgstr "订单#%(id)s"
-
 #: .\models\order.py:127
+#, python-format
+msgid "Order #%(pk)s"
+msgstr "订单#%(pk)s"
+
+#: .\models\order.py:132
 msgid "order status transition"
 msgstr "订单状态转移"
 
-#: .\models\order.py:128
+#: .\models\order.py:133
 msgid "order status transitions"
 msgstr "订单状态转移"
 
-#: .\models\order.py:133
+#: .\models\order.py:138
 msgid "happened datetime"
 msgstr "发生时间"
 
-#: .\models\order.py:135
+#: .\models\order.py:140
 msgid "source status"
 msgstr "源状态"
 
-#: .\models\order.py:137
+#: .\models\order.py:142
 msgid "destination status"
 msgstr "目标状态"
+
+#: .\models\payment.py:17
+msgid "billing address"
+msgstr "账单地址"
+
+#: .\models\payment.py:18
+msgid "billing addresses"
+msgstr "账单地址"
+
+#: .\models\payment.py:22 .\models\payment.py:27
+msgid "payment"
+msgstr "支付"
+
+#: .\models\payment.py:28
+msgid "payments"
+msgstr "支付"
+
+#: .\models\payment.py:33
+msgid "Payment|amount"
+msgstr "金额"
+
+#: .\models\payment.py:35
+msgid "Payment|use balance"
+msgstr "使用余额"
+
+#: .\models\payment.py:36
+msgid "Payment|amount from balance"
+msgstr "从余额支付的金额"
+
+#: .\models\payment.py:39
+msgid "Payment|use point"
+msgstr "使用积分抵扣"
+
+#: .\models\payment.py:40
+msgid "Payment|amount from point"
+msgstr "从积分抵扣的金额"
+
+#: .\models\payment.py:42
+msgid "Payment|point used"
+msgstr "使用的积分"
+
+#: .\models\payment.py:45
+msgid "PayPal"
+msgstr ""
+
+#: .\models\payment.py:46 .\models\payment_method.py:27
+msgid "credit card"
+msgstr "信用卡"
+
+#: .\models\payment.py:49
+msgid "Payment|method"
+msgstr "支付方式"
+
+#: .\models\payment.py:51
+msgid "Payment|vendor payment ID"
+msgstr "支付提供商的支付编号"
+
+#: .\models\payment.py:53
+msgid "extra information"
+msgstr "其它信息"
+
+#: .\models\payment.py:61
+msgid "PaymentStatus|pending"
+msgstr "进行中"
+
+#: .\models\payment.py:62
+msgid "PaymentStatus|closed"
+msgstr "已关闭"
+
+#: .\models\payment.py:63
+msgid "PaymentStatus|failed"
+msgstr "已失败"
+
+#: .\models\payment.py:64
+msgid "PaymentStatus|succeeded"
+msgstr "已成功"
+
+#: .\models\payment.py:75
+#, python-format
+msgid "Payment #%(pk)s"
+msgstr "支付#%(pk)s"
 
 #: .\models\payment_method.py:11
 msgid "payment method"
@@ -305,10 +386,6 @@ msgstr "支付方式"
 #: .\models\product.py:53
 msgid "name"
 msgstr "名称"
-
-#: .\models\payment_method.py:27
-msgid "credit card"
-msgstr "信用卡"
 
 #: .\models\payment_method.py:30
 msgid "PaymentMethod|method"
@@ -478,11 +555,15 @@ msgstr "余额"
 msgid "UserInfo|point"
 msgstr "积分"
 
-#: .\serializers\payment_method.py:32
+#: .\serializers\payment.py:18
+msgid "The payment is failed."
+msgstr "支付失败。"
+
+#: .\serializers\payment_method.py:30
 msgid "This field must be a JSON object."
 msgstr "该字段必须是JSON对象。"
 
-#: .\serializers\payment_method.py:37
+#: .\serializers\payment_method.py:35
 msgid "Payment method failed to pass check."
 msgstr "支付方式没有通过校验。"
 
@@ -502,14 +583,17 @@ msgid ""
 "+/-/_ characters."
 msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/_字符。"
 
+#: .\views\payment.py:58
+#, python-format
+msgid ""
+"The \"%(field_name)s\" is required for payment method \"%(payment_method)s\"."
+msgstr "对于支付方式“%(payment_method)s”，“%(field_name)s”字段是必填的。"
+
 #~ msgid "return express company"
 #~ msgstr "退货快递公司"
 
 #~ msgid "return tracking number"
 #~ msgstr "退货运单号"
-
-#~ msgid "PaymentMethod|balance"
-#~ msgstr "余额"
 
 #~ msgid "PaymentMethod|paypal"
 #~ msgstr "PayPal"

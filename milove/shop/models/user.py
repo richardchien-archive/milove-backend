@@ -70,7 +70,7 @@ class UserInfo(models.Model):
 
 
 @receiver(signals.post_save, sender=settings.AUTH_USER_MODEL)
-def create_default_user_info(instance, **_):
+def create_default_user_info(instance, **kwargs):
     if not hasattr(instance, 'info'):
         # there is no UserInfo object bound to the current User, create one
         UserInfo.objects.create(user=instance)
