@@ -13,9 +13,20 @@
   <p>
     总计：${{ order.total_price }}<br>
     折扣：${{ order.discount_amount }}<br>
-    实际支付：${{ order.total_price|sub:order.discount_amount }}
-    {# TODO: 这里换成实际支付的金额 #}
+    实际支付：${{ order.paid_amount }}
   </p>
+  {% if payment and payment.billing_address %}
+    {% with address=payment.billing_address %}
+      <p>
+        账单地址：<br>
+        {{ address.fullname }}<br>
+        {{ address.street_address }}<br>
+        {{ address.city }}, {{ address.province }} {{ address.zip_code }}<br>
+        {{ address.country }}<br>
+        电话号码：{{ address.phone_number }}
+      </p>
+    {% endwith %}
+  {% endif %}
   {% with address=order.shipping_address %}
     <p>
       收货地址：<br>
@@ -26,7 +37,6 @@
       电话号码：{{ address.phone_number }}
     </p>
   {% endwith %}
-  {# TODO: 账单地址 #}
   <p>
     我们将尽快为您发货，发货后您会收到邮件提醒，此外，您还可以前往<a href="https://www.milove.com/account/orders/{{ order.pk }}/"
   >此处</a

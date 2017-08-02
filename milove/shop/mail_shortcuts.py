@@ -52,6 +52,10 @@ def notify_order_created(order):
 
 
 def notify_order_status_changed(order):
+    from .models import Payment
+    payment = order.payments.filter(
+        status=Payment.STATUS_SUCCEEDED).first()
+
     status = order.status.replace('-', '_')
     _send_ignore_failure('订单状态变更', [order.user.email],
                          'shop/mails/order_%s.html' % status,
