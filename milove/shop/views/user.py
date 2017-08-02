@@ -32,21 +32,24 @@ class IsCurrentUser(BasePermission):
                and obj.pk == request.user.pk
 
 
-class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
-                  mixins.UpdateModelMixin,  # this brings PUT and PATCH
+class UserViewSet(mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsCurrentUser,)
 
-    @list_route(methods=['POST'])
-    def signup(self, request):
-        # TODO: 可以换成 create 方法，更标准
-        serializer = UserSignupSerializer(data=request.data)
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return UserSignupSerializer
+        return self.serializer_class
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
         validate_or_raise(serializer)
 
         user = serializer.save()
-        mail.notify_user_signed_up(user)  # TODO: 可以放在 User 的 post_add 里
+        mail.notify_user_signed_up(user)
         return Response(UserSerializer(user).data,
                         status=status.HTTP_201_CREATED)
 
@@ -62,18 +65,18 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
             raise rest_exceptions.AuthenticationFailed
 
         auth.login(request, user)
-        return Response(UserSerializer(user).data)
+        return Response(self.get_serializer(user).data)
 
     @list_route(['POST'])
     def logout(self, request):
         auth.logout(request)
         return Response()
 
-    @detail_route(['POST'])
+    @detail_route(['POST'], serializer_class=UserChangePasswordSerializer)
     def change_password(self, request, pk=None):
         user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
-        serializer = UserChangePasswordSerializer(
+        serializer = self.get_serializer(
             instance=user,
             data=request.data
         )
@@ -94,12 +97,13 @@ class UserViewSet(mixins.RetrieveModelMixin,  # this brings GET /users/:pk/
         )
         return Response()
 
-    @detail_route(['POST'], permission_classes=())
+    @detail_route(['POST'], permission_classes=(),
+                  serializer_class=UserSetPasswordSerializer)
     def set_password(self, request, pk=None):
         user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
 
-        serializer = UserSetPasswordSerializer(user, request.data)
+        serializer = self.get_serializer(user, request.data)
         validate_or_raise(serializer)
         serializer.save()
         return Response()
