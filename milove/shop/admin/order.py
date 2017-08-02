@@ -108,14 +108,15 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     inlines = (OrderItemInline, ShippingAddressInline)
     ordering = ('-created_dt',)
-    search_fields = ('id', 'user__username', 'comment', 'tracking_number')
+    search_fields = ('id', 'user__username', 'user__email',
+                     'comment', 'tracking_number')
 
     form = OrderForm
-    fields = ('created_dt', 'user', 'total_price', 'discount_amount',
+    fields = ('id', 'created_dt', 'user', 'total_price', 'discount_amount',
               'paid_amount', 'comment', 'status', 'last_status',
               'express_company', 'tracking_number')
-    readonly_fields = ('created_dt', 'user', 'total_price', 'paid_amount',
-                       'comment', 'last_status')
+    readonly_fields = ('id', 'created_dt', 'user', 'total_price',
+                       'paid_amount', 'comment', 'last_status')
 
     def has_add_permission(self, request):
         # only users can create orders

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-02 21:45+0800\n"
+"POT-Creation-Date: 2017-08-02 23:56+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,7 +176,7 @@ msgid "product"
 msgstr ""
 
 #: .\models\order.py:23 .\models\order.py:47 .\models\order.py:52
-#: .\models\order.py:137 .\models\payment.py:32
+#: .\models\order.py:140 .\models\payment.py:31
 msgid "order"
 msgstr ""
 
@@ -196,7 +196,7 @@ msgstr ""
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:60 .\models\payment.py:30
+#: .\models\order.py:60 .\models\payment.py:29
 msgid "created datetime"
 msgstr ""
 
@@ -209,167 +209,171 @@ msgid "discount amount"
 msgstr ""
 
 #: .\models\order.py:67
+msgid "paid amount"
+msgstr ""
+
+#: .\models\order.py:68
 msgid "Order|comment"
 msgstr "comment"
 
-#: .\models\order.py:81
+#: .\models\order.py:82
 msgid "OrderStatus|unpaid"
 msgstr "unpaid"
 
-#: .\models\order.py:82
+#: .\models\order.py:83
 msgid "OrderStatus|closed"
 msgstr "closed"
 
-#: .\models\order.py:83
+#: .\models\order.py:84
 msgid "OrderStatus|paid"
 msgstr "paid"
 
-#: .\models\order.py:84
+#: .\models\order.py:85
 msgid "OrderStatus|cancelling"
 msgstr "cancelling"
 
-#: .\models\order.py:85
+#: .\models\order.py:86
 msgid "OrderStatus|cancelled"
 msgstr "cancelled"
 
-#: .\models\order.py:86
+#: .\models\order.py:87
 msgid "OrderStatus|shipping"
 msgstr "shipping"
 
-#: .\models\order.py:87
+#: .\models\order.py:88
 msgid "OrderStatus|done"
 msgstr "done"
 
-#: .\models\order.py:88
+#: .\models\order.py:89
 msgid "OrderStatus|return requested"
 msgstr "return requested"
 
-#: .\models\order.py:89
+#: .\models\order.py:90
 msgid "OrderStatus|returning"
 msgstr "returning"
 
-#: .\models\order.py:90
+#: .\models\order.py:91
 msgid "OrderStatus|returned"
 msgstr "returned"
 
-#: .\models\order.py:93 .\models\payment.py:67
+#: .\models\order.py:94 .\models\payment.py:66
 msgid "status"
 msgstr ""
 
-#: .\models\order.py:95
+#: .\models\order.py:96
 msgid "last status"
 msgstr ""
 
-#: .\models\order.py:121
+#: .\models\order.py:124
 msgid "express company"
 msgstr ""
 
-#: .\models\order.py:123
+#: .\models\order.py:126
 msgid "tracking number"
 msgstr ""
 
-#: .\models\order.py:127
+#: .\models\order.py:130
 #, python-format
 msgid "Order #%(pk)s"
 msgstr ""
 
-#: .\models\order.py:132
+#: .\models\order.py:135
 msgid "order status transition"
 msgstr ""
 
-#: .\models\order.py:133
+#: .\models\order.py:136
 msgid "order status transitions"
 msgstr ""
 
-#: .\models\order.py:138
+#: .\models\order.py:141
 msgid "happened datetime"
 msgstr ""
 
-#: .\models\order.py:140
+#: .\models\order.py:143
 msgid "source status"
 msgstr ""
 
-#: .\models\order.py:142
+#: .\models\order.py:145
 msgid "destination status"
 msgstr ""
 
-#: .\models\payment.py:17
+#: .\models\payment.py:16
 msgid "billing address"
 msgstr ""
 
-#: .\models\payment.py:18
+#: .\models\payment.py:17
 msgid "billing addresses"
 msgstr ""
 
-#: .\models\payment.py:22 .\models\payment.py:27
+#: .\models\payment.py:21 .\models\payment.py:26
 msgid "payment"
 msgstr ""
 
-#: .\models\payment.py:28
+#: .\models\payment.py:27
 msgid "payments"
 msgstr ""
 
-#: .\models\payment.py:33
+#: .\models\payment.py:32
 msgid "Payment|amount"
 msgstr "amount"
 
-#: .\models\payment.py:35
+#: .\models\payment.py:34
 msgid "Payment|use balance"
 msgstr "use balance"
 
-#: .\models\payment.py:36
+#: .\models\payment.py:35
 msgid "Payment|amount from balance"
 msgstr "amount from balance"
 
-#: .\models\payment.py:39
+#: .\models\payment.py:38
 msgid "Payment|use point"
 msgstr "use point"
 
-#: .\models\payment.py:40
+#: .\models\payment.py:39
 msgid "Payment|amount from point"
 msgstr "amount from point"
 
-#: .\models\payment.py:42
+#: .\models\payment.py:41
 msgid "Payment|point used"
 msgstr "point used"
 
-#: .\models\payment.py:45
+#: .\models\payment.py:44
 msgid "PayPal"
 msgstr ""
 
-#: .\models\payment.py:46 .\models\payment_method.py:27
+#: .\models\payment.py:45 .\models\payment_method.py:27
 msgid "credit card"
 msgstr ""
 
-#: .\models\payment.py:49
+#: .\models\payment.py:48
 msgid "Payment|method"
 msgstr "method"
 
-#: .\models\payment.py:51
+#: .\models\payment.py:50
 msgid "Payment|vendor payment ID"
 msgstr "vendor payment ID"
 
-#: .\models\payment.py:53
+#: .\models\payment.py:52
 msgid "extra information"
 msgstr ""
 
-#: .\models\payment.py:61
+#: .\models\payment.py:60
 msgid "PaymentStatus|pending"
 msgstr "pending"
 
-#: .\models\payment.py:62
+#: .\models\payment.py:61
 msgid "PaymentStatus|closed"
 msgstr "closed"
 
-#: .\models\payment.py:63
+#: .\models\payment.py:62
 msgid "PaymentStatus|failed"
 msgstr "failed"
 
-#: .\models\payment.py:64
+#: .\models\payment.py:63
 msgid "PaymentStatus|succeeded"
 msgstr "succeeded"
 
-#: .\models\payment.py:75
+#: .\models\payment.py:89
 #, python-format
 msgid "Payment #%(pk)s"
 msgstr ""
@@ -555,7 +559,7 @@ msgstr "balance"
 msgid "UserInfo|point"
 msgstr "point"
 
-#: .\serializers\payment.py:18
+#: .\serializers\payment.py:20
 msgid "The payment is failed."
 msgstr ""
 
