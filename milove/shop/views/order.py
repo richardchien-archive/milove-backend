@@ -8,6 +8,7 @@ from rest_framework.decorators import detail_route
 from rest_framework.pagination import PageNumberPagination
 
 from ..models.order import *
+from ..models.payment import Payment
 from ..serializers.order import *
 from .. import rest_filters
 from .helpers import validate_or_raise, PartialUpdateModelMixin
@@ -65,12 +66,16 @@ class OrderViewSet(PartialUpdateModelMixin,
             with transaction.atomic():
                 if order.status == Order.STATUS_PAID:
                     # the order is paid, give the user a refund
-                    request.user.info.balance \
-                        += order.total_price - order.discount_amount
-                    # TODO: 这里要换成加上 Order 所关联的成功的 Payment 的金额
-                    request.user.info.save()
+                    payment = order.payments.filter(
+                        status=Payment.STATUS_SUCCEEDED).first()
+                    if payment:
+                        request.user.info.point += payment.point_used
+                        request.user.info.balance \
+                            += payment.amount - payment.amount_from_point
+                        request.user.info.save()
                 order.status = Order.STATUS_CANCELLED
                 order.save()
+
         return Response(self.get_serializer(order).data)
 
     @detail_route(methods=['PUT'])

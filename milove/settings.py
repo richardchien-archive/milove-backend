@@ -26,9 +26,6 @@ DEBUG = True
 
 ADMINS = []
 
-# STAFFS = []
-ORDER_NOTIFICATION_GROUP_NAME = '订单管理员'
-
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -184,3 +181,10 @@ PAYPAL_CLIENT_SECRET = ''
 # Thread Pool
 
 THREAD_POOL_MAX_WORKER = 20
+
+# Shop configuration
+
+ORDER_NOTIFICATION_GROUP_NAME = '订单管理员'
+AMOUNT_TO_POINT = lambda x: int(x / 10.0)
+POINT_TO_AMOUNT = lambda x: x / 100.0
+POINT_TO_AMOUNT_REVERSE = lambda x: x * 100.0

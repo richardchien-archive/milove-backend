@@ -1,8 +1,7 @@
-from django.db import models, transaction
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
 from django.dispatch import receiver
-from django.conf import settings
 from jsonfield import JSONField
 
 from .payment_method import PaymentMethod
@@ -69,7 +68,32 @@ class Payment(models.Model):
 
     @staticmethod
     def status_changed(old_obj, new_obj):
-        pass
+        if new_obj.status == Payment.STATUS_SUCCEEDED:
+            # payment succeeded, mark the order as done
+            new_obj.order.status = Order.STATUS_PAID
+            new_obj.order.paid_amount = new_obj.amount
+            new_obj.order.save()
+        elif new_obj.status in (Payment.STATUS_CLOSED,
+                                Payment.STATUS_FAILED):
+            # payment closed or failed, refund balance and point
+            new_obj.order.user.info.point += new_obj.point_used
+            new_obj.order.user.info.balance += new_obj.amount_from_balance
+            new_obj.order.user.info.save()
+
+            # clean payment object, in case of duplicated refund
+            new_obj.point_used = 0
+            new_obj.amount_from_point = 0.0
+            new_obj.amount_from_balance = 0.0
 
     def __str__(self):
         return _('Payment #%(pk)s') % {'pk': self.pk}
+
+
+@receiver(signals.pre_save, sender=Payment)
+def order_pre_save(instance, **kwargs):
+    old_instance = None
+    if instance.pk:
+        old_instance = Payment.objects.get(pk=instance.pk)
+
+    if old_instance and old_instance.status != instance.status:
+        instance.status_changed(old_instance, instance)

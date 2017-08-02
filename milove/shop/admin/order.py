@@ -103,7 +103,7 @@ class OrderForm(forms.ModelForm):
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'total_price', 'discount_amount',
-                    'comment', 'status', 'tracking_number')
+                    'paid_amount', 'comment', 'status', 'tracking_number')
     list_display_links = ('id', 'user')
     list_filter = ('status',)
     inlines = (OrderItemInline, ShippingAddressInline)
@@ -112,10 +112,10 @@ class OrderAdmin(admin.ModelAdmin):
 
     form = OrderForm
     fields = ('created_dt', 'user', 'total_price', 'discount_amount',
-              'comment', 'status', 'last_status',
+              'paid_amount', 'comment', 'status', 'last_status',
               'express_company', 'tracking_number')
-    readonly_fields = ('created_dt', 'user', 'total_price', 'comment',
-                       'last_status')
+    readonly_fields = ('created_dt', 'user', 'total_price', 'paid_amount',
+                       'comment', 'last_status')
 
     def has_add_permission(self, request):
         # only users can create orders

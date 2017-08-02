@@ -64,6 +64,7 @@ class Order(models.Model):
     total_price = models.FloatField(_('total price'))
     discount_amount = models.FloatField(_('discount amount'), default=0.0,
                                         blank=True)
+    paid_amount = models.FloatField(_('paid amount'), default=0.0, blank=True)
     comment = models.TextField(_('Order|comment'), blank=True)
 
     STATUS_UNPAID = 'unpaid'
@@ -113,9 +114,11 @@ class Order(models.Model):
                     item.product.sold = False
                     item.product.save()
         if new_obj.status == Order.STATUS_DONE:
-            # thr order is done, give the user some points
-            # new_obj.user.info.point +=
-            pass
+            # the order is done, give the user some points
+            new_obj.user.info.point += settings.AMOUNT_TO_POINT(
+                new_obj.paid_amount
+            )
+            new_obj.user.info.save()
 
     # shipping information
     express_company = models.CharField(_('express company'),

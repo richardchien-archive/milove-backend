@@ -15,7 +15,7 @@ from .helpers import validate_or_raise
 router = SimpleRouter()
 
 
-class PaymentExecuteForm(forms.Form):
+class PaymentForm(forms.Form):
     method = forms.ChoiceField(choices=((PaymentMethod.PAYPAL, ''),))
     vendor_payment_id = forms.CharField()
 
@@ -42,7 +42,7 @@ class PaymentViewSet(viewsets.GenericViewSet):
     def execute(self, request, **kwargs):
         """Execute a payment after user authorized it."""
 
-        form = PaymentExecuteForm(request.data)
+        form = PaymentForm(request.data)
         validate_or_raise(form)
         payment = get_object_or_404(
             self.get_queryset(),
@@ -71,6 +71,23 @@ class PaymentViewSet(viewsets.GenericViewSet):
                 payment.status = Payment.STATUS_FAILED
             payment.save()
 
+        return Response()
+
+    @list_route(['POST'])
+    def cancel(self, request, **kwargs):
+        """Cancel a payment, when the user cancelled the auth window."""
+
+        form = PaymentForm(request.data)
+        validate_or_raise(form)
+        payment = get_object_or_404(
+            self.get_queryset(),
+            status=Payment.STATUS_PENDING,
+            method=form.cleaned_data['method'],
+            vendor_payment_id=form.cleaned_data['vendor_payment_id']
+        )
+
+        payment.status = Payment.STATUS_CLOSED
+        payment.save()
         return Response()
 
 

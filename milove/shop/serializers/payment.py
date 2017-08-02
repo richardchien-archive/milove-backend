@@ -1,5 +1,6 @@
 from functools import wraps
 
+from django.conf import settings
 from django.db import transaction
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, exceptions, status
@@ -9,6 +10,7 @@ from ..models.order import Order
 from ..models.address import Address
 from ..models.payment_method import PaymentMethod
 from .helpers import PrimaryKeyRelatedFieldFilterByUser
+from ..thread_pool import delay_run
 
 __all__ = ['PaymentSerializer', 'PaymentAddSerializer']
 
@@ -84,10 +86,16 @@ class PaymentAddSerializer(serializers.ModelSerializer):
             method=validated_data['method']
         )
 
-        # if payment.use_point:
-        #     pass
+        if payment.use_point:
+            payment.amount_from_point = min(
+                amount_to_pay, settings.POINT_TO_AMOUNT(user.info.point)
+            )
+            payment.point_used = settings.POINT_TO_AMOUNT_REVERSE(
+                payment.amount_from_point
+            )
+            amount_to_pay -= payment.amount_from_point
 
-        if payment.use_balance:
+        if payment.use_balance and amount_to_pay > 0:
             payment.amount_from_balance = min(amount_to_pay,
                                               user.info.balance)
             amount_to_pay -= payment.amount_from_balance
@@ -108,29 +116,45 @@ class PaymentAddSerializer(serializers.ModelSerializer):
                 zip_code=address.zip_code
             )
 
-        try:
-            with transaction.atomic():
-                user.info.point -= payment.point_used
-                user.info.balance -= payment.amount_from_balance
-                user.info.save()
+        user.info.point -= payment.point_used
+        user.info.balance -= payment.amount_from_balance
+        user.info.save()
 
-                if amount_to_pay > 0:
-                    method_obj = validated_data['method_id']
-                    if method_obj and method_obj.method != payment.method:
-                        raise PaymentFailed
-                    try:
-                        _payment_funcs[payment.method](
-                            payment=payment,
-                            method_obj=method_obj,
-                            amount=amount_to_pay
-                        )
-                        payment.save()
-                    except (KeyError, PaymentFailed):
-                        raise PaymentFailed
+        try:
+            if amount_to_pay > 0:
+                method_obj = validated_data['method_id']
+                if method_obj and method_obj.method != payment.method:
+                    raise PaymentFailed
+                try:
+                    _payment_funcs[payment.method](
+                        payment=payment,
+                        method_obj=method_obj,
+                        amount=amount_to_pay
+                    )
+                    payment.save()
+                except (KeyError, PaymentFailed):
+                    raise PaymentFailed
+            else:
+                # already paid all
+                payment.status = Payment.STATUS_SUCCEEDED
+                payment.save()
         except PaymentFailed:
+            # NOTE!
+            # balance and point have been subtracted from the user's account,
+            # and status_change method will handle the refund job
             payment.status = Payment.STATUS_FAILED
             payment.save()
             raise
+
+        def close_pending_payment(p):
+            if p.status == Payment.STATUS_PENDING:
+                p.status = Payment.STATUS_CLOSED
+                p.save()
+
+        if payment.status == payment.STATUS_PENDING:
+            # if the payment is still pending after 5 minutes,
+            # close it, and balance and point will be refunded
+            delay_run(5 * 60, close_pending_payment, payment)
 
         return payment
 
