@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-01 14:37+0800\n"
+"POT-Creation-Date: 2017-08-02 10:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Coupon|discount"
 msgstr "discount"
 
-#: .\admin\order.py:91
+#: .\admin\order.py:93
 #, python-format
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr ""
@@ -42,7 +42,7 @@ msgstr ""
 msgid "image preview"
 msgstr ""
 
-#: .\admin\product.py:93
+#: .\admin\product.py:93 .\models\order.py:33
 msgid "Product|main image preview"
 msgstr "main image preview"
 
@@ -126,7 +126,7 @@ msgstr ""
 msgid "addresses"
 msgstr ""
 
-#: .\models\address.py:48 .\models\order.py:51 .\models\payment_method.py:17
+#: .\models\address.py:48 .\models\order.py:62 .\models\payment_method.py:17
 #: .\models\user.py:61
 msgid "user"
 msgstr ""
@@ -163,129 +163,133 @@ msgstr "price required"
 msgid "Coupon|is valid"
 msgstr "is valid"
 
-#: .\models\order.py:15
+#: .\models\order.py:16
 msgid "order item"
 msgstr ""
 
-#: .\models\order.py:16
+#: .\models\order.py:17
 msgid "order items"
 msgstr ""
 
-#: .\models\order.py:19 .\models\product.py:87 .\models\product.py:95
+#: .\models\order.py:20 .\models\product.py:87 .\models\product.py:95
 msgid "product"
 msgstr ""
 
-#: .\models\order.py:22 .\models\order.py:36 .\models\order.py:41
-#: .\models\order.py:118
+#: .\models\order.py:23 .\models\order.py:47 .\models\order.py:52
+#: .\models\order.py:132
 msgid "order"
 msgstr ""
 
-#: .\models\order.py:23
+#: .\models\order.py:24
 msgid "strike price"
 msgstr ""
 
-#: .\models\order.py:31
+#: .\models\order.py:42
 msgid "shipping address"
 msgstr ""
 
-#: .\models\order.py:32
+#: .\models\order.py:43
 msgid "shipping addresses"
 msgstr ""
 
-#: .\models\order.py:42
+#: .\models\order.py:53
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:52
+#: .\models\order.py:63
 msgid "total price"
 msgstr ""
 
-#: .\models\order.py:53
+#: .\models\order.py:64
 msgid "discount amount"
 msgstr ""
 
-#: .\models\order.py:55
+#: .\models\order.py:66
 msgid "created datetime"
 msgstr "created datetime"
 
-#: .\models\order.py:56
+#: .\models\order.py:67
 msgid "Order|comment"
 msgstr "comment"
 
-#: .\models\order.py:69
+#: .\models\order.py:81
 msgid "OrderStatus|unpaid"
 msgstr "unpaid"
 
-#: .\models\order.py:70
+#: .\models\order.py:82
+msgid "OrderStatus|closed"
+msgstr "closed"
+
+#: .\models\order.py:83
 msgid "OrderStatus|paid"
 msgstr "paid"
 
-#: .\models\order.py:71
+#: .\models\order.py:84
 msgid "OrderStatus|cancelling"
 msgstr "cancelling"
 
-#: .\models\order.py:72
+#: .\models\order.py:85
 msgid "OrderStatus|cancelled"
 msgstr "cancelled"
 
-#: .\models\order.py:73
+#: .\models\order.py:86
 msgid "OrderStatus|shipping"
 msgstr "shipping"
 
-#: .\models\order.py:74
+#: .\models\order.py:87
 msgid "OrderStatus|done"
 msgstr "done"
 
-#: .\models\order.py:75
+#: .\models\order.py:88
 msgid "OrderStatus|return requested"
 msgstr "return requested"
 
-#: .\models\order.py:76
+#: .\models\order.py:89
 msgid "OrderStatus|returning"
 msgstr "returning"
 
-#: .\models\order.py:77
+#: .\models\order.py:90
 msgid "OrderStatus|returned"
 msgstr "returned"
 
-#: .\models\order.py:80
+#: .\models\order.py:93
 msgid "status"
 msgstr ""
 
-#: .\models\order.py:82
+#: .\models\order.py:95
 msgid "last status"
 msgstr ""
 
-#: .\models\order.py:102
+#: .\models\order.py:116
 msgid "express company"
 msgstr ""
 
-#: .\models\order.py:104
+#: .\models\order.py:118
 msgid "tracking number"
 msgstr ""
 
-#: .\models\order.py:108
+#: .\models\order.py:122
 #, python-format
 msgid "Order #%(id)s"
 msgstr ""
 
-#: .\models\order.py:113
+#: .\models\order.py:127
 msgid "order status transition"
 msgstr ""
 
-#: .\models\order.py:114
+#: .\models\order.py:128
 msgid "order status transitions"
 msgstr ""
 
-#: .\models\order.py:119
+#: .\models\order.py:133
 msgid "happened datetime"
 msgstr ""
 
-#: .\models\order.py:121
+#: .\models\order.py:135
 msgid "source status"
 msgstr ""
 
-#: .\models\order.py:123
+#: .\models\order.py:137
 msgid "destination status"
 msgstr ""
 

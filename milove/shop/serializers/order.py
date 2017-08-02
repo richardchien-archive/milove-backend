@@ -10,6 +10,7 @@ from ..models.coupon import Coupon
 from ..serializers.product import ProductSerializer
 from .helpers import PrimaryKeyRelatedFieldFilterByUser
 from .. import mail_shortcuts as mail
+from ..thread_pool import delay_run
 
 __all__ = ['ShippingAddressSerializer',
            'OrderSerializer', 'OrderAddSerializer']
@@ -130,5 +131,14 @@ class OrderAddSerializer(serializers.ModelSerializer):
 
         # notify related user and staffs
         mail.notify_order_created(order)
+
+        def close_unpaid_order(o):
+            if o.status == Order.STATUS_UNPAID:
+                o.status = Order.STATUS_CLOSED
+                o.save()
+
+        # if the order is still unpaid after 30 minutes, close it
+        # delay_run(30 * 60, close_unpaid_order, order)
+        # TODO: 开发完成后启用
 
         return order

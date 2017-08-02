@@ -67,6 +67,7 @@ class Order(models.Model):
     comment = models.TextField(_('Order|comment'), blank=True)
 
     STATUS_UNPAID = 'unpaid'
+    STATUS_CLOSED = 'closed'
     STATUS_PAID = 'paid'
     STATUS_CANCELLING = 'cancelling'
     STATUS_CANCELLED = 'cancelled'
@@ -78,6 +79,7 @@ class Order(models.Model):
 
     STATUSES = (
         (STATUS_UNPAID, _('OrderStatus|unpaid')),
+        (STATUS_CLOSED, _('OrderStatus|closed')),
         (STATUS_PAID, _('OrderStatus|paid')),
         (STATUS_CANCELLING, _('OrderStatus|cancelling')),
         (STATUS_CANCELLED, _('OrderStatus|cancelled')),
@@ -102,8 +104,9 @@ class Order(models.Model):
             dst_status=new_obj.status
         )
 
-        if new_obj.status == Order.STATUS_CANCELLED:
-            # cancel an order, restore all products related
+        if new_obj.status in (Order.STATUS_CLOSED,
+                              Order.STATUS_CANCELLED):
+            # close or cancel an order, restore all products related
             with transaction.atomic():
                 for item in new_obj.items.all():
                     item.product.sold = False

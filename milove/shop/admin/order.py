@@ -32,7 +32,9 @@ class ShippingAddressInline(admin.StackedInline):
 
 
 _NEXT_STATUS_ALLOWED = {
-    Order.STATUS_UNPAID: (Order.STATUS_PAID, Order.STATUS_CANCELLED),
+    Order.STATUS_UNPAID: (Order.STATUS_PAID,
+                          Order.STATUS_CLOSED,
+                          Order.STATUS_CANCELLED),
     Order.STATUS_PAID: (Order.STATUS_SHIPPING,
                         Order.STATUS_CANCELLING,
                         Order.STATUS_CANCELLED),
