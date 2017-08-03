@@ -1,6 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
-from rest_framework import viewsets, status, exceptions
+from rest_framework import viewsets, status
 from rest_framework.generics import get_object_or_404
 from rest_framework.routers import SimpleRouter
 from rest_framework.permissions import IsAuthenticated
@@ -11,6 +10,7 @@ from ..models.payment import *
 from ..models.payment_method import PaymentMethod
 from ..serializers.payment import *
 from ..exceptions import PaymentFailed
+from ..payment_funcs import get_payment_func
 from .helpers import validate_or_raise
 
 router = SimpleRouter()
@@ -19,10 +19,6 @@ router = SimpleRouter()
 class PaymentForm(forms.Form):
     method = forms.ChoiceField(choices=((PaymentMethod.PAYPAL, ''),))
     vendor_payment_id = forms.CharField()
-
-
-_field_required_for_method_msg = _('The "%(field_name)s" is required for '
-                                   'payment method "%(payment_method)s".')
 
 
 class PaymentViewSet(viewsets.GenericViewSet):
@@ -56,36 +52,24 @@ class PaymentViewSet(viewsets.GenericViewSet):
             vendor_payment_id=form.cleaned_data['vendor_payment_id']
         )
 
-        if payment.method == PaymentMethod.PAYPAL:
-            if 'payer_id' not in request.data \
-                    or not isinstance(request.data['payer_id'], str):
-                raise exceptions.ValidationError({
-                    'payer_id': _field_required_for_method_msg % {
-                        'field_name': 'payer_id',
-                        'payment_method': payment.method
-                    }
-                })
-
-            import paypalrestsdk as paypal
-            try:
-                paypal_payment = paypal.Payment.find(payment.vendor_payment_id)
-                if paypal_payment.execute(
-                        {'payer_id': request.data['payer_id']}):
-                    payment.extra_info = eval(str(paypal_payment))
-                    payment.status = Payment.STATUS_SUCCEEDED
-                else:
-                    payment.status = Payment.STATUS_FAILED
-            except paypal.exceptions.ClientError:
-                payment.status = Payment.STATUS_FAILED
+        try:
+            func = get_payment_func(payment.method, stage='execute')
+            if not func:
                 raise PaymentFailed
-            finally:
-                payment.save()
+            func(payment=payment, request=request)
+        except PaymentFailed:
+            payment.status = Payment.STATUS_FAILED
+            raise
+        finally:
+            # no matter what happened, save the payment
+            payment.save()
 
-        return Response()
+        return Response(PaymentSerializer(payment).data)
 
     @list_route(['POST'])
     def cancel(self, request, **kwargs):
         """Cancel a payment, when the user cancelled the auth window."""
+        # TODO: 这个函数其实可以删除
 
         form = PaymentForm(request.data)
         validate_or_raise(form)

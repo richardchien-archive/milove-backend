@@ -32,13 +32,19 @@ class Payment(models.Model):
     amount = models.FloatField(_('Payment|amount'))
 
     use_balance = models.BooleanField(_('Payment|use balance'))
+    # amount that need to be paid from balance
     amount_from_balance = models.FloatField(_('Payment|amount from balance'),
                                             default=0.0)
+    # amount that actually have been paid from balance
+    paid_amount_from_balance = models.FloatField(
+        _('Payment|paid amount from balance'), default=0.0)
 
     use_point = models.BooleanField(_('Payment|use point'))
+    # amount that need to be paid from point
     amount_from_point = models.FloatField(_('Payment|amount from point'),
                                           default=0.0)
-    point_used = models.IntegerField(_('Payment|point used'), default=0)
+    # point that actually have been paid
+    paid_point = models.IntegerField(_('Payment|paid point'), default=0)
 
     METHODS = (
         (PaymentMethod.PAYPAL, _('PayPal')),
@@ -75,15 +81,14 @@ class Payment(models.Model):
             new_obj.order.save()
         elif new_obj.status in (Payment.STATUS_CLOSED,
                                 Payment.STATUS_FAILED):
-            # payment closed or failed, refund balance and point
-            new_obj.order.user.info.point += new_obj.point_used
-            new_obj.order.user.info.balance += new_obj.amount_from_balance
+            # payment closed or failed, refund paid balance and point
+            new_obj.order.user.info.point += new_obj.paid_point
+            new_obj.order.user.info.balance += new_obj.paid_amount_from_balance
             new_obj.order.user.info.save()
 
             # clean payment object, in case of duplicated refund
-            new_obj.point_used = 0
-            new_obj.amount_from_point = 0.0
-            new_obj.amount_from_balance = 0.0
+            new_obj.paid_point = 0
+            new_obj.paid_amount_from_balance = 0.0
 
     def __str__(self):
         return _('Payment #%(pk)s') % {'pk': self.pk}

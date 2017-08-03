@@ -1,5 +1,3 @@
-from functools import wraps
-
 from django.conf import settings
 from django.db import transaction
 from rest_framework import serializers
@@ -10,11 +8,9 @@ from ..models.order import Order
 from ..models.address import Address
 from ..models.payment_method import PaymentMethod
 from ..exceptions import PaymentFailed
-from ..thread_pool import delay_run
+from ..payment_funcs import charge_balance_and_point, get_payment_func
 
 __all__ = ['PaymentSerializer', 'PaymentAddSerializer']
-
-_payment_funcs = {}
 
 
 class BillingAddressSerializer(serializers.ModelSerializer):
@@ -91,9 +87,6 @@ class PaymentAddSerializer(serializers.ModelSerializer):
             payment.amount_from_point = min(
                 amount_to_pay, settings.POINT_TO_AMOUNT(user.info.point)
             )
-            payment.point_used = settings.POINT_TO_AMOUNT_REVERSE(
-                payment.amount_from_point
-            )
             amount_to_pay -= payment.amount_from_point
 
         if payment.use_balance and amount_to_pay > 0:
@@ -104,13 +97,6 @@ class PaymentAddSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             # do create the payment object in db
             payment.save()
-
-            # it's save to charge the balance and point here,
-            # because if the payment failed or closed later,
-            # they will be refunded
-            user.info.point -= payment.point_used
-            user.info.balance -= payment.amount_from_balance
-            user.info.save()
 
             # snapshot the specified "Address", as a "ShippingAddress"
             address = validated_data['billing_address']
@@ -128,127 +114,32 @@ class PaymentAddSerializer(serializers.ModelSerializer):
         try:
             if amount_to_pay > 0:
                 # the remained amount will be charged from 3-party
+
+                # we don't call charge_balance_and_point() here,
+                # the payment function will do this
+
                 method_obj = validated_data['method_id']
                 if method_obj and method_obj.method != payment.method:
                     raise PaymentFailed
-                try:
-                    _payment_funcs[payment.method](
-                        payment=payment,
-                        method_obj=method_obj,
-                        amount=amount_to_pay
-                    )
-                    payment.save()
-                except (KeyError, PaymentFailed):
-                    # payment method not exists,
-                    # or not specified,
-                    #   e.g. if the balance is not enough to pay the bill,
-                    #        and the method is null, KeyError will be raised
-                    # or payment failed in payment function
+
+                func = get_payment_func(payment.method)
+                if not func:
                     raise PaymentFailed
+                func(
+                    payment=payment,
+                    method_obj=method_obj,
+                    amount=amount_to_pay
+                )
             else:
-                # already paid all (from balance and point)
+                # pay with balance and point
+                charge_balance_and_point(payment)
+                # no exception raised, means succeeded
                 payment.status = Payment.STATUS_SUCCEEDED
-                payment.save()
         except PaymentFailed:
-            # NOTE!
-            # balance and point have been subtracted from the user's account,
-            # and status_changed() method will handle the refund job
             payment.status = Payment.STATUS_FAILED
-            payment.save()
             raise
-
-        def close_pending_payment(p):
-            if p.status == Payment.STATUS_PENDING:
-                # just put the payment to "closed" status,
-                # status_changed() method will handle the refund job
-                p.status = Payment.STATUS_CLOSED
-                p.save()
-
-        if payment.status == payment.STATUS_PENDING:
-            # if the payment is still pending after 5 minutes,
-            # close it, and balance and point will be refunded
-            delay_run(5 * 60, close_pending_payment, payment)
+        finally:
+            # no matter what happened, save the payment
+            payment.save()
 
         return payment
-
-
-def pay_with(method_name):
-    """
-    Decorate a function as the payment function of a given payment method.
-
-    The function should receive these keyword arguments:
-    - payment: A Payment object
-    - method_obj: A PaymentMethod object, or None
-    - amount: Amount that should be charged, in USD
-
-    The function should process the payment and change "payment" object
-    if needed (especially the "status" and "vendor_payment_id" attributes),
-    without need to call "save()" on it.
-
-    If anything wrong happened while creating payment, raise PaymentFailed.
-
-    :param method_name: payment method name
-    """
-
-    def decorator(func):
-        _payment_funcs[method_name] = func
-
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
-
-
-@pay_with(PaymentMethod.PAYPAL)
-def _pay_with_paypal(payment, amount, **kwargs):
-    import paypalrestsdk as paypal
-    paypal_payment = paypal.Payment({
-        'intent': 'sale',
-        'redirect_urls': {
-            'return_url': 'https://www.milove.com/',  # just put in
-            'cancel_url': 'https://www.milove.com/'  # but we don't use it
-        },
-        'payer': {
-            'payment_method': 'paypal'
-        },
-        'transactions': [
-            {
-                'amount': {
-                    'total': '%.2f' % amount,
-                    'currency': 'USD',
-                },
-            }
-        ]
-    })
-    if paypal_payment.create():
-        payment.vendor_payment_id = paypal_payment.id
-        # this is safe, trust me, it's just a dict
-        payment.extra_info = eval(str(paypal_payment))
-        payment.status = Payment.STATUS_PENDING
-    else:
-        raise PaymentFailed
-
-
-@pay_with(PaymentMethod.CREDIT_CARD)
-def _pay_with_credit_card(payment, method_obj: PaymentMethod, amount):
-    if not method_obj:
-        raise PaymentFailed
-
-    import stripe
-    try:
-        amount_in_cent = int(amount * 100)
-        charge = stripe.Charge.create(
-            amount=amount_in_cent,
-            currency='usd',
-            customer=method_obj.secret['customer_id'],
-        )
-        payment.vendor_payment_id = charge['id']
-        payment.extra_info = charge
-        if charge.get('paid'):
-            payment.status = Payment.STATUS_SUCCEEDED
-    except (stripe.error.InvalidRequestError,
-            stripe.error.CardError):
-        raise PaymentFailed

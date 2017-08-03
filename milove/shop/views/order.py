@@ -69,7 +69,7 @@ class OrderViewSet(PartialUpdateModelMixin,
                     payment = order.payments.filter(
                         status=Payment.STATUS_SUCCEEDED).first()
                     if payment:
-                        request.user.info.point += payment.point_used
+                        request.user.info.point += payment.paid_point
                         request.user.info.balance \
                             += payment.amount - payment.amount_from_point
                         request.user.info.save()

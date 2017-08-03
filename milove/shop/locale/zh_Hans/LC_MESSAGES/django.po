@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-02 23:56+0800\n"
+"POT-Creation-Date: 2017-08-03 14:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr "Milove 后台管理"
 msgid "Coupon|discount"
 msgstr "折扣"
 
-#: .\admin\order.py:95
+#: .\admin\order.py:94
 #, python-format
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr "订单状态不可以从“%(src_status)s”切换到“%(dst_status)s”。"
@@ -81,6 +81,14 @@ msgstr "联系方式"
 #: .\apps.py:7
 msgid "Shop"
 msgstr "商店"
+
+#: .\exceptions.py:8
+msgid "Payment method failed to pass check."
+msgstr "支付方式没有通过校验。"
+
+#: .\exceptions.py:13
+msgid "The payment is failed."
+msgstr "支付失败。"
 
 #: .\models\address.py:12
 msgid "Address|fullname"
@@ -256,7 +264,7 @@ msgstr "退货中"
 msgid "OrderStatus|returned"
 msgstr "已退货"
 
-#: .\models\order.py:94 .\models\payment.py:66
+#: .\models\order.py:94 .\models\payment.py:72
 msgid "status"
 msgstr "状态"
 
@@ -315,65 +323,69 @@ msgstr "支付"
 
 #: .\models\payment.py:32
 msgid "Payment|amount"
-msgstr "金额"
+msgstr "总金额"
 
 #: .\models\payment.py:34
 msgid "Payment|use balance"
 msgstr "使用余额"
 
-#: .\models\payment.py:35
+#: .\models\payment.py:36
 msgid "Payment|amount from balance"
-msgstr "从余额支付的金额"
+msgstr "应从余额支付的金额"
 
-#: .\models\payment.py:38
+#: .\models\payment.py:40
+msgid "Payment|paid amount from balance"
+msgstr "已从余额支付的金额"
+
+#: .\models\payment.py:42
 msgid "Payment|use point"
 msgstr "使用积分抵扣"
 
-#: .\models\payment.py:39
-msgid "Payment|amount from point"
-msgstr "从积分抵扣的金额"
-
-#: .\models\payment.py:41
-msgid "Payment|point used"
-msgstr "使用的积分"
-
 #: .\models\payment.py:44
+msgid "Payment|amount from point"
+msgstr "应从积分抵扣的金额"
+
+#: .\models\payment.py:47
+msgid "Payment|paid point"
+msgstr "已抵扣的积分"
+
+#: .\models\payment.py:50
 msgid "PayPal"
 msgstr ""
 
-#: .\models\payment.py:45 .\models\payment_method.py:27
+#: .\models\payment.py:51 .\models\payment_method.py:27
 msgid "credit card"
 msgstr "信用卡"
 
-#: .\models\payment.py:48
+#: .\models\payment.py:54
 msgid "Payment|method"
 msgstr "支付方式"
 
-#: .\models\payment.py:50
+#: .\models\payment.py:56
 msgid "Payment|vendor payment ID"
 msgstr "支付提供商的支付编号"
 
-#: .\models\payment.py:52
+#: .\models\payment.py:58
 msgid "extra information"
 msgstr "其它信息"
 
-#: .\models\payment.py:60
+#: .\models\payment.py:66
 msgid "PaymentStatus|pending"
 msgstr "进行中"
 
-#: .\models\payment.py:61
+#: .\models\payment.py:67
 msgid "PaymentStatus|closed"
 msgstr "已关闭"
 
-#: .\models\payment.py:62
+#: .\models\payment.py:68
 msgid "PaymentStatus|failed"
 msgstr "已失败"
 
-#: .\models\payment.py:63
+#: .\models\payment.py:69
 msgid "PaymentStatus|succeeded"
 msgstr "已成功"
 
-#: .\models\payment.py:89
+#: .\models\payment.py:94
 #, python-format
 msgid "Payment #%(pk)s"
 msgstr "支付#%(pk)s"
@@ -559,19 +571,11 @@ msgstr "余额"
 msgid "UserInfo|point"
 msgstr "积分"
 
-#: .\serializers\payment.py:20
-msgid "The payment is failed."
-msgstr "支付失败。"
-
-#: .\serializers\payment_method.py:30
+#: .\serializers\payment_method.py:31
 msgid "This field must be a JSON object."
 msgstr "该字段必须是JSON对象。"
 
-#: .\serializers\payment_method.py:35
-msgid "Payment method failed to pass check."
-msgstr "支付方式没有通过校验。"
-
-#: .\serializers\payment_method.py:69
+#: .\serializers\payment_method.py:65
 #, python-format
 msgid "Value of \"%(field_name)s\" field is not valid."
 msgstr "“%(field_name)s”字段的值无效。"
@@ -587,11 +591,13 @@ msgid ""
 "+/-/_ characters."
 msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/_字符。"
 
-#: .\views\payment.py:58
-#, python-format
-msgid ""
-"The \"%(field_name)s\" is required for payment method \"%(payment_method)s\"."
-msgstr "对于支付方式“%(payment_method)s”，“%(field_name)s”字段是必填的。"
+#~ msgid ""
+#~ "The \"%(field_name)s\" is required for payment method \"%(payment_method)s"
+#~ "\"."
+#~ msgstr "对于支付方式“%(payment_method)s”，“%(field_name)s”字段是必填的。"
+
+#~ msgid "Payment|point used"
+#~ msgstr "使用的积分"
 
 #~ msgid "return express company"
 #~ msgstr "退货快递公司"
