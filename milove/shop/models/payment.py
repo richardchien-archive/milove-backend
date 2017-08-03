@@ -74,13 +74,8 @@ class Payment(models.Model):
 
     @staticmethod
     def status_changed(old_obj, new_obj):
-        if new_obj.status == Payment.STATUS_SUCCEEDED:
-            # payment succeeded, mark the order as paid
-            new_obj.order.status = Order.STATUS_PAID
-            new_obj.order.paid_amount = new_obj.amount
-            new_obj.order.save()
-        elif new_obj.status in (Payment.STATUS_CLOSED,
-                                Payment.STATUS_FAILED):
+        if new_obj.status in (Payment.STATUS_CLOSED,
+                              Payment.STATUS_FAILED):
             # payment closed or failed, refund paid balance and point
             new_obj.order.user.info.point += new_obj.paid_point
             new_obj.order.user.info.balance += new_obj.paid_amount_from_balance
@@ -102,3 +97,17 @@ def order_pre_save(instance, **kwargs):
 
     if old_instance and old_instance.status != instance.status:
         instance.status_changed(old_instance, instance)
+
+
+@receiver(signals.post_save, sender=Payment)
+def order_post_save(instance, **kwargs):
+    # put this code in post_save is because that
+    # the order should notify user and staffs after becoming "paid",
+    # and that notification needs the payment object related to the order,
+    # which means the payment with status "succeeded" must be save first
+    if instance.status == Payment.STATUS_SUCCEEDED \
+            and instance.order.status == Order.STATUS_UNPAID:
+        # payment succeeded, mark the order as paid
+        instance.order.status = Order.STATUS_PAID
+        instance.order.paid_amount = instance.amount
+        instance.order.save()
