@@ -69,7 +69,7 @@ class Payment(models.Model):
     @staticmethod
     def status_changed(old_obj, new_obj):
         if new_obj.status == Payment.STATUS_SUCCEEDED:
-            # payment succeeded, mark the order as done
+            # payment succeeded, mark the order as paid
             new_obj.order.status = Order.STATUS_PAID
             new_obj.order.paid_amount = new_obj.amount
             new_obj.order.save()

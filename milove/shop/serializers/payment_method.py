@@ -1,7 +1,8 @@
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import serializers, exceptions, status
+from rest_framework import serializers, exceptions
 
 from ..models.payment_method import *
+from ..exceptions import PaymentMethodCheckFailed
 
 __all__ = ['PaymentMethodSerializer', 'PaymentMethodAddSerializer']
 
@@ -28,11 +29,6 @@ def is_json_object(value):
     if not isinstance(value, dict):
         raise serializers.ValidationError(
             _('This field must be a JSON object.'))
-
-
-class PaymentMethodCheckFailed(exceptions.APIException):
-    status_code = status.HTTP_402_PAYMENT_REQUIRED
-    default_detail = _('Payment method failed to pass check.')
 
 
 class PaymentMethodAddSerializer(PaymentMethodSerializer):

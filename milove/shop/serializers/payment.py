@@ -2,23 +2,17 @@ from functools import wraps
 
 from django.conf import settings
 from django.db import transaction
-from django.utils.translation import ugettext_lazy as _
-from rest_framework import serializers, exceptions, status
+from rest_framework import serializers
 
+from .helpers import PrimaryKeyRelatedFieldFilterByUser
 from ..models.payment import *
 from ..models.order import Order
 from ..models.address import Address
 from ..models.payment_method import PaymentMethod
-from .helpers import PrimaryKeyRelatedFieldFilterByUser
+from ..exceptions import PaymentFailed
 from ..thread_pool import delay_run
 
 __all__ = ['PaymentSerializer', 'PaymentAddSerializer']
-
-
-class PaymentFailed(exceptions.APIException):
-    status_code = status.HTTP_402_PAYMENT_REQUIRED
-    default_detail = _('The payment is failed.')
-
 
 _payment_funcs = {}
 
@@ -48,7 +42,13 @@ class PaymentAddSerializer(serializers.ModelSerializer):
         write_only=True
     )
 
+    # if the balance and point is enough to pay the bill, this can be null,
+    # but if not, and meanwhile this is null, payment will fail immediately
     method = serializers.ChoiceField(choices=Payment.METHODS, allow_null=True)
+
+    # for savable payment method (e.g. Stripe credit card),
+    # the user must specify a saved method (card) to use in the frontend.
+    # if the method is not savable (e.g. PayPal), this must be null
     method_id = PrimaryKeyRelatedFieldFilterByUser(
         queryset=PaymentMethod.objects.all(),
         allow_null=True,
@@ -60,6 +60,7 @@ class PaymentAddSerializer(serializers.ModelSerializer):
         fields = ('order', 'billing_address', 'use_balance',
                   'use_point', 'method', 'method_id')
         extra_kwargs = {
+            # no matter use or not, the following 2 fields must be passed in
             'use_balance': {
                 'required': True
             },
@@ -101,7 +102,15 @@ class PaymentAddSerializer(serializers.ModelSerializer):
             amount_to_pay -= payment.amount_from_balance
 
         with transaction.atomic():
-            payment.save()  # do create the payment object in db
+            # do create the payment object in db
+            payment.save()
+
+            # it's save to charge the balance and point here,
+            # because if the payment failed or closed later,
+            # they will be refunded
+            user.info.point -= payment.point_used
+            user.info.balance -= payment.amount_from_balance
+            user.info.save()
 
             # snapshot the specified "Address", as a "ShippingAddress"
             address = validated_data['billing_address']
@@ -116,12 +125,9 @@ class PaymentAddSerializer(serializers.ModelSerializer):
                 zip_code=address.zip_code
             )
 
-        user.info.point -= payment.point_used
-        user.info.balance -= payment.amount_from_balance
-        user.info.save()
-
         try:
             if amount_to_pay > 0:
+                # the remained amount will be charged from 3-party
                 method_obj = validated_data['method_id']
                 if method_obj and method_obj.method != payment.method:
                     raise PaymentFailed
@@ -133,21 +139,28 @@ class PaymentAddSerializer(serializers.ModelSerializer):
                     )
                     payment.save()
                 except (KeyError, PaymentFailed):
+                    # payment method not exists,
+                    # or not specified,
+                    #   e.g. if the balance is not enough to pay the bill,
+                    #        and the method is null, KeyError will be raised
+                    # or payment failed in payment function
                     raise PaymentFailed
             else:
-                # already paid all
+                # already paid all (from balance and point)
                 payment.status = Payment.STATUS_SUCCEEDED
                 payment.save()
         except PaymentFailed:
             # NOTE!
             # balance and point have been subtracted from the user's account,
-            # and status_change method will handle the refund job
+            # and status_changed() method will handle the refund job
             payment.status = Payment.STATUS_FAILED
             payment.save()
             raise
 
         def close_pending_payment(p):
             if p.status == Payment.STATUS_PENDING:
+                # just put the payment to "closed" status,
+                # status_changed() method will handle the refund job
                 p.status = Payment.STATUS_CLOSED
                 p.save()
 
@@ -212,6 +225,7 @@ def _pay_with_paypal(payment, amount, **kwargs):
     })
     if paypal_payment.create():
         payment.vendor_payment_id = paypal_payment.id
+        # this is safe, trust me, it's just a dict
         payment.extra_info = eval(str(paypal_payment))
         payment.status = Payment.STATUS_PENDING
     else:
