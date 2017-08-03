@@ -27,5 +27,19 @@ class PaymentAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         return [f.name for f in self.model._meta.fields]
 
+    def has_add_permission(self, request):
+        # only users can create payments
+        if request.user.is_superuser:
+            # except superuser
+            return True
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        # no one can delete payments
+        if request.user.is_superuser:
+            # except superuser
+            return True
+        return False
+
 
 admin.site.register(Payment, PaymentAdmin)

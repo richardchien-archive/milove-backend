@@ -2,7 +2,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django import forms
 from django.core import exceptions
-from django.conf import settings
 
 from ..models.order import *
 
@@ -120,14 +119,17 @@ class OrderAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         # only users can create orders
+        if request.user.is_superuser:
+            # except superuser
+            return True
         return False
 
     def has_delete_permission(self, request, obj=None):
-        if settings.DEBUG:
-            return super().has_delete_permission(request, obj)
-        else:
-            # no one can delete orders
-            return False
+        # no one can delete orders
+        if request.user.is_superuser:
+            # except superuser
+            return True
+        return False
 
     def get_form(self, request, obj=None, **kwargs):
         # inject "request" object to form
