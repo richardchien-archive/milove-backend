@@ -111,7 +111,7 @@ class ProductAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     list_per_page = 20
-    list_max_show_all = 100
+    list_max_show_all = 50
     list_display = ('id', 'get_main_image_preview',
                     'brand', 'name', 'style', 'size', 'condition',
                     'get_categories_string', 'get_price_fraction',

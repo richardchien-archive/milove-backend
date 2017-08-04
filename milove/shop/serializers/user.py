@@ -15,7 +15,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserInfo
-        exclude = ['user']
+        exclude = ('user',)
         read_only_fields = ('balance', 'point')
 
 
