@@ -686,7 +686,7 @@ msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/
 #: .\validators.py:17
 #, python-format
 msgid "File %(name)s is too large."
-msgstr "文件太大。"
+msgstr "文件%(name)s太大。"
 
 #: .\validators.py:28
 msgid "This field must be a JSON array."
