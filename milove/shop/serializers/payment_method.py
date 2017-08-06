@@ -3,6 +3,7 @@ from rest_framework import serializers, exceptions
 
 from ..models.payment_method import *
 from ..exceptions import PaymentMethodCheckFailed
+from ..validators import validate_json_object
 
 __all__ = ['PaymentMethodSerializer', 'PaymentMethodAddSerializer']
 
@@ -25,14 +26,9 @@ class PaymentMethodSerializer(serializers.ModelSerializer):
         return instance
 
 
-def is_json_object(value):
-    if not isinstance(value, dict):
-        raise serializers.ValidationError(
-            _('This field must be a JSON object.'))
-
-
 class PaymentMethodAddSerializer(PaymentMethodSerializer):
-    data = serializers.JSONField(write_only=True, validators=[is_json_object])
+    data = serializers.JSONField(write_only=True,
+                                 validators=[validate_json_object])
 
     class Meta(PaymentMethodSerializer.Meta):
         exclude = ('secret',)

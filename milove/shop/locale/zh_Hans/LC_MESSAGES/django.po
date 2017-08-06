@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 14:07+0800\n"
+"POT-Creation-Date: 2017-08-06 21:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\admin\__init__.py:6
+#: .\admin\__init__.py:14
 msgid "Milove Admin"
 msgstr "Milove 后台管理"
 
@@ -53,6 +53,10 @@ msgstr "分类"
 #: .\admin\product.py:104
 msgid "Product|price / original price"
 msgstr "定价 / 原价"
+
+#: .\admin\sell_request.py:22
+msgid "preview"
+msgstr "预览"
 
 #: .\admin\user.py:27
 msgid "Permissions"
@@ -135,7 +139,7 @@ msgid "addresses"
 msgstr "地址"
 
 #: .\models\address.py:48 .\models\order.py:63 .\models\payment_method.py:17
-#: .\models\user.py:61
+#: .\models\sell_request.py:23 .\models\user.py:61
 msgid "user"
 msgstr "用户"
 
@@ -204,7 +208,7 @@ msgstr "收货地址"
 msgid "orders"
 msgstr "订单"
 
-#: .\models\order.py:60 .\models\payment.py:29
+#: .\models\order.py:60 .\models\payment.py:29 .\models\sell_request.py:20
 msgid "created datetime"
 msgstr "创建时间"
 
@@ -264,7 +268,7 @@ msgstr "退货中"
 msgid "OrderStatus|returned"
 msgstr "已退货"
 
-#: .\models\order.py:94 .\models\payment.py:72
+#: .\models\order.py:94 .\models\payment.py:72 .\models\sell_request.py:62
 msgid "status"
 msgstr "状态"
 
@@ -385,7 +389,7 @@ msgstr "已失败"
 msgid "PaymentStatus|succeeded"
 msgstr "已成功"
 
-#: .\models\payment.py:94
+#: .\models\payment.py:89
 #, python-format
 msgid "Payment #%(pk)s"
 msgstr "支付#%(pk)s"
@@ -471,11 +475,11 @@ msgstr "已出售"
 msgid "Product|sold datetime"
 msgstr "出售时间"
 
-#: .\models\product.py:114
+#: .\models\product.py:114 .\models\sell_request.py:25
 msgid "Product|brand"
 msgstr "品牌"
 
-#: .\models\product.py:116
+#: .\models\product.py:116 .\models\sell_request.py:27
 msgid "Product|name"
 msgstr "名称"
 
@@ -483,7 +487,7 @@ msgstr "名称"
 msgid "Product|style"
 msgstr "款式"
 
-#: .\models\product.py:120
+#: .\models\product.py:120 .\models\sell_request.py:28
 msgid "Product|size"
 msgstr "尺码"
 
@@ -511,19 +515,19 @@ msgstr "C"
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:139
+#: .\models\product.py:139 .\models\sell_request.py:29
 msgid "Product|condition"
 msgstr "成色"
 
-#: .\models\product.py:145
+#: .\models\product.py:145 .\models\sell_request.py:33
 msgid "Product|attachments"
 msgstr "附件"
 
-#: .\models\product.py:147
+#: .\models\product.py:147 .\models\sell_request.py:35
 msgid "Product|description"
 msgstr "描述"
 
-#: .\models\product.py:149
+#: .\models\product.py:149 .\models\sell_request.py:32
 msgid "Product|original price"
 msgstr "原价"
 
@@ -538,6 +542,94 @@ msgstr "定价"
 #: .\models\product.py:157
 msgid "Product|main image"
 msgstr "主图"
+
+#: .\models\sell_request.py:17
+msgid "sell request"
+msgstr "出售请求"
+
+#: .\models\sell_request.py:18
+msgid "sell requests"
+msgstr "出售请求"
+
+#: .\models\sell_request.py:26
+msgid "Product|category"
+msgstr "分类"
+
+#: .\models\sell_request.py:30
+msgid "SellRequest|purchase year"
+msgstr "购买年份"
+
+#: .\models\sell_request.py:36
+msgid "image paths"
+msgstr "图片路径"
+
+#: .\models\sell_request.py:50
+msgid "SellRequest|created"
+msgstr "已创建"
+
+#: .\models\sell_request.py:51
+msgid "SellRequest|cancelled"
+msgstr "已取消"
+
+#: .\models\sell_request.py:52
+msgid "SellRequest|denied"
+msgstr "不合适"
+
+#: .\models\sell_request.py:53
+msgid "SellRequest|valuated"
+msgstr "已估价"
+
+#: .\models\sell_request.py:54
+msgid "SellRequest|closed"
+msgstr "已关闭"
+
+#: .\models\sell_request.py:55
+msgid "SellRequest|decided"
+msgstr "已决定出售类型"
+
+#: .\models\sell_request.py:56
+msgid "SellRequest|shipping"
+msgstr "待收货"
+
+#: .\models\sell_request.py:57
+msgid "SellRequest|authenticating"
+msgstr "验货中"
+
+#: .\models\sell_request.py:58
+msgid "SellRequest|selling"
+msgstr "寄卖中"
+
+#: .\models\sell_request.py:59
+msgid "SellRequest|done"
+msgstr "已完成"
+
+#: .\models\sell_request.py:65
+msgid "SellRequest|buy back valuation"
+msgstr "回购估价"
+
+#: .\models\sell_request.py:67
+msgid "SellRequest|sell valuation"
+msgstr "寄卖估价"
+
+#: .\models\sell_request.py:69
+msgid "SellRequest|valuated datetime"
+msgstr "估价时间"
+
+#: .\models\sell_request.py:77
+msgid "SellRequest|undecided"
+msgstr "未决定"
+
+#: .\models\sell_request.py:78
+msgid "SellRequest|buy back"
+msgstr "回购"
+
+#: .\models\sell_request.py:79
+msgid "SellRequest|sell"
+msgstr "寄卖"
+
+#: .\models\sell_request.py:82
+msgid "SellRequest|sell type"
+msgstr "出售类型"
 
 #: .\models\user.py:24
 msgid "Required. 150 characters or fewer. Letters, digits and ./+/-/_ only."
@@ -571,7 +663,7 @@ msgstr "余额"
 msgid "UserInfo|point"
 msgstr "积分"
 
-#: .\serializers\payment_method.py:31
+#: .\serializers\payment_method.py:31 .\validators.py:23
 msgid "This field must be a JSON object."
 msgstr "该字段必须是JSON对象。"
 
@@ -585,11 +677,20 @@ msgstr "“%(field_name)s”字段的值无效。"
 msgid " By %(filter_title)s "
 msgstr " 以 %(filter_title)s "
 
-#: .\validators.py:8
+#: .\validators.py:10
 msgid ""
 "Enter a valid username. This value may contain only letters, numbers, and ./"
 "+/-/_ characters."
 msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/_字符。"
+
+#: .\validators.py:17
+#, python-format
+msgid "File %(name)s is too large."
+msgstr "文件太大。"
+
+#: .\validators.py:28
+msgid "This field must be a JSON array."
+msgstr "该字段必须是JSON数组。"
 
 #~ msgid ""
 #~ "The \"%(field_name)s\" is required for payment method \"%(payment_method)s"

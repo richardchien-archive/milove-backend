@@ -119,7 +119,7 @@ class Migration(migrations.Migration):
                 ('original_price', models.FloatField(verbose_name='Product|original price')),
                 ('buy_back_price', models.FloatField(blank=True, null=True, verbose_name='Product|buy back price')),
                 ('price', models.FloatField(verbose_name='Product|price')),
-                ('main_image', models.ImageField(default='products/placeholder-120x120.png', upload_to=milove.shop.models.product._prod_image_path, verbose_name='Product|main image')),
+                ('main_image', models.ImageField(default='products/120x120.png', upload_to=milove.shop.models.product._prod_image_path, verbose_name='Product|main image')),
                 ('attachments', models.ManyToManyField(blank=True, to='shop.Attachment', verbose_name='Product|attachments')),
                 ('brand', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='products', to='shop.Brand', verbose_name='Product|brand')),
                 ('categories', models.ManyToManyField(blank=True, related_name='products', to='shop.Category', verbose_name='Product|categories')),

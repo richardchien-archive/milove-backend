@@ -10,7 +10,7 @@ from imagekit import ImageSpec
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
-from ..helpers import get_or_none
+from ..model_utils import get_or_none
 
 __all__ = ['Brand', 'Category', 'Attachment',
            'ProductImage', 'Product']
@@ -65,7 +65,7 @@ def _prod_image_path(_, filename):
     return 'products/{}{}'.format(filename_hash.hexdigest(), ext)
 
 
-_prod_image_placeholder_path = 'products/placeholder-120x120.png'
+_prod_image_placeholder_path = 'placeholders/120x120.png'
 
 
 class _Thumbnail(ImageSpec):

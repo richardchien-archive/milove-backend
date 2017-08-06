@@ -3,14 +3,15 @@ import hashlib
 
 from django.conf.urls import url
 from django import forms
-from django.conf import settings
 from django.utils.datetime_safe import datetime
-from django.db import transaction
 from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework import viewsets, exceptions, parsers
-from rest_framework.decorators import api_view, parser_classes
+from django.core.files.storage import DefaultStorage
+from rest_framework import exceptions
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from ..validators import validate_uploaded_file_size
+from .helpers import validate_or_raise
 from . import (
     product,
     user,
@@ -19,6 +20,7 @@ from . import (
     order,
     coupon,
     payment,
+    sell_request,
 )
 
 
@@ -32,7 +34,8 @@ def get_token(request):
 
 
 class UploadImageForm(forms.Form):
-    file = forms.ImageField(required=True)
+    file = forms.ImageField(required=True,
+                            validators=[validate_uploaded_file_size])
 
 
 @api_view(['POST'])
@@ -41,8 +44,7 @@ def upload(request):
         raise exceptions.NotAuthenticated
 
     form = UploadImageForm(request.POST, request.FILES)
-    if not form.is_valid():
-        raise exceptions.ParseError
+    validate_or_raise(form)
 
     file = request.FILES['file']
     filename, ext = os.path.splitext(file.name)
@@ -52,16 +54,15 @@ def upload(request):
     filename_hash.update(str(now.timestamp()).encode('utf-8'))
     filename = '{}-{}{}'.format(now.strftime('%Y%m%d%H%M%S'),
                                 filename_hash.hexdigest(), ext)
-    with open(os.path.join(settings.MEDIA_ROOT, 'uploads', filename),
-              'wb') as f:
-        for chunk in file.chunks():
-            f.write(chunk)
 
+    storage = DefaultStorage()
+    storage.save(os.path.join('uploads', filename), file)
     return Response({'path': 'uploads/' + filename})
 
 
 urlpatterns = [
     url(r'^get_token/$', get_token),
+    url(r'^upload/$', upload),
 ]
 urlpatterns += product.urlpatterns
 urlpatterns += user.urlpatterns
@@ -70,3 +71,4 @@ urlpatterns += payment_method.urlpatterns
 urlpatterns += order.urlpatterns
 urlpatterns += coupon.urlpatterns
 urlpatterns += payment.urlpatterns
+urlpatterns += sell_request.urlpatterns

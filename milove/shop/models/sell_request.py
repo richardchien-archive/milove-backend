@@ -26,21 +26,62 @@ class SellRequest(models.Model):
     category = models.CharField(_('Product|category'), max_length=30)
     name = models.CharField(_('Product|name'), max_length=200, blank=True)
     size = models.CharField(_('Product|size'), max_length=20, blank=True)
-    condition = models.CharField(_('Product|condition'), max_length=50)
-    year = models.CharField(_('SellRequest|year'), max_length=10)
+    condition = models.CharField(_('Product|condition'), max_length=100)
+    purchase_year = models.CharField(_('SellRequest|purchase year'),
+                                     max_length=10)
     original_price = models.FloatField(_('Product|original price'))
     attachments = models.CharField(_('Product|attachments'), max_length=200,
                                    blank=True)
     description = models.TextField(_('Product|description'), blank=True)
-
-    # STATUS_
-
-    buy_back_price = models.FloatField(_('SellRequest|buy back price'),
-                                       null=True, blank=True)
-    sell_price = models.FloatField(_('SellRequest|sell price'),
-                                   null=True, blank=True)
-
     image_paths = JSONField(_('image paths'), default=[], blank=True)
+
+    STATUS_CREATED = 'created'
+    STATUS_CANCELLED = 'cancelled'
+    STATUS_DENIED = 'denied'
+    STATUS_VALUATED = 'valuated'
+    STATUS_CLOSED = 'closed'
+    STATUS_DECIDED = 'decided'
+    STATUS_SHIPPING = 'shipping'
+    STATUS_AUTHENTICATING = 'authenticating'
+    STATUS_SELLING = 'selling'
+    STATUS_DONE = 'done'
+
+    STATUSES = (
+        (STATUS_CREATED, _('SellRequest|created')),
+        (STATUS_CANCELLED, _('SellRequest|cancelled')),
+        (STATUS_DENIED, _('SellRequest|denied')),
+        (STATUS_VALUATED, _('SellRequest|valuated')),
+        (STATUS_CLOSED, _('SellRequest|closed')),
+        (STATUS_DECIDED, _('SellRequest|decided')),
+        (STATUS_SHIPPING, _('SellRequest|shipping')),
+        (STATUS_AUTHENTICATING, _('SellRequest|authenticating')),
+        (STATUS_SELLING, _('SellRequest|selling')),
+        (STATUS_DONE, _('SellRequest|done')),
+    )
+
+    status = models.CharField(_('status'), max_length=20, choices=STATUSES,
+                              default=STATUS_CREATED)
+
+    buy_back_valuation = models.FloatField(_('SellRequest|buy back valuation'),
+                                           null=True, blank=True)
+    sell_valuation = models.FloatField(_('SellRequest|sell valuation'),
+                                       null=True, blank=True)
+    valuated_dt = models.DateTimeField(_('SellRequest|valuated datetime'),
+                                       null=True, blank=True)
+
+    SELL_TYPE_UNDECIDED = 'undecided'
+    SELL_TYPE_BUY_BACK = 'buy-back'
+    SELL_TYPE_SELL = 'sell'
+
+    SELL_TYPES = (
+        (SELL_TYPE_UNDECIDED, _('SellRequest|undecided')),
+        (SELL_TYPE_BUY_BACK, _('SellRequest|buy back')),
+        (SELL_TYPE_SELL, _('SellRequest|sell')),
+    )
+
+    sell_type = models.CharField(_('SellRequest|sell type'), max_length=20,
+                                 choices=SELL_TYPES,
+                                 default=SELL_TYPE_UNDECIDED)
 
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand \
