@@ -9,7 +9,8 @@ from .product import Product
 from .address import AbstractAddress
 from .. import mail_shortcuts as mail
 
-__all__ = ['SellRequest']
+__all__ = ['SellRequest', 'get_direct_dst_statuses', 'get_direct_src_statuses',
+           'is_status_transition_allowed']
 
 
 class SellRequest(models.Model):
@@ -86,3 +87,50 @@ class SellRequest(models.Model):
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand \
                + (' ' + self.name if self.name else '')
+
+
+# all sides of the status transition graph
+_STATUS_SIDES = (
+    (SellRequest.STATUS_CREATED, SellRequest.STATUS_CANCELLED),
+    (SellRequest.STATUS_CREATED, SellRequest.STATUS_DENIED),
+    (SellRequest.STATUS_CREATED, SellRequest.STATUS_VALUATED),
+    (SellRequest.STATUS_VALUATED, SellRequest.STATUS_CLOSED),
+    (SellRequest.STATUS_VALUATED, SellRequest.STATUS_DECIDED),
+    (SellRequest.STATUS_DECIDED, SellRequest.STATUS_SHIPPING),
+    (SellRequest.STATUS_SHIPPING, SellRequest.STATUS_AUTHENTICATING),
+    (SellRequest.STATUS_AUTHENTICATING, SellRequest.STATUS_SELLING),
+    (SellRequest.STATUS_AUTHENTICATING, SellRequest.STATUS_DONE),
+    (SellRequest.STATUS_SELLING, SellRequest.STATUS_DONE),
+)
+
+_STATUSES = dict(SellRequest.STATUSES).keys()
+
+
+def get_direct_src_statuses(status):
+    """Get statuses that can directly transition to the given status."""
+    if status not in _STATUSES:
+        return ()
+    return (status,) + tuple(map(
+        lambda side: side[0],
+        filter(lambda side: side[1] == status, _STATUS_SIDES)
+    ))
+
+
+def get_direct_dst_statuses(status):
+    """Get statuses that the given status can directly transition to."""
+    if status not in _STATUSES:
+        return ()
+    return (status,) + tuple(map(
+        lambda side: side[1],
+        filter(lambda side: side[0] == status, _STATUS_SIDES)
+    ))
+
+
+def is_status_transition_allowed(src_status, dst_status):
+    """Check if the transition from "src_status" to "dst_status" is allowed."""
+    if src_status not in _STATUSES or dst_status not in _STATUSES:
+        return False
+    return src_status == dst_status or any(
+        map(lambda side: side[0] == src_status and side[1] == dst_status,
+            _STATUS_SIDES)
+    )
