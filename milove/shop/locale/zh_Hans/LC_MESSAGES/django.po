@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-06 21:02+0800\n"
+"POT-Creation-Date: 2017-08-07 16:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr "Milove 后台管理"
 msgid "Coupon|discount"
 msgstr "折扣"
 
-#: .\admin\order.py:94
+#: .\admin\order.py:73
 #, python-format
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr "订单状态不可以从“%(src_status)s”切换到“%(dst_status)s”。"
@@ -42,7 +42,7 @@ msgstr "在售商品数"
 msgid "image preview"
 msgstr "图片预览"
 
-#: .\admin\product.py:93 .\models\order.py:33
+#: .\admin\product.py:93 .\models\order.py:38
 msgid "Product|main image preview"
 msgstr "主图预览"
 
@@ -54,7 +54,7 @@ msgstr "分类"
 msgid "Product|price / original price"
 msgstr "定价 / 原价"
 
-#: .\admin\sell_request.py:22
+#: .\admin\sell_request.py:52
 msgid "preview"
 msgstr "预览"
 
@@ -138,8 +138,8 @@ msgstr "地址"
 msgid "addresses"
 msgstr "地址"
 
-#: .\models\address.py:48 .\models\order.py:63 .\models\payment_method.py:17
-#: .\models\sell_request.py:23 .\models\user.py:61
+#: .\models\address.py:48 .\models\order.py:68 .\models\payment_method.py:17
+#: .\models\sell_request.py:39 .\models\user.py:61
 msgid "user"
 msgstr "用户"
 
@@ -175,137 +175,137 @@ msgstr "订单总价需满"
 msgid "Coupon|is valid"
 msgstr "有效"
 
-#: .\models\order.py:16
+#: .\models\order.py:21
 msgid "order item"
 msgstr "订单项"
 
-#: .\models\order.py:17
+#: .\models\order.py:22
 msgid "order items"
 msgstr "订单项"
 
-#: .\models\order.py:20 .\models\product.py:87 .\models\product.py:95
+#: .\models\order.py:25 .\models\product.py:87 .\models\product.py:95
 msgid "product"
 msgstr "商品"
 
-#: .\models\order.py:23 .\models\order.py:47 .\models\order.py:52
-#: .\models\order.py:140 .\models\payment.py:31
+#: .\models\order.py:28 .\models\order.py:52 .\models\order.py:57
+#: .\models\order.py:145 .\models\payment.py:31
 msgid "order"
 msgstr "订单"
 
-#: .\models\order.py:24
+#: .\models\order.py:29
 msgid "strike price"
 msgstr "成交价"
 
-#: .\models\order.py:42
+#: .\models\order.py:47
 msgid "shipping address"
 msgstr "收货地址"
 
-#: .\models\order.py:43
+#: .\models\order.py:48
 msgid "shipping addresses"
 msgstr "收货地址"
 
-#: .\models\order.py:53
+#: .\models\order.py:58
 msgid "orders"
 msgstr "订单"
 
-#: .\models\order.py:60 .\models\payment.py:29 .\models\sell_request.py:20
+#: .\models\order.py:65 .\models\payment.py:29 .\models\sell_request.py:36
 msgid "created datetime"
 msgstr "创建时间"
 
-#: .\models\order.py:64
+#: .\models\order.py:69
 msgid "total price"
 msgstr "总价"
 
-#: .\models\order.py:65
+#: .\models\order.py:70
 msgid "discount amount"
 msgstr "折扣金额"
 
-#: .\models\order.py:67
+#: .\models\order.py:72
 msgid "paid amount"
 msgstr "实付金额"
 
-#: .\models\order.py:68
+#: .\models\order.py:73
 msgid "Order|comment"
 msgstr "买家留言"
 
-#: .\models\order.py:82
+#: .\models\order.py:87
 msgid "OrderStatus|unpaid"
 msgstr "待付款"
 
-#: .\models\order.py:83
+#: .\models\order.py:88
 msgid "OrderStatus|closed"
 msgstr "已关闭"
 
-#: .\models\order.py:84
+#: .\models\order.py:89
 msgid "OrderStatus|paid"
 msgstr "已付款"
 
-#: .\models\order.py:85
+#: .\models\order.py:90
 msgid "OrderStatus|cancelling"
 msgstr "取消中"
 
-#: .\models\order.py:86
+#: .\models\order.py:91
 msgid "OrderStatus|cancelled"
 msgstr "已取消"
 
-#: .\models\order.py:87
+#: .\models\order.py:92
 msgid "OrderStatus|shipping"
 msgstr "待收货"
 
-#: .\models\order.py:88
+#: .\models\order.py:93
 msgid "OrderStatus|done"
 msgstr "已完成"
 
-#: .\models\order.py:89
+#: .\models\order.py:94
 msgid "OrderStatus|return requested"
 msgstr "已申请退货"
 
-#: .\models\order.py:90
+#: .\models\order.py:95
 msgid "OrderStatus|returning"
 msgstr "退货中"
 
-#: .\models\order.py:91
+#: .\models\order.py:96
 msgid "OrderStatus|returned"
 msgstr "已退货"
 
-#: .\models\order.py:94 .\models\payment.py:72 .\models\sell_request.py:62
+#: .\models\order.py:99 .\models\payment.py:72 .\models\sell_request.py:78
 msgid "status"
 msgstr "状态"
 
-#: .\models\order.py:96
+#: .\models\order.py:101
 msgid "last status"
 msgstr "上一个状态"
 
-#: .\models\order.py:124
+#: .\models\order.py:129
 msgid "express company"
 msgstr "快递公司"
 
-#: .\models\order.py:126
+#: .\models\order.py:131
 msgid "tracking number"
 msgstr "运单号"
 
-#: .\models\order.py:130
+#: .\models\order.py:135
 #, python-format
 msgid "Order #%(pk)s"
 msgstr "订单#%(pk)s"
 
-#: .\models\order.py:135
+#: .\models\order.py:140
 msgid "order status transition"
 msgstr "订单状态转移"
 
-#: .\models\order.py:136
+#: .\models\order.py:141
 msgid "order status transitions"
 msgstr "订单状态转移"
 
-#: .\models\order.py:141
+#: .\models\order.py:146
 msgid "happened datetime"
 msgstr "发生时间"
 
-#: .\models\order.py:143
+#: .\models\order.py:148
 msgid "source status"
 msgstr "源状态"
 
-#: .\models\order.py:145
+#: .\models\order.py:150
 msgid "destination status"
 msgstr "目标状态"
 
@@ -475,11 +475,11 @@ msgstr "已出售"
 msgid "Product|sold datetime"
 msgstr "出售时间"
 
-#: .\models\product.py:114 .\models\sell_request.py:25
+#: .\models\product.py:114 .\models\sell_request.py:41
 msgid "Product|brand"
 msgstr "品牌"
 
-#: .\models\product.py:116 .\models\sell_request.py:27
+#: .\models\product.py:116 .\models\sell_request.py:43
 msgid "Product|name"
 msgstr "名称"
 
@@ -487,7 +487,7 @@ msgstr "名称"
 msgid "Product|style"
 msgstr "款式"
 
-#: .\models\product.py:120 .\models\sell_request.py:28
+#: .\models\product.py:120 .\models\sell_request.py:44
 msgid "Product|size"
 msgstr "尺码"
 
@@ -515,19 +515,19 @@ msgstr "C"
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:139 .\models\sell_request.py:29
+#: .\models\product.py:139 .\models\sell_request.py:45
 msgid "Product|condition"
 msgstr "成色"
 
-#: .\models\product.py:145 .\models\sell_request.py:33
+#: .\models\product.py:145 .\models\sell_request.py:49
 msgid "Product|attachments"
 msgstr "附件"
 
-#: .\models\product.py:147 .\models\sell_request.py:35
+#: .\models\product.py:147 .\models\sell_request.py:51
 msgid "Product|description"
 msgstr "描述"
 
-#: .\models\product.py:149 .\models\sell_request.py:32
+#: .\models\product.py:149 .\models\sell_request.py:48
 msgid "Product|original price"
 msgstr "原价"
 
@@ -543,91 +543,99 @@ msgstr "定价"
 msgid "Product|main image"
 msgstr "主图"
 
-#: .\models\sell_request.py:17
+#: .\models\sell_request.py:22
+msgid "sell request sender address"
+msgstr "寄件地址"
+
+#: .\models\sell_request.py:23
+msgid "sell request sender addresses"
+msgstr "寄件地址"
+
+#: .\models\sell_request.py:28 .\models\sell_request.py:33
 msgid "sell request"
 msgstr "出售请求"
 
-#: .\models\sell_request.py:18
+#: .\models\sell_request.py:34
 msgid "sell requests"
 msgstr "出售请求"
 
-#: .\models\sell_request.py:26
+#: .\models\sell_request.py:42
 msgid "Product|category"
 msgstr "分类"
 
-#: .\models\sell_request.py:30
+#: .\models\sell_request.py:46
 msgid "SellRequest|purchase year"
 msgstr "购买年份"
 
-#: .\models\sell_request.py:36
+#: .\models\sell_request.py:52
 msgid "image paths"
 msgstr "图片路径"
 
-#: .\models\sell_request.py:50
+#: .\models\sell_request.py:66
 msgid "SellRequest|created"
 msgstr "已创建"
 
-#: .\models\sell_request.py:51
+#: .\models\sell_request.py:67
 msgid "SellRequest|cancelled"
 msgstr "已取消"
 
-#: .\models\sell_request.py:52
+#: .\models\sell_request.py:68
 msgid "SellRequest|denied"
 msgstr "不合适"
 
-#: .\models\sell_request.py:53
+#: .\models\sell_request.py:69
 msgid "SellRequest|valuated"
 msgstr "已估价"
 
-#: .\models\sell_request.py:54
+#: .\models\sell_request.py:70
 msgid "SellRequest|closed"
 msgstr "已关闭"
 
-#: .\models\sell_request.py:55
+#: .\models\sell_request.py:71
 msgid "SellRequest|decided"
 msgstr "已决定出售类型"
 
-#: .\models\sell_request.py:56
+#: .\models\sell_request.py:72
 msgid "SellRequest|shipping"
 msgstr "待收货"
 
-#: .\models\sell_request.py:57
+#: .\models\sell_request.py:73
 msgid "SellRequest|authenticating"
 msgstr "验货中"
 
-#: .\models\sell_request.py:58
+#: .\models\sell_request.py:74
 msgid "SellRequest|selling"
 msgstr "寄卖中"
 
-#: .\models\sell_request.py:59
+#: .\models\sell_request.py:75
 msgid "SellRequest|done"
 msgstr "已完成"
 
-#: .\models\sell_request.py:65
+#: .\models\sell_request.py:81
 msgid "SellRequest|buy back valuation"
 msgstr "回购估价"
 
-#: .\models\sell_request.py:67
+#: .\models\sell_request.py:83
 msgid "SellRequest|sell valuation"
 msgstr "寄卖估价"
 
-#: .\models\sell_request.py:69
+#: .\models\sell_request.py:85
 msgid "SellRequest|valuated datetime"
 msgstr "估价时间"
 
-#: .\models\sell_request.py:77
+#: .\models\sell_request.py:93
 msgid "SellRequest|undecided"
 msgstr "未决定"
 
-#: .\models\sell_request.py:78
+#: .\models\sell_request.py:94
 msgid "SellRequest|buy back"
 msgstr "回购"
 
-#: .\models\sell_request.py:79
+#: .\models\sell_request.py:95
 msgid "SellRequest|sell"
 msgstr "寄卖"
 
-#: .\models\sell_request.py:82
+#: .\models\sell_request.py:98
 msgid "SellRequest|sell type"
 msgstr "出售类型"
 
@@ -663,11 +671,7 @@ msgstr "余额"
 msgid "UserInfo|point"
 msgstr "积分"
 
-#: .\serializers\payment_method.py:31 .\validators.py:23
-msgid "This field must be a JSON object."
-msgstr "该字段必须是JSON对象。"
-
-#: .\serializers\payment_method.py:65
+#: .\serializers\payment_method.py:61
 #, python-format
 msgid "Value of \"%(field_name)s\" field is not valid."
 msgstr "“%(field_name)s”字段的值无效。"
@@ -687,6 +691,10 @@ msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/
 #, python-format
 msgid "File %(name)s is too large."
 msgstr "文件%(name)s太大。"
+
+#: .\validators.py:23
+msgid "This field must be a JSON object."
+msgstr "该字段必须是JSON对象。"
 
 #: .\validators.py:28
 msgid "This field must be a JSON array."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-06 21:02+0800\n"
+"POT-Creation-Date: 2017-08-07 16:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Coupon|discount"
 msgstr "discount"
 
-#: .\admin\order.py:94
+#: .\admin\order.py:73
 #, python-format
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr ""
@@ -42,7 +42,7 @@ msgstr ""
 msgid "image preview"
 msgstr ""
 
-#: .\admin\product.py:93 .\models\order.py:33
+#: .\admin\product.py:93 .\models\order.py:38
 msgid "Product|main image preview"
 msgstr "main image preview"
 
@@ -54,7 +54,7 @@ msgstr "categories"
 msgid "Product|price / original price"
 msgstr "price / original price"
 
-#: .\admin\sell_request.py:22
+#: .\admin\sell_request.py:52
 msgid "preview"
 msgstr ""
 
@@ -138,8 +138,8 @@ msgstr ""
 msgid "addresses"
 msgstr ""
 
-#: .\models\address.py:48 .\models\order.py:63 .\models\payment_method.py:17
-#: .\models\sell_request.py:23 .\models\user.py:61
+#: .\models\address.py:48 .\models\order.py:68 .\models\payment_method.py:17
+#: .\models\sell_request.py:39 .\models\user.py:61
 msgid "user"
 msgstr ""
 
@@ -175,137 +175,137 @@ msgstr "price required"
 msgid "Coupon|is valid"
 msgstr "is valid"
 
-#: .\models\order.py:16
+#: .\models\order.py:21
 msgid "order item"
 msgstr ""
 
-#: .\models\order.py:17
+#: .\models\order.py:22
 msgid "order items"
 msgstr ""
 
-#: .\models\order.py:20 .\models\product.py:87 .\models\product.py:95
+#: .\models\order.py:25 .\models\product.py:87 .\models\product.py:95
 msgid "product"
 msgstr ""
 
-#: .\models\order.py:23 .\models\order.py:47 .\models\order.py:52
-#: .\models\order.py:140 .\models\payment.py:31
+#: .\models\order.py:28 .\models\order.py:52 .\models\order.py:57
+#: .\models\order.py:145 .\models\payment.py:31
 msgid "order"
 msgstr ""
 
-#: .\models\order.py:24
+#: .\models\order.py:29
 msgid "strike price"
 msgstr ""
 
-#: .\models\order.py:42
+#: .\models\order.py:47
 msgid "shipping address"
 msgstr ""
 
-#: .\models\order.py:43
+#: .\models\order.py:48
 msgid "shipping addresses"
 msgstr ""
 
-#: .\models\order.py:53
+#: .\models\order.py:58
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:60 .\models\payment.py:29 .\models\sell_request.py:20
+#: .\models\order.py:65 .\models\payment.py:29 .\models\sell_request.py:36
 msgid "created datetime"
 msgstr ""
 
-#: .\models\order.py:64
+#: .\models\order.py:69
 msgid "total price"
 msgstr ""
 
-#: .\models\order.py:65
+#: .\models\order.py:70
 msgid "discount amount"
 msgstr ""
 
-#: .\models\order.py:67
+#: .\models\order.py:72
 msgid "paid amount"
 msgstr ""
 
-#: .\models\order.py:68
+#: .\models\order.py:73
 msgid "Order|comment"
 msgstr "comment"
 
-#: .\models\order.py:82
+#: .\models\order.py:87
 msgid "OrderStatus|unpaid"
 msgstr "unpaid"
 
-#: .\models\order.py:83
+#: .\models\order.py:88
 msgid "OrderStatus|closed"
 msgstr "closed"
 
-#: .\models\order.py:84
+#: .\models\order.py:89
 msgid "OrderStatus|paid"
 msgstr "paid"
 
-#: .\models\order.py:85
+#: .\models\order.py:90
 msgid "OrderStatus|cancelling"
 msgstr "cancelling"
 
-#: .\models\order.py:86
+#: .\models\order.py:91
 msgid "OrderStatus|cancelled"
 msgstr "cancelled"
 
-#: .\models\order.py:87
+#: .\models\order.py:92
 msgid "OrderStatus|shipping"
 msgstr "shipping"
 
-#: .\models\order.py:88
+#: .\models\order.py:93
 msgid "OrderStatus|done"
 msgstr "done"
 
-#: .\models\order.py:89
+#: .\models\order.py:94
 msgid "OrderStatus|return requested"
 msgstr "return requested"
 
-#: .\models\order.py:90
+#: .\models\order.py:95
 msgid "OrderStatus|returning"
 msgstr "returning"
 
-#: .\models\order.py:91
+#: .\models\order.py:96
 msgid "OrderStatus|returned"
 msgstr "returned"
 
-#: .\models\order.py:94 .\models\payment.py:72 .\models\sell_request.py:62
+#: .\models\order.py:99 .\models\payment.py:72 .\models\sell_request.py:78
 msgid "status"
 msgstr ""
 
-#: .\models\order.py:96
+#: .\models\order.py:101
 msgid "last status"
 msgstr ""
 
-#: .\models\order.py:124
+#: .\models\order.py:129
 msgid "express company"
 msgstr ""
 
-#: .\models\order.py:126
+#: .\models\order.py:131
 msgid "tracking number"
 msgstr ""
 
-#: .\models\order.py:130
+#: .\models\order.py:135
 #, python-format
 msgid "Order #%(pk)s"
 msgstr ""
 
-#: .\models\order.py:135
+#: .\models\order.py:140
 msgid "order status transition"
 msgstr ""
 
-#: .\models\order.py:136
+#: .\models\order.py:141
 msgid "order status transitions"
 msgstr ""
 
-#: .\models\order.py:141
+#: .\models\order.py:146
 msgid "happened datetime"
 msgstr ""
 
-#: .\models\order.py:143
+#: .\models\order.py:148
 msgid "source status"
 msgstr ""
 
-#: .\models\order.py:145
+#: .\models\order.py:150
 msgid "destination status"
 msgstr ""
 
@@ -475,11 +475,11 @@ msgstr "sold"
 msgid "Product|sold datetime"
 msgstr "sold datetime"
 
-#: .\models\product.py:114 .\models\sell_request.py:25
+#: .\models\product.py:114 .\models\sell_request.py:41
 msgid "Product|brand"
 msgstr "brand"
 
-#: .\models\product.py:116 .\models\sell_request.py:27
+#: .\models\product.py:116 .\models\sell_request.py:43
 msgid "Product|name"
 msgstr "name"
 
@@ -487,7 +487,7 @@ msgstr "name"
 msgid "Product|style"
 msgstr "style"
 
-#: .\models\product.py:120 .\models\sell_request.py:28
+#: .\models\product.py:120 .\models\sell_request.py:44
 msgid "Product|size"
 msgstr "size"
 
@@ -515,19 +515,19 @@ msgstr "C"
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:139 .\models\sell_request.py:29
+#: .\models\product.py:139 .\models\sell_request.py:45
 msgid "Product|condition"
 msgstr "condition"
 
-#: .\models\product.py:145 .\models\sell_request.py:33
+#: .\models\product.py:145 .\models\sell_request.py:49
 msgid "Product|attachments"
 msgstr "attachments"
 
-#: .\models\product.py:147 .\models\sell_request.py:35
+#: .\models\product.py:147 .\models\sell_request.py:51
 msgid "Product|description"
 msgstr "description"
 
-#: .\models\product.py:149 .\models\sell_request.py:32
+#: .\models\product.py:149 .\models\sell_request.py:48
 msgid "Product|original price"
 msgstr "original price"
 
@@ -543,91 +543,99 @@ msgstr "price"
 msgid "Product|main image"
 msgstr "main image"
 
-#: .\models\sell_request.py:17
+#: .\models\sell_request.py:22
+msgid "sell request sender address"
+msgstr ""
+
+#: .\models\sell_request.py:23
+msgid "sell request sender addresses"
+msgstr ""
+
+#: .\models\sell_request.py:28 .\models\sell_request.py:33
 msgid "sell request"
 msgstr ""
 
-#: .\models\sell_request.py:18
+#: .\models\sell_request.py:34
 msgid "sell requests"
 msgstr ""
 
-#: .\models\sell_request.py:26
+#: .\models\sell_request.py:42
 msgid "Product|category"
 msgstr "category"
 
-#: .\models\sell_request.py:30
+#: .\models\sell_request.py:46
 msgid "SellRequest|purchase year"
 msgstr "purchase year"
 
-#: .\models\sell_request.py:36
+#: .\models\sell_request.py:52
 msgid "image paths"
 msgstr ""
 
-#: .\models\sell_request.py:50
+#: .\models\sell_request.py:66
 msgid "SellRequest|created"
 msgstr "created"
 
-#: .\models\sell_request.py:51
+#: .\models\sell_request.py:67
 msgid "SellRequest|cancelled"
 msgstr "cancelled"
 
-#: .\models\sell_request.py:52
+#: .\models\sell_request.py:68
 msgid "SellRequest|denied"
 msgstr "denied"
 
-#: .\models\sell_request.py:53
+#: .\models\sell_request.py:69
 msgid "SellRequest|valuated"
 msgstr "valuated"
 
-#: .\models\sell_request.py:54
+#: .\models\sell_request.py:70
 msgid "SellRequest|closed"
 msgstr "closed"
 
-#: .\models\sell_request.py:55
+#: .\models\sell_request.py:71
 msgid "SellRequest|decided"
 msgstr "decided"
 
-#: .\models\sell_request.py:56
+#: .\models\sell_request.py:72
 msgid "SellRequest|shipping"
 msgstr "shipping"
 
-#: .\models\sell_request.py:57
+#: .\models\sell_request.py:73
 msgid "SellRequest|authenticating"
 msgstr "authenticating"
 
-#: .\models\sell_request.py:58
+#: .\models\sell_request.py:74
 msgid "SellRequest|selling"
 msgstr "selling"
 
-#: .\models\sell_request.py:59
+#: .\models\sell_request.py:75
 msgid "SellRequest|done"
 msgstr "done"
 
-#: .\models\sell_request.py:65
+#: .\models\sell_request.py:81
 msgid "SellRequest|buy back valuation"
 msgstr "buy back valuation"
 
-#: .\models\sell_request.py:67
+#: .\models\sell_request.py:83
 msgid "SellRequest|sell valuation"
 msgstr "sell valuation"
 
-#: .\models\sell_request.py:69
+#: .\models\sell_request.py:85
 msgid "SellRequest|valuated datetime"
 msgstr "valuated datetime"
 
-#: .\models\sell_request.py:77
+#: .\models\sell_request.py:93
 msgid "SellRequest|undecided"
 msgstr "undecided"
 
-#: .\models\sell_request.py:78
+#: .\models\sell_request.py:94
 msgid "SellRequest|buy back"
 msgstr "buy back"
 
-#: .\models\sell_request.py:79
+#: .\models\sell_request.py:95
 msgid "SellRequest|sell"
 msgstr "sell"
 
-#: .\models\sell_request.py:82
+#: .\models\sell_request.py:98
 msgid "SellRequest|sell type"
 msgstr "sell type"
 
@@ -663,11 +671,7 @@ msgstr "balance"
 msgid "UserInfo|point"
 msgstr "point"
 
-#: .\serializers\payment_method.py:31 .\validators.py:23
-msgid "This field must be a JSON object."
-msgstr ""
-
-#: .\serializers\payment_method.py:65
+#: .\serializers\payment_method.py:61
 #, python-format
 msgid "Value of \"%(field_name)s\" field is not valid."
 msgstr ""
@@ -686,6 +690,10 @@ msgstr ""
 #: .\validators.py:17
 #, python-format
 msgid "File %(name)s is too large."
+msgstr ""
+
+#: .\validators.py:23
+msgid "This field must be a JSON object."
 msgstr ""
 
 #: .\validators.py:28
