@@ -1,7 +1,7 @@
 import django_filters.rest_framework
 from django.db import transaction
 from django import forms
-from rest_framework import viewsets, mixins, status, exceptions
+from rest_framework import viewsets, mixins, exceptions
 from rest_framework.routers import SimpleRouter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -35,6 +35,25 @@ class SellRequestViewSet(mixins.CreateModelMixin,
 
     def get_queryset(self):
         return SellRequest.objects.filter(user=self.request.user)
+
+    class Pagination(PageNumberPagination):
+        page_size = 15
+
+    class Filter(django_filters.rest_framework.FilterSet):
+        created_dt = django_filters.rest_framework.DateFromToRangeFilter()
+        status = rest_filters.CommaSplitListFilter()
+        valuated_dt = django_filters.rest_framework.DateFromToRangeFilter()
+        sell_type = rest_filters.CommaSplitListFilter()
+
+        class Meta:
+            model = SellRequest
+            fields = ('created_dt', 'status', 'valuated_dt', 'sell_type')
+
+    pagination_class = Pagination
+    filter_class = Filter
+    ordering = ('-created_dt',)
+    search_fields = ('brand', 'category', 'name', 'size', 'condition',
+                     'purchase_year', 'attachments', 'description')
 
     @detail_route(methods=['PUT'])
     def cancellation(self, request, **kwargs):
