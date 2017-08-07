@@ -40,7 +40,7 @@ class PaymentViewSet(viewsets.GenericViewSet):
                         status=status.HTTP_201_CREATED)
 
     @list_route(['POST'])
-    def execute(self, request, **kwargs):
+    def execution(self, request, **kwargs):
         """Execute a payment after user authorized it."""
 
         form = PaymentForm(request.data)
@@ -67,7 +67,7 @@ class PaymentViewSet(viewsets.GenericViewSet):
         return Response(PaymentSerializer(payment).data)
 
     @list_route(['POST'])
-    def cancel(self, request, **kwargs):
+    def cancellation(self, request, **kwargs):
         """Cancel a payment, when the user cancelled the auth window."""
         # TODO: 这个函数其实可以删除
 
