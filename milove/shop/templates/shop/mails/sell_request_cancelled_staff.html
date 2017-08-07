@@ -1,0 +1,10 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>出售请求#{{ sell_req.pk }}</h2>
+  <p>
+    该出售请求已被用户取消。
+  </p>
+  <p>
+    详细信息见<a href="http://www.milove.com/admin/shop/sellrequest/{{ sell_req.pk }}/change/">这里</a>。
+  </p>
+{% endblock %}

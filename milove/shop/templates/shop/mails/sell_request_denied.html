@@ -1,0 +1,11 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>出售请求#{{ sell_req.pk }}</h2>
+  <p>
+    您的出售请求已被标记为不合适，原因如下：
+  </p>
+  <p>{{ sell_req.denied_reason }}</p>
+  <p>
+    对此我们深感抱歉。详情见<a href="https://www.milove.com/account/sell-requests/{{ sell_req.pk }}/">这里</a>。
+  </p>
+{% endblock %}

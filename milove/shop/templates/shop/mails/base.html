@@ -7,13 +7,18 @@
       font-family: -apple-system, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Wenquanyi Micro Hei, WenQuanYi Zen Hei, ST Heiti, SimHei, WenQuanYi Zen Hei Sharp, sans-serif;
     }
 
-    td {
-      padding: 12px 20px;
-      border: 1px solid #ddd;
-      border-bottom: none;
+    table {
+      border: 0;
+      border-spacing: 0;
     }
 
-    tr.footer > td {
+    #main-table > tbody > tr > td {
+      border: 1px solid #ddd;
+      border-bottom: none;
+      padding: 12px 20px;
+    }
+
+    #main-table > tbody > tr.last-row > td {
       border-bottom: 1px solid #ddd;
     }
 
@@ -32,8 +37,7 @@
     .container {
       background: white;
       max-width: 600px;
-      margin: auto;
-      padding: 20px 0;
+      margin: 20px auto;
     }
 
     .header {
@@ -76,18 +80,28 @@
       display: block;
       margin-top: 20px;
     }
+
+    .content tr > td {
+      border-top: 1px solid #ddd;
+      border-bottom: none;
+      padding: 6px 12px;
+    }
+
+    .content tr.last-row > td {
+      border-bottom: 1px solid #ddd;
+    }
   </style>
 </head>
 
 <body>
 <div class="container">
-  <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="main-table">
     <tbody>
     <tr>
       <td class="header">
         {% block header %}
           <a href="https://www.milove.com">
-            <h1>MILOVE</h1>
+            <img src="https://o33x5shzt.qnssl.com/17-8-7/39040319.jpg" height="24" alt="MILOVE">
           </a>
         {% endblock %}
       </td>
@@ -99,7 +113,7 @@
         <p class="content-end">Milove 团队敬上</p>
       </td>
     </tr>
-    <tr class="footer">
+    <tr class="last-row footer">
       <td>
         {% block footer %}
           <a href="https://www.milove.com">访问网站</a> |

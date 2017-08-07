@@ -1,0 +1,11 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>出售请求#{{ sell_req.pk }}</h2>
+  <p>
+    您的邮寄标签已生成，请前往<a href="https://www.milove.com/account/sell-requests/{{ sell_req.pk }}/">这里</a
+  >下载并寄出货品。我们收到货并鉴定之后，如果您选择的是回购，钱款将直接进入您的 Milove 账户余额，如果是寄卖，钱款将在货品卖出后进入余额。
+  </p>
+  <p>
+    如有疑问，请及时联系我们的客服微信进行咨询。
+  </p>
+{% endblock %}

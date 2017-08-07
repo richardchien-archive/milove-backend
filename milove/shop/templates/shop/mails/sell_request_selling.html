@@ -1,0 +1,11 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>出售请求#{{ sell_req.pk }}</h2>
+  <p>
+    您的货品已在寄卖中，详情见<a href="https://www.milove.com/account/sell-requests/{{ sell_req.pk }}/">这里</a
+  >，卖出后您将收到邮件提醒，与此同时，钱款将会进入您的 Milove 账户余额。
+  </p>
+  <p>
+    如有疑问，请及时联系我们的客服微信进行咨询。
+  </p>
+{% endblock %}

@@ -185,6 +185,7 @@ THREAD_POOL_MAX_WORKER = 20
 # Shop configuration
 
 ORDER_NOTIFICATION_GROUP_NAME = '订单管理员'
+SELL_REQUEST_NOTIFICATION_GROUP_NAME = '出售请求管理员'
 AMOUNT_TO_POINT = lambda x: int(x / 10.0)
 POINT_TO_AMOUNT = lambda x: x / 100.0
 POINT_TO_AMOUNT_REVERSE = lambda x: x * 100.0

@@ -1,0 +1,18 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>出售请求#{{ sell_req.pk }}</h2>
+  <p>
+    您的出售请求已估价，估价如下：
+  </p>
+  <p>
+    回收：${{ sell_req.buy_back_valuation }}
+    寄卖：${{ sell_req.sell_valuation }}
+  </p>
+  <p>
+    上面为预估价格，我们在收到您的货品之后会仔细检查和鉴定，届时如有必要可能会联系您修改最终报价。
+  </p>
+  <p>
+    如果您对估价感到满意，请前往<a href="https://www.milove.com/account/sell-requests/{{ sell_req.pk }}/">这里</a
+  >选择出售类型（目前支持回收和寄卖），选择后我们将会尽快为您生成邮寄标签（生成后您将收到邮件提醒，并可在出售请求详情页下载），以便您将货品寄出。若两周后您仍然没有选择出售类型，出售请求将会自动关闭。
+  </p>
+{% endblock %}

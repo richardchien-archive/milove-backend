@@ -10,12 +10,12 @@
   </p>
   {% with address=order.shipping_address %}
     <p>
-      收货地址：<br>
-      {{ address.fullname }}<br>
-      {{ address.street_address }}<br>
-      {{ address.city }}, {{ address.province }} {{ address.zip_code }}<br>
-      {{ address.country }}<br>
-      电话号码：{{ address.phone_number }}
+      收货地址：
+      <br>{{ address.fullname }}
+      <br>{{ address.street_address }}
+      <br>{{ address.city }}, {{ address.province }} {{ address.zip_code }}
+      <br>{{ address.country }}
+      <br>电话号码：{{ address.phone_number }}
     </p>
   {% endwith %}
   <p>

@@ -18,7 +18,7 @@
   <p>
     客户联系方式：
     {% for key, value in order.user.info.contact.items %}
-      <br>{{ key }}: {{ value }}
+      {{ key }}: {{ value }}<br>
     {% endfor %}
   </p>
   <p>

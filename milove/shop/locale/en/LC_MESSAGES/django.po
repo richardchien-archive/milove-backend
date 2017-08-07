@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-07 16:15+0800\n"
+"POT-Creation-Date: 2017-08-07 20:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,7 +139,7 @@ msgid "addresses"
 msgstr ""
 
 #: .\models\address.py:48 .\models\order.py:68 .\models\payment_method.py:17
-#: .\models\sell_request.py:39 .\models\user.py:61
+#: .\models\sell_request.py:53 .\models\user.py:61
 msgid "user"
 msgstr ""
 
@@ -208,7 +208,7 @@ msgstr ""
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:65 .\models\payment.py:29 .\models\sell_request.py:36
+#: .\models\order.py:65 .\models\payment.py:29 .\models\sell_request.py:50
 msgid "created datetime"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr "returning"
 msgid "OrderStatus|returned"
 msgstr "returned"
 
-#: .\models\order.py:99 .\models\payment.py:72 .\models\sell_request.py:78
+#: .\models\order.py:99 .\models\payment.py:72 .\models\sell_request.py:92
 msgid "status"
 msgstr ""
 
@@ -276,15 +276,15 @@ msgstr ""
 msgid "last status"
 msgstr ""
 
-#: .\models\order.py:129
+#: .\models\order.py:105
 msgid "express company"
 msgstr ""
 
-#: .\models\order.py:131
+#: .\models\order.py:107
 msgid "tracking number"
 msgstr ""
 
-#: .\models\order.py:135
+#: .\models\order.py:111
 #, python-format
 msgid "Order #%(pk)s"
 msgstr ""
@@ -475,11 +475,11 @@ msgstr "sold"
 msgid "Product|sold datetime"
 msgstr "sold datetime"
 
-#: .\models\product.py:114 .\models\sell_request.py:41
+#: .\models\product.py:114 .\models\sell_request.py:55
 msgid "Product|brand"
 msgstr "brand"
 
-#: .\models\product.py:116 .\models\sell_request.py:43
+#: .\models\product.py:116 .\models\sell_request.py:57
 msgid "Product|name"
 msgstr "name"
 
@@ -487,7 +487,7 @@ msgstr "name"
 msgid "Product|style"
 msgstr "style"
 
-#: .\models\product.py:120 .\models\sell_request.py:44
+#: .\models\product.py:120 .\models\sell_request.py:58
 msgid "Product|size"
 msgstr "size"
 
@@ -515,19 +515,19 @@ msgstr "C"
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:139 .\models\sell_request.py:45
+#: .\models\product.py:139 .\models\sell_request.py:59
 msgid "Product|condition"
 msgstr "condition"
 
-#: .\models\product.py:145 .\models\sell_request.py:49
+#: .\models\product.py:145 .\models\sell_request.py:63
 msgid "Product|attachments"
 msgstr "attachments"
 
-#: .\models\product.py:147 .\models\sell_request.py:51
+#: .\models\product.py:147 .\models\sell_request.py:65
 msgid "Product|description"
 msgstr "description"
 
-#: .\models\product.py:149 .\models\sell_request.py:48
+#: .\models\product.py:149 .\models\sell_request.py:62
 msgid "Product|original price"
 msgstr "original price"
 
@@ -543,101 +543,105 @@ msgstr "price"
 msgid "Product|main image"
 msgstr "main image"
 
-#: .\models\sell_request.py:22
+#: .\models\sell_request.py:25
 msgid "sell request sender address"
 msgstr ""
 
-#: .\models\sell_request.py:23
+#: .\models\sell_request.py:26
 msgid "sell request sender addresses"
 msgstr ""
 
-#: .\models\sell_request.py:28 .\models\sell_request.py:33
+#: .\models\sell_request.py:31 .\models\sell_request.py:47
 msgid "sell request"
 msgstr ""
 
-#: .\models\sell_request.py:34
+#: .\models\sell_request.py:48
 msgid "sell requests"
 msgstr ""
 
-#: .\models\sell_request.py:42
+#: .\models\sell_request.py:56
 msgid "Product|category"
 msgstr "category"
 
-#: .\models\sell_request.py:46
+#: .\models\sell_request.py:60
 msgid "SellRequest|purchase year"
 msgstr "purchase year"
 
-#: .\models\sell_request.py:52
+#: .\models\sell_request.py:66
 msgid "image paths"
 msgstr ""
 
-#: .\models\sell_request.py:66
+#: .\models\sell_request.py:80
 msgid "SellRequest|created"
 msgstr "created"
 
-#: .\models\sell_request.py:67
+#: .\models\sell_request.py:81
 msgid "SellRequest|cancelled"
 msgstr "cancelled"
 
-#: .\models\sell_request.py:68
+#: .\models\sell_request.py:82
 msgid "SellRequest|denied"
 msgstr "denied"
 
-#: .\models\sell_request.py:69
+#: .\models\sell_request.py:83
 msgid "SellRequest|valuated"
 msgstr "valuated"
 
-#: .\models\sell_request.py:70
+#: .\models\sell_request.py:84
 msgid "SellRequest|closed"
 msgstr "closed"
 
-#: .\models\sell_request.py:71
+#: .\models\sell_request.py:85
 msgid "SellRequest|decided"
 msgstr "decided"
 
-#: .\models\sell_request.py:72
+#: .\models\sell_request.py:86
 msgid "SellRequest|shipping"
 msgstr "shipping"
 
-#: .\models\sell_request.py:73
+#: .\models\sell_request.py:87
 msgid "SellRequest|authenticating"
 msgstr "authenticating"
 
-#: .\models\sell_request.py:74
+#: .\models\sell_request.py:88
 msgid "SellRequest|selling"
 msgstr "selling"
 
-#: .\models\sell_request.py:75
+#: .\models\sell_request.py:89
 msgid "SellRequest|done"
 msgstr "done"
 
-#: .\models\sell_request.py:81
+#: .\models\sell_request.py:95
+msgid "SellRequest|denied reason"
+msgstr "denied reason"
+
+#: .\models\sell_request.py:98
 msgid "SellRequest|buy back valuation"
 msgstr "buy back valuation"
 
-#: .\models\sell_request.py:83
+#: .\models\sell_request.py:100
 msgid "SellRequest|sell valuation"
 msgstr "sell valuation"
 
-#: .\models\sell_request.py:85
+#: .\models\sell_request.py:102
 msgid "SellRequest|valuated datetime"
 msgstr "valuated datetime"
 
-#: .\models\sell_request.py:93
-msgid "SellRequest|undecided"
-msgstr "undecided"
-
-#: .\models\sell_request.py:94
+#: .\models\sell_request.py:109
 msgid "SellRequest|buy back"
 msgstr "buy back"
 
-#: .\models\sell_request.py:95
+#: .\models\sell_request.py:110
 msgid "SellRequest|sell"
 msgstr "sell"
 
-#: .\models\sell_request.py:98
+#: .\models\sell_request.py:113
 msgid "SellRequest|sell type"
 msgstr "sell type"
+
+#: .\models\sell_request.py:116
+msgid "shipping label"
+msgstr ""
 
 #: .\models\user.py:24
 msgid "Required. 150 characters or fewer. Letters, digits and ./+/-/_ only."
@@ -676,29 +680,42 @@ msgstr "point"
 msgid "Value of \"%(field_name)s\" field is not valid."
 msgstr ""
 
+#: .\serializers\sell_request.py:25
+#, python-format
+msgid "File %(name)s is not valid."
+msgstr ""
+
 #: .\templates\admin\dropdown_filter.html:7
 #, python-format
 msgid " By %(filter_title)s "
 msgstr ""
 
-#: .\validators.py:10
+#: .\validators.py:13
 msgid ""
 "Enter a valid username. This value may contain only letters, numbers, and ./"
 "+/-/_ characters."
 msgstr ""
 
-#: .\validators.py:17
+#: .\validators.py:20
 #, python-format
 msgid "File %(name)s is too large."
 msgstr ""
 
-#: .\validators.py:23
+#: .\validators.py:26
 msgid "This field must be a JSON object."
 msgstr ""
 
-#: .\validators.py:28
+#: .\validators.py:31
 msgid "This field must be a JSON array."
 msgstr ""
+
+#: .\validators.py:40
+#, python-format
+msgid "File %(name)s does not exist."
+msgstr ""
+
+#~ msgid "SellRequest|undecided"
+#~ msgstr "undecided"
 
 #~ msgid "Payment|point used"
 #~ msgstr "point used"

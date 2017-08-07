@@ -1,0 +1,63 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>出售请求#{{ sell_req.pk }}</h2>
+  <p>
+    有新的出售请求，简要信息如下：
+  </p>
+  <table>
+    <tbody>
+    <tr>
+      <td>用户名</td>
+      <td>{{ sell_req.user.username }}</td>
+    </tr>
+    <tr>
+      <td>联系方式</td>
+      <td>
+        {% for key, value in sell_req.user.info.contact.items %}
+          {{ key }}: {{ value }}<br>
+        {% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <td>品牌</td>
+      <td>{{ sell_req.brand }}</td>
+    </tr>
+    <tr>
+      <td>品类</td>
+      <td>{{ sell_req.category }}</td>
+    </tr>
+    <tr>
+      <td>名称</td>
+      <td>{{ sell_req.name }}</td>
+    </tr>
+    <tr>
+      <td>尺码</td>
+      <td>{{ sell_req.size }}</td>
+    </tr>
+    <tr>
+      <td>成色</td>
+      <td>{{ sell_req.condition }}</td>
+    </tr>
+    <tr>
+      <td>购买年份</td>
+      <td>{{ sell_req.purchase_year }}</td>
+    </tr>
+    <tr>
+      <td>原价</td>
+      <td>{{ sell_req.original_price }}</td>
+    </tr>
+    <tr>
+      <td>附件</td>
+      <td>{{ sell_req.attachments }}</td>
+    </tr>
+    <tr class="last-row">
+      <td>描述</td>
+      <td>{{ sell_req.description }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <p>
+    用户上传的图片在<a href="https://cloud.milove.com/sell_requests/{{ sell_req.pk }}/">这里</a>，评估完成后，去<a
+          href="https://www.milove.com/admin/shop/sellrequest/{{ sell_req.pk }}/change/">这里</a>填写估价。
+  </p>
+{% endblock %}

@@ -1,13 +1,16 @@
 import functools
+import os
+import hashlib
 
-from django.db import models, transaction
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
 from django.dispatch import receiver
 from django.conf import settings
+from django.utils import timezone
+from django.core.files.storage import DefaultStorage
 from jsonfield import JSONField
 
-from .product import Product
 from .address import AbstractAddress
 from .helpers import *
 from .. import mail_shortcuts as mail
@@ -26,6 +29,17 @@ class SellRequestSenderAddress(AbstractAddress):
                                         on_delete=models.CASCADE,
                                         related_name='sender_address',
                                         verbose_name=_('sell request'))
+
+
+def _shipping_label_upload_path(instance, filename):
+    filename, ext = os.path.splitext(filename)
+    now = timezone.now()
+    filename_hash = hashlib.md5()
+    filename_hash.update(filename.encode('utf-8'))
+    filename_hash.update(str(now.timestamp()).encode('utf-8'))
+    return 'sell_requests/%s/shipping-label-%s%s' % (
+        instance.pk, filename_hash.hexdigest(), ext
+    )
 
 
 class SellRequest(models.Model):
@@ -78,6 +92,9 @@ class SellRequest(models.Model):
     status = models.CharField(_('status'), max_length=20, choices=STATUSES,
                               default=STATUS_CREATED)
 
+    denied_reason = models.TextField(_('SellRequest|denied reason'),
+                                     null=True, blank=True)
+
     buy_back_valuation = models.FloatField(_('SellRequest|buy back valuation'),
                                            null=True, blank=True)
     sell_valuation = models.FloatField(_('SellRequest|sell valuation'),
@@ -85,23 +102,69 @@ class SellRequest(models.Model):
     valuated_dt = models.DateTimeField(_('SellRequest|valuated datetime'),
                                        null=True, blank=True)
 
-    SELL_TYPE_UNDECIDED = 'undecided'
     SELL_TYPE_BUY_BACK = 'buy-back'
     SELL_TYPE_SELL = 'sell'
 
     SELL_TYPES = (
-        (SELL_TYPE_UNDECIDED, _('SellRequest|undecided')),
         (SELL_TYPE_BUY_BACK, _('SellRequest|buy back')),
         (SELL_TYPE_SELL, _('SellRequest|sell')),
     )
 
     sell_type = models.CharField(_('SellRequest|sell type'), max_length=20,
-                                 choices=SELL_TYPES,
-                                 default=SELL_TYPE_UNDECIDED)
+                                 choices=SELL_TYPES, null=True, blank=True)
+
+    shipping_label = models.FileField(_('shipping label'),
+                                      upload_to=_shipping_label_upload_path,
+                                      null=True, blank=True)
 
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand \
                + (' ' + self.name if self.name else '')
+
+    @staticmethod
+    def status_changed(old_obj, new_obj):
+        if new_obj.status == SellRequest.STATUS_VALUATED:
+            # log the datetime
+            new_obj.valuated_dt = timezone.now()
+        elif new_obj.status == SellRequest.STATUS_DONE:
+            # the sell request is done
+            if new_obj.sell_type == SellRequest.SELL_TYPE_BUY_BACK:
+                new_obj.user.info.balance += new_obj.buy_back_valuation
+            elif new_obj.sell_type == SellRequest.SELL_TYPE_SELL:
+                new_obj.user.info.balance += new_obj.sell_valuation
+            new_obj.user.info.save()
+
+
+@receiver(signals.pre_save, sender=SellRequest)
+def sell_request_pre_save(instance, **kwargs):
+    old_instance = None
+    if instance.pk:
+        old_instance = SellRequest.objects.get(pk=instance.pk)
+
+    if old_instance and old_instance.status != instance.status:
+        instance.status_changed(old_instance, instance)
+
+        # notify related user and staffs
+        mail.notify_sell_request_status_changed(instance)
+
+
+@receiver(signals.post_save, sender=SellRequest)
+def sell_request_post_save(instance, created, **kwargs):
+    if created:
+        # notify related user and staffs
+        mail.notify_sell_request_created(instance)
+
+        # move uploaded files
+        storage = DefaultStorage()
+        for index, name in enumerate(instance.image_paths):
+            if name.startswith('uploads/') and storage.exists(name):
+                pure_name = name.split('/')[-1]
+                new_dir = 'sell_requests/%s/' % instance.pk
+                os.makedirs(storage.path(new_dir), exist_ok=True)
+                new_name = new_dir + pure_name
+                instance.image_paths[index] = new_name
+                os.rename(storage.path(name), storage.path(new_name))
+        instance.save()
 
 
 # all sides of the status transition graph

@@ -68,3 +68,31 @@ def notify_order_status_changed(order):
                          [staff.email for staff in staffs],
                          'shop/mails/order_%s_staff.html' % status,
                          context=locals())
+
+
+def notify_sell_request_created(sell_req):
+    _send_ignore_failure('出售请求创建成功', [sell_req.user.email],
+                         'shop/mails/sell_request_created.html',
+                         context=locals())
+
+    staffs = User.objects.filter(
+        groups__name=settings.SELL_REQUEST_NOTIFICATION_GROUP_NAME)
+    _send_ignore_failure('有新的出售请求', [staff.email for staff in staffs],
+                         'shop/mails/sell_request_created_staff.html',
+                         context=locals())
+
+
+def notify_sell_request_status_changed(sell_req):
+    status = sell_req.status.replace('-', '_')
+
+    _send_ignore_failure('出售请求状态变更', [sell_req.user.email],
+                         'shop/mails/sell_request_%s.html' % status,
+                         context=locals())
+
+    staffs = User.objects.filter(
+        groups__name=settings.SELL_REQUEST_NOTIFICATION_GROUP_NAME)
+    _send_ignore_failure('出售请求#%s状态变更为%s' % (sell_req.pk,
+                                             sell_req.status),
+                         [staff.email for staff in staffs],
+                         'shop/mails/sell_request_%s_staff.html' % status,
+                         context=locals())

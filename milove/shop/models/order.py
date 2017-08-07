@@ -101,6 +101,15 @@ class Order(models.Model):
     last_status = models.CharField(_('last status'), max_length=20,
                                    choices=STATUSES, null=True, blank=True)
 
+    # shipping information
+    express_company = models.CharField(_('express company'),
+                                       null=True, blank=True, max_length=60)
+    tracking_number = models.CharField(_('tracking number'),
+                                       null=True, blank=True, max_length=30)
+
+    def __str__(self):
+        return _('Order #%(pk)s') % {'pk': self.pk}
+
     @staticmethod
     def status_changed(old_obj, new_obj):
         # log status changes
@@ -124,15 +133,6 @@ class Order(models.Model):
                 new_obj.paid_amount
             )
             new_obj.user.info.save()
-
-    # shipping information
-    express_company = models.CharField(_('express company'),
-                                       null=True, blank=True, max_length=60)
-    tracking_number = models.CharField(_('tracking number'),
-                                       null=True, blank=True, max_length=30)
-
-    def __str__(self):
-        return _('Order #%(pk)s') % {'pk': self.pk}
 
 
 class OrderStatusTransition(models.Model):

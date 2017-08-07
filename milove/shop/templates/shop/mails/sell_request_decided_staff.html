@@ -1,0 +1,20 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>出售请求#{{ sell_req.pk }}</h2>
+  <p>
+    该出售请求已确定出售类型为{{ sell_req.sell_type }}。
+  </p>
+  {% with address=sell_req.sender_address %}
+    <p>
+      寄件地址：
+      <br>{{ address.fullname }}
+      <br>{{ address.street_address }}
+      <br>{{ address.city }}, {{ address.province }} {{ address.zip_code }}
+      <br>{{ address.country }}
+      <br>电话号码：{{ address.phone_number }}
+    </p>
+  {% endwith %}
+  <p>
+    生成邮寄标签后到<a href="http://www.milove.com/admin/shop/sellrequest/{{ sell_req.pk }}/change/">这里</a>上传。
+  </p>
+{% endblock %}

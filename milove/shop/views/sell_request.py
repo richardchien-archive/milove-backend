@@ -78,10 +78,8 @@ class SellRequestViewSet(mixins.CreateModelMixin,
         validate_or_raise(form)
 
         with transaction.atomic():
-            sell_req.sell_type = form.cleaned_data['sell_type']
-            sell_req.status = SellRequest.STATUS_DECIDED
-            sell_req.save()
-
+            # create address first,
+            # so that the notifization mail can access it
             address = form.cleaned_data['sender_address']
             SellRequestSenderAddress.objects.create(
                 sell_request=sell_req,
@@ -93,6 +91,10 @@ class SellRequestViewSet(mixins.CreateModelMixin,
                 province=address.province,
                 zip_code=address.zip_code
             )
+
+            sell_req.sell_type = form.cleaned_data['sell_type']
+            sell_req.status = SellRequest.STATUS_DECIDED
+            sell_req.save()
 
         return Response(self.get_serializer(sell_req).data)
 
