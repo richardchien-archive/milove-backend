@@ -3,11 +3,19 @@ from rest_framework import serializers
 from ..models.sell_request import *
 from ..validators import validate_json_array
 
-__all__ = ['SellRequestSerializer']
+__all__ = ['SellRequestSenderAddressSerializer',
+           'SellRequestSerializer', ]
+
+
+class SellRequestSenderAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SellRequestSenderAddress
+        exclude = ('id', 'sell_request')
 
 
 class SellRequestSerializer(serializers.ModelSerializer):
     image_paths = serializers.JSONField(validators=[validate_json_array])
+    sender_address = SellRequestSenderAddressSerializer(read_only=True)
 
     class Meta:
         model = SellRequest

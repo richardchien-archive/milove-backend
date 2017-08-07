@@ -9,6 +9,7 @@ from rest_framework.decorators import detail_route
 from rest_framework.pagination import PageNumberPagination
 
 from ..models.sell_request import *
+from ..models.address import Address
 from ..serializers.sell_request import *
 from .. import rest_filters
 from .helpers import validate_or_raise
@@ -18,6 +19,13 @@ router = SimpleRouter()
 
 class SellRequestDecisionForm(forms.Form):
     sell_type = forms.ChoiceField(choices=SellRequest.SELL_TYPES)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['sender_address'] = forms.ModelChoiceField(
+            queryset=Address.objects.filter(user=user)
+        )
 
 
 class SellRequestViewSet(mixins.CreateModelMixin,
@@ -39,19 +47,34 @@ class SellRequestViewSet(mixins.CreateModelMixin,
         sell_req.save()
         return Response(self.get_serializer(sell_req).data)
 
-    @detail_route(methods=['PUT'])
+    @detail_route(methods=['POST'])
     def decision(self, request, **kwargs):
         sell_req = self.get_object()
         if not is_status_transition_allowed(sell_req.status,
-                                            SellRequest.STATUS_DECIDED):
+                                            SellRequest.STATUS_DECIDED) \
+                or sell_req.status == SellRequest.STATUS_DECIDED:
             raise exceptions.PermissionDenied
 
-        form = SellRequestDecisionForm(request.data)
+        form = SellRequestDecisionForm(request.data, user=request.user)
         validate_or_raise(form)
 
-        sell_req.sell_type = form.cleaned_data['sell_type']
-        sell_req.status = SellRequest.STATUS_DECIDED
-        sell_req.save()
+        with transaction.atomic():
+            sell_req.sell_type = form.cleaned_data['sell_type']
+            sell_req.status = SellRequest.STATUS_DECIDED
+            sell_req.save()
+
+            address = form.cleaned_data['sender_address']
+            SellRequestSenderAddress.objects.create(
+                sell_request=sell_req,
+                fullname=address.fullname,
+                phone_number=address.phone_number,
+                country=address.country,
+                street_address=address.street_address,
+                city=address.city,
+                province=address.province,
+                zip_code=address.zip_code
+            )
+
         return Response(self.get_serializer(sell_req).data)
 
 

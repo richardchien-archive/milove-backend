@@ -12,8 +12,20 @@ from .address import AbstractAddress
 from .helpers import *
 from .. import mail_shortcuts as mail
 
-__all__ = ['SellRequest', 'get_direct_dst_statuses', 'get_direct_src_statuses',
+__all__ = ['SellRequestSenderAddress', 'SellRequest',
+           'get_direct_dst_statuses', 'get_direct_src_statuses',
            'is_status_transition_allowed']
+
+
+class SellRequestSenderAddress(AbstractAddress):
+    class Meta:
+        verbose_name = _('sell request sender address')
+        verbose_name_plural = _('sell request sender addresses')
+
+    sell_request = models.OneToOneField('SellRequest',
+                                        on_delete=models.CASCADE,
+                                        related_name='sender_address',
+                                        verbose_name=_('sell request'))
 
 
 class SellRequest(models.Model):
