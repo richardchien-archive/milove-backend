@@ -1,3 +1,5 @@
+import functools
+
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
@@ -7,6 +9,7 @@ from jsonfield import JSONField
 
 from .product import Product
 from .address import AbstractAddress
+from .helpers import *
 from .. import mail_shortcuts as mail
 
 __all__ = ['SellRequest', 'get_direct_dst_statuses', 'get_direct_src_statuses',
@@ -105,32 +108,9 @@ _STATUS_SIDES = (
 
 _STATUSES = dict(SellRequest.STATUSES).keys()
 
-
-def get_direct_src_statuses(status):
-    """Get statuses that can directly transition to the given status."""
-    if status not in _STATUSES:
-        return ()
-    return (status,) + tuple(map(
-        lambda side: side[0],
-        filter(lambda side: side[1] == status, _STATUS_SIDES)
-    ))
-
-
-def get_direct_dst_statuses(status):
-    """Get statuses that the given status can directly transition to."""
-    if status not in _STATUSES:
-        return ()
-    return (status,) + tuple(map(
-        lambda side: side[1],
-        filter(lambda side: side[0] == status, _STATUS_SIDES)
-    ))
-
-
-def is_status_transition_allowed(src_status, dst_status):
-    """Check if the transition from "src_status" to "dst_status" is allowed."""
-    if src_status not in _STATUSES or dst_status not in _STATUSES:
-        return False
-    return src_status == dst_status or any(
-        map(lambda side: side[0] == src_status and side[1] == dst_status,
-            _STATUS_SIDES)
-    )
+get_direct_src_statuses = functools.partial(base_get_direct_src_statuses,
+                                            _STATUSES, _STATUS_SIDES)
+get_direct_dst_statuses = functools.partial(base_get_direct_dst_statuses,
+                                            _STATUSES, _STATUS_SIDES)
+is_status_transition_allowed = functools.partial(
+    base_is_status_transition_allowed, _STATUSES, _STATUS_SIDES)

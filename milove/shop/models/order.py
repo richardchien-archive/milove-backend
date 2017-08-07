@@ -1,3 +1,5 @@
+import functools
+
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
@@ -6,9 +8,12 @@ from django.conf import settings
 
 from .product import Product
 from .address import AbstractAddress
+from .helpers import *
 from .. import mail_shortcuts as mail
 
-__all__ = ['OrderItem', 'ShippingAddress', 'Order', 'OrderStatusTransition']
+__all__ = ['OrderItem', 'ShippingAddress', 'Order', 'OrderStatusTransition',
+           'get_direct_src_statuses', 'get_direct_dst_statuses',
+           'is_status_transition_allowed']
 
 
 class OrderItem(models.Model):
@@ -157,3 +162,28 @@ def order_pre_save(instance, **kwargs):
 
         # notify related user and staffs
         mail.notify_order_status_changed(instance)
+
+
+_STATUS_SIDES = (
+    (Order.STATUS_UNPAID, Order.STATUS_CANCELLED),
+    (Order.STATUS_UNPAID, Order.STATUS_CLOSED),
+    (Order.STATUS_UNPAID, Order.STATUS_PAID),
+    (Order.STATUS_PAID, Order.STATUS_CANCELLING),
+    (Order.STATUS_PAID, Order.STATUS_CANCELLED),
+    (Order.STATUS_PAID, Order.STATUS_SHIPPING),
+    (Order.STATUS_CANCELLING, Order.STATUS_CANCELLED),
+    (Order.STATUS_SHIPPING, Order.STATUS_DONE),
+    (Order.STATUS_DONE, Order.STATUS_RETURN_REQUESTED),
+    (Order.STATUS_RETURN_REQUESTED, Order.STATUS_DONE),
+    (Order.STATUS_RETURN_REQUESTED, Order.STATUS_RETURNING),
+    (Order.STATUS_RETURNING, Order.STATUS_RETURNED),
+)
+
+_STATUSES = dict(Order.STATUSES).keys()
+
+get_direct_src_statuses = functools.partial(base_get_direct_src_statuses,
+                                            _STATUSES, _STATUS_SIDES)
+get_direct_dst_statuses = functools.partial(base_get_direct_dst_statuses,
+                                            _STATUSES, _STATUS_SIDES)
+is_status_transition_allowed = functools.partial(
+    base_is_status_transition_allowed, _STATUSES, _STATUS_SIDES)

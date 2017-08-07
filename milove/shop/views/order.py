@@ -56,9 +56,8 @@ class OrderViewSet(PartialUpdateModelMixin,
     @detail_route(methods=['PUT'])
     def cancellation(self, request, **kwargs):
         order = self.get_object()
-        if order.status not in (Order.STATUS_UNPAID, Order.STATUS_PAID,
-                                Order.STATUS_CANCELLING,
-                                Order.STATUS_CANCELLED):
+        if not is_status_transition_allowed(order.status,
+                                            Order.STATUS_CANCELLED):
             raise exceptions.PermissionDenied
 
         if order.status != Order.STATUS_CANCELLING:
@@ -81,7 +80,7 @@ class OrderViewSet(PartialUpdateModelMixin,
     @detail_route(methods=['PUT'])
     def receipt_confirmation(self, request, **kwargs):
         order = self.get_object()
-        if order.status not in (Order.STATUS_SHIPPING, Order.STATUS_DONE):
+        if not is_status_transition_allowed(order.status, Order.STATUS_DONE):
             raise exceptions.PermissionDenied
 
         order.status = Order.STATUS_DONE

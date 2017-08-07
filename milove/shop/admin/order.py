@@ -30,23 +30,6 @@ class ShippingAddressInline(admin.StackedInline):
         return False
 
 
-_NEXT_STATUS_ALLOWED = {
-    Order.STATUS_UNPAID: (Order.STATUS_PAID,
-                          Order.STATUS_CLOSED,
-                          Order.STATUS_CANCELLED),
-    Order.STATUS_PAID: (Order.STATUS_SHIPPING,
-                        Order.STATUS_CANCELLING,
-                        Order.STATUS_CANCELLED),
-    Order.STATUS_CANCELLING: (Order.STATUS_CANCELLED,),
-    Order.STATUS_CANCELLED: (),
-    Order.STATUS_SHIPPING: (Order.STATUS_DONE,),
-    Order.STATUS_DONE: (Order.STATUS_RETURN_REQUESTED,),
-    Order.STATUS_RETURN_REQUESTED: (Order.STATUS_DONE, Order.STATUS_RETURNING),
-    Order.STATUS_RETURNING: (Order.STATUS_RETURNED,),
-    Order.STATUS_RETURNED: (),
-}
-
-
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
@@ -57,9 +40,7 @@ class OrderForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if self.initial and 'status' in self.initial:
-            choice_set = {self.initial['status'], *_NEXT_STATUS_ALLOWED.get(
-                self.initial['status'], ()
-            )}
+            choice_set = set(get_direct_dst_statuses(self.initial['status']))
             if self.should_hide_not_allowed_statuses():
                 self.fields['status'].choices = filter(
                     lambda choice: choice[0] in choice_set,
@@ -86,10 +67,8 @@ class OrderForm(forms.ModelForm):
             # the current user cannot has no permission to
             # randomly switch order status,
             # so we restrict them
-            next_status_allowed = _NEXT_STATUS_ALLOWED.get(
-                self.initial['status'], ()
-            )
-            if self.cleaned_data['status'] not in next_status_allowed:
+            if self.cleaned_data['status'] not in get_direct_dst_statuses(
+                    self.initial['status']):
                 raise exceptions.ValidationError(
                     _('Order status cannot be switched to %(dst_status)s '
                       'from %(src_status)s.') % {
