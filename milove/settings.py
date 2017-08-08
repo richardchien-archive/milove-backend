@@ -178,7 +178,7 @@ PAYPAL_MODE = 'sandbox'
 PAYPAL_CLIENT_ID = ''
 PAYPAL_CLIENT_SECRET = ''
 
-# Thread Pool
+# Thread pool
 
 THREAD_POOL_MAX_WORKER = 20
 
