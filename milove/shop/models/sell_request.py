@@ -116,6 +116,10 @@ class SellRequest(models.Model):
     shipping_label = models.FileField(_('shipping label'),
                                       upload_to=_shipping_label_upload_path,
                                       null=True, blank=True)
+    express_company = models.CharField(_('express company'),
+                                       null=True, blank=True, max_length=60)
+    tracking_number = models.CharField(_('tracking number'),
+                                       null=True, blank=True, max_length=30)
 
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand \

@@ -40,7 +40,8 @@ class SellRequestSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('created_dt', 'status', 'denied_reason',
                             'buy_back_valuation', 'sell_valuation',
-                            'valuated_dt', 'sell_type')
+                            'valuated_dt', 'sell_type',
+                            'express_company', 'tracking_number')
         extra_kwargs = {
             'user': {
                 'write_only': True,

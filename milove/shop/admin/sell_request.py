@@ -57,18 +57,20 @@ class SellRequestAdmin(admin.ModelAdmin):
     list_display = ('id', 'get_preview', 'user', 'brand', 'category', 'name',
                     'size', 'condition', 'purchase_year', 'original_price',
                     'status', 'buy_back_valuation', 'sell_valuation',
-                    'sell_type')
+                    'sell_type', 'tracking_number')
     list_display_links = ('id', 'get_preview')
     list_filter = ('status', 'sell_type')
     ordering = ('-created_dt',)
     search_fields = ('id', 'user__username', 'user__email',
-                     'brand', 'category', 'name', 'description')
+                     'brand', 'category', 'name', 'description',
+                     'tracking_number')
 
     fields = ('id', 'created_dt', 'user', 'brand', 'category', 'name',
               'size', 'condition', 'purchase_year', 'original_price',
               'attachments', 'description', 'status', 'denied_reason',
               'buy_back_valuation', 'sell_valuation', 'valuated_dt',
-              'sell_type', 'shipping_label')
+              'sell_type', 'shipping_label',
+              'express_company', 'tracking_number')
     readonly_fields = ('id', 'created_dt', 'user', 'brand', 'category', 'name',
                        'size', 'condition', 'purchase_year', 'original_price',
                        'attachments', 'description', 'valuated_dt')
