@@ -23,4 +23,4 @@ COPY crontab /etc/cron.d/backend-cron
 RUN chmod 0644 /etc/cron.d/backend-cron
 RUN touch /var/log/cron.log
 
-CMD python manage.py collectstatic --no-input --clear && gunicorn --config gunicorn_config.py milove.wsgi
+CMD python manage.py collectstatic --no-input --clear && gunicorn milove.wsgi
