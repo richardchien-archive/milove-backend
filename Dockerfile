@@ -28,6 +28,6 @@ RUN chmod 0644 /etc/cron.d/backend-cron
 RUN touch /var/log/cron.log
 
 # cleanup
-RUN apt-get clean && apt-get autoclean && apt-get autoremove -y --purge
+RUN apt-get autoremove -y --purge && apt-get clean && apt-get autoclean
 
-CMD python manage.py collectstatic --no-input --clear && gunicorn milove.wsgi
+CMD python manage.py collectstatic --no-input --clear && gunicorn --config gunicorn_config.py milove.wsgi
