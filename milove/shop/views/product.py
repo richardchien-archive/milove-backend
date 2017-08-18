@@ -46,6 +46,8 @@ router.register('categories', CategoryViewSet)
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     class Pagination(PageNumberPagination):
         page_size = 20
+        page_size_query_param = 'page_size'
+        max_page_size = 50
 
     class Filter(django_filters.rest_framework.FilterSet):
         published_dt = django_filters.rest_framework.DateFromToRangeFilter()
