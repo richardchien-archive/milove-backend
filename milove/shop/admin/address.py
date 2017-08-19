@@ -17,4 +17,5 @@ class AddressAdmin(admin.ModelAdmin):
                      'phone_number', 'province', 'city', 'zip_code')
 
 
+# TODO: 生产环境这里不要加
 admin.site.register(Address, AddressAdmin)

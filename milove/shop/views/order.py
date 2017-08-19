@@ -36,10 +36,12 @@ class OrderViewSet(PartialUpdateModelMixin,
     class Filter(django_filters.rest_framework.FilterSet):
         created_dt = django_filters.rest_framework.DateFromToRangeFilter()
         status = rest_filters.CommaSplitListFilter()
+        status_not = rest_filters.CommaSplitListFilter(name='status',
+                                                       exclude=True)
 
         class Meta:
             model = Order
-            fields = ('created_dt', 'status')
+            fields = ('created_dt', 'status', 'status_not')
 
     pagination_class = Pagination
     filter_class = Filter

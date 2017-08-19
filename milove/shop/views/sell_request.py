@@ -44,6 +44,8 @@ class SellRequestViewSet(mixins.CreateModelMixin,
     class Filter(django_filters.rest_framework.FilterSet):
         created_dt = django_filters.rest_framework.DateFromToRangeFilter()
         status = rest_filters.CommaSplitListFilter()
+        status_not = rest_filters.CommaSplitListFilter(name='status',
+                                                       exclude=True)
         valuated_dt = django_filters.rest_framework.DateFromToRangeFilter()
         sell_type = rest_filters.CommaSplitListFilter()
 
