@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, exceptions
 from rest_framework.routers import SimpleRouter
 from rest_framework.permissions import IsAuthenticated
 
@@ -14,6 +14,12 @@ class AddressViewSet(viewsets.ModelViewSet):
 
     serializer_class = AddressSerializer
     permission_classes = (IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        if qs.count() >= 10:
+            raise exceptions.PermissionDenied
+        return super().create(request, *args, **kwargs)
 
 
 router.register('addresses', AddressViewSet, base_name='address')
