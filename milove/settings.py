@@ -191,5 +191,6 @@ SELL_REQUEST_NOTIFICATION_GROUP_NAME = '出售请求管理员'
 AMOUNT_TO_POINT = lambda x: int(x / 10.0)
 POINT_TO_AMOUNT = lambda x: x / 100.0
 POINT_TO_AMOUNT_REVERSE = lambda x: x * 100.0
+MAX_ADDRESSES = 10  # the max number of addresses of a single user
 
 MAX_UPLOAD_SIZE = 5242880

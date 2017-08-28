@@ -54,17 +54,17 @@ class OrderAddSerializer(serializers.ModelSerializer):
     products = serializers.PrimaryKeyRelatedField(
         queryset=Product.objects.filter(sold=False),
         write_only=True,
-        many=True,
+        many=True, allow_empty=False,
     )
 
     # this is actually an "Address", not a "ShippingAddress"
     shipping_address = PrimaryKeyRelatedFieldFilterByUser(
-        queryset=Address.objects.all()
+        queryset=Address.objects.all(),
     )
 
     coupon = serializers.CharField(
         required=False,
-        write_only=True
+        write_only=True,
     )
 
     class Meta:
@@ -82,6 +82,11 @@ class OrderAddSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         products = list(OrderedDict.fromkeys(validated_data['products']))
+
+        # we just checkout the first product passed in,
+        # which may be a temporary behavior
+        products = products[:1]
+
         user = validated_data['user']
         comment = validated_data.get('comment', '')
         with transaction.atomic():

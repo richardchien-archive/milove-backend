@@ -1,6 +1,7 @@
 from rest_framework import viewsets, exceptions
 from rest_framework.routers import SimpleRouter
 from rest_framework.permissions import IsAuthenticated
+from django.conf import settings
 
 from ..models.address import *
 from ..serializers.address import *
@@ -17,7 +18,9 @@ class AddressViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         qs = self.get_queryset()
-        if qs.count() >= 10:
+        if qs.count() >= settings.MAX_ADDRESSES:
+            # this happens before the serializer validate the input data,
+            # which is intended
             raise exceptions.PermissionDenied
         return super().create(request, *args, **kwargs)
 
