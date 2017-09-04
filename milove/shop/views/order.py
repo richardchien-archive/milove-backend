@@ -57,6 +57,23 @@ class OrderViewSet(PartialUpdateModelMixin,
         return Response(OrderSerializer(order).data,
                         status=status.HTTP_201_CREATED)
 
+    @detail_route(methods=['GET'])
+    def status_transitions(self, request, **kwargs):
+        order = self.get_object()
+        needed_statuses = (
+            Order.STATUS_CLOSED, Order.STATUS_CANCELLED,
+            Order.STATUS_PAID, Order.STATUS_SHIPPING, Order.STATUS_DONE
+        )
+        result = {
+            'created_dt': order.created_dt
+        }
+        result.update(dict.fromkeys([x + '_dt' for x in needed_statuses]))
+        for trans in order.status_transitions.order_by('happened_dt'):
+            if trans.dst_status in needed_statuses:
+                result[trans.dst_status + '_dt'] = trans.happened_dt
+
+        return Response(result)
+
     @detail_route(methods=['PUT'])
     def cancellation(self, request, **kwargs):
         order = self.get_object()
