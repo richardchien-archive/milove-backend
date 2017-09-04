@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.db import models as db_models
 from django import forms
+from django.conf import settings
 
 from ..admin_filters import (
     RelatedFieldDropdownFilter,
@@ -60,10 +61,11 @@ admin.site.register(Brand, BrandAdmin)
 
 
 class CategoryAdmin(_ModelWithProductCount):
-    list_display = ('id', 'name', 'super_category', 'get_product_count',
-                    'get_product_for_sale_count')
+    list_display = ('id', 'name', 'super_category', 'level',
+                    'get_product_count', 'get_product_for_sale_count')
     list_display_links = ('id', 'name')
     ordering = ('id',)
+    list_filter = ('level',)
 
 
 admin.site.register(Category, CategoryAdmin)
@@ -99,7 +101,13 @@ class ProductAdmin(admin.ModelAdmin):
     get_main_image_preview.allow_tags = True
 
     def get_categories_string(self, instance: Product):
-        return ', '.join(map(str, instance.categories.all()))
+        qs = instance.categories
+        if settings.PRODUCT_ADMIN_CATEGORY_LEVEL \
+                and settings.PRODUCT_ADMIN_CATEGORY_LEVEL > 0:
+            qs = qs.filter(level=settings.PRODUCT_ADMIN_CATEGORY_LEVEL)
+        else:
+            qs = qs.all()
+        return ', '.join(map(str, qs))
 
     get_categories_string.short_description = _('Product|categories')
 
@@ -114,6 +122,14 @@ class ProductAdmin(admin.ModelAdmin):
             # sort the brand dropdown
             kwargs['queryset'] = Brand.objects.order_by('name')
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'categories' \
+                and settings.PRODUCT_ADMIN_CATEGORY_LEVEL \
+                and settings.PRODUCT_ADMIN_CATEGORY_LEVEL > 0:
+            kwargs['queryset'] = Category.objects.filter(
+                level=settings.PRODUCT_ADMIN_CATEGORY_LEVEL)
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
     list_per_page = 20
     list_max_show_all = 50

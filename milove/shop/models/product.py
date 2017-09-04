@@ -34,16 +34,27 @@ class Category(models.Model):
         verbose_name = _('category')
         verbose_name_plural = _('categories')
 
-    name = models.CharField(max_length=50, verbose_name=_('name'))
+    name = models.CharField(_('name'), max_length=50)
     super_category = models.ForeignKey('self', related_name='children',
                                        blank=True, null=True,
                                        on_delete=models.CASCADE,
                                        verbose_name=_('super category'))
+    level = models.IntegerField(_('category level'), editable=False)
 
     def __str__(self):
         if not self.super_category:
             return self.name
         return str(self.super_category) + ' - ' + str(self.name)
+
+
+@receiver(signals.pre_save, sender=Category)
+def category_pre_save(sender, instance: Category, **kwargs):
+    level = 1
+    cat = instance
+    while cat.super_category:
+        level += 1
+        cat = cat.super_category
+    instance.level = level
 
 
 class Attachment(models.Model):
