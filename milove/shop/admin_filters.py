@@ -5,7 +5,7 @@ from django.contrib.admin.filters import (
 )
 
 
-class AllValueFieldDropdownFilter(AllValuesFieldListFilter):
+class AllValuesFieldDropdownFilter(AllValuesFieldListFilter):
     template = 'admin/dropdown_filter.html'
 
 

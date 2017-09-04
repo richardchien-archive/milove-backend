@@ -3,8 +3,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models as db_models
 from django import forms
 
-from ..admin_filters import RelatedFieldDropdownFilter, \
-    ChoicesFieldDropdownFilter
+from ..admin_filters import (
+    RelatedFieldDropdownFilter,
+    ChoicesFieldDropdownFilter,
+    AllValuesFieldDropdownFilter
+)
 from ..models.product import *
 
 
@@ -66,6 +69,8 @@ class CategoryAdmin(_ModelWithProductCount):
 admin.site.register(Category, CategoryAdmin)
 
 admin.site.register(Attachment)
+admin.site.register(AuthenticationMethod)
+admin.site.register(ProductLocation)
 
 
 class ProductImageInline(admin.TabularInline):
@@ -113,9 +118,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_max_show_all = 50
     list_display = ('id', 'get_main_image_preview',
-                    'brand', 'name', 'style', 'size', 'condition',
-                    'get_categories_string', 'get_price_fraction',
-                    'buy_back_price', 'sold')
+                    'brand', 'name', 'size', 'condition',
+                    'get_categories_string', 'serial_code', 'purchase_year',
+                    'get_price_fraction', 'sold')
     list_display_links = ('id', 'get_main_image_preview')
     ordering = ('-published_dt',)  # order by published datetime descending
     list_editable = ('sold',)
@@ -124,12 +129,17 @@ class ProductAdmin(admin.ModelAdmin):
         ('brand', RelatedFieldDropdownFilter),
         ('condition', ChoicesFieldDropdownFilter),
         ('categories', RelatedFieldDropdownFilter),
-        ('attachments', RelatedFieldDropdownFilter)
+        ('attachments', RelatedFieldDropdownFilter),
+        ('location', RelatedFieldDropdownFilter),
+        ('purchase_year', AllValuesFieldDropdownFilter),
     )
-    search_fields = ('brand__name', 'name', 'style', 'size', 'description')
+    search_fields = ('brand__name', 'name', 'style', 'color', 'size',
+                     'description', 'serial_code')
 
     fields = ('published_dt', 'sold', 'sold_dt', 'brand', 'name', 'style',
-              'size', 'condition', 'categories', 'attachments', 'description',
+              'color', 'size', 'condition', 'categories', 'attachments',
+              'description', 'serial_code', 'authentication_method',
+              'location', 'purchase_year',
               'original_price', 'buy_back_price', 'price',
               'main_image', 'get_main_image_preview')
     readonly_fields = ('published_dt', 'sold_dt', 'get_main_image_preview',)

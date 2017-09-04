@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-07 20:05+0800\n"
+"POT-Creation-Date: 2017-09-04 11:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,29 +30,29 @@ msgstr "折扣"
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr "订单状态不可以从“%(src_status)s”切换到“%(dst_status)s”。"
 
-#: .\admin\product.py:37
+#: .\admin\product.py:40
 msgid "total number of products"
 msgstr "商品总数"
 
-#: .\admin\product.py:44
+#: .\admin\product.py:47
 msgid "number of products for sale"
 msgstr "在售商品数"
 
-#: .\admin\product.py:79
+#: .\admin\product.py:84
 msgid "image preview"
 msgstr "图片预览"
 
-#: .\admin\product.py:93 .\models\order.py:38
+#: .\admin\product.py:98 .\models\order.py:38
 msgid "Product|main image preview"
 msgstr "主图预览"
 
-#: .\admin\product.py:99 .\models\product.py:143
+#: .\admin\product.py:104 .\models\product.py:171
 msgid "Product|categories"
 msgstr "分类"
 
-#: .\admin\product.py:104
+#: .\admin\product.py:109
 msgid "Product|price / original price"
-msgstr "定价 / 原价"
+msgstr "定价／原价"
 
 #: .\admin\sell_request.py:52
 msgid "preview"
@@ -183,7 +183,7 @@ msgstr "订单项"
 msgid "order items"
 msgstr "订单项"
 
-#: .\models\order.py:25 .\models\product.py:87 .\models\product.py:95
+#: .\models\order.py:25 .\models\product.py:113 .\models\product.py:121
 msgid "product"
 msgstr "商品"
 
@@ -276,11 +276,11 @@ msgstr "状态"
 msgid "last status"
 msgstr "上一个状态"
 
-#: .\models\order.py:105
+#: .\models\order.py:105 .\models\sell_request.py:119
 msgid "express company"
 msgstr "快递公司"
 
-#: .\models\order.py:107
+#: .\models\order.py:107 .\models\sell_request.py:121
 msgid "tracking number"
 msgstr "运单号"
 
@@ -402,8 +402,8 @@ msgstr "支付方式"
 msgid "payment methods"
 msgstr "支付方式"
 
-#: .\models\payment_method.py:19 .\models\product.py:25 .\models\product.py:36
-#: .\models\product.py:53
+#: .\models\payment_method.py:19 .\models\product.py:26 .\models\product.py:37
+#: .\models\product.py:55 .\models\product.py:67 .\models\product.py:79
 msgid "name"
 msgstr "名称"
 
@@ -419,127 +419,163 @@ msgstr "信息"
 msgid "PaymentMethod|secret information"
 msgstr "私密信息"
 
-#: .\models\product.py:21
+#: .\models\product.py:22
 msgid "brand"
 msgstr "品牌"
 
-#: .\models\product.py:22
+#: .\models\product.py:23
 msgid "brands"
 msgstr "品牌"
 
-#: .\models\product.py:33
+#: .\models\product.py:34
 msgid "category"
 msgstr "分类"
 
-#: .\models\product.py:34
+#: .\models\product.py:35
 msgid "categories"
 msgstr "分类"
 
-#: .\models\product.py:40
+#: .\models\product.py:41
 msgid "super category"
 msgstr "父级分类"
 
-#: .\models\product.py:50
+#: .\models\product.py:51
 msgid "attachment"
 msgstr "附件"
 
-#: .\models\product.py:51
+#: .\models\product.py:52
 msgid "attachments"
 msgstr "附件"
 
-#: .\models\product.py:79
+#: .\models\product.py:63
+msgid "authentication method"
+msgstr "验真方式"
+
+#: .\models\product.py:64
+msgid "authentication methods"
+msgstr "验真方式"
+
+#: .\models\product.py:75
+msgid "product location"
+msgstr "商品位置"
+
+#: .\models\product.py:76
+msgid "product locations"
+msgstr "商品位置"
+
+#: .\models\product.py:105
 msgid "product image"
 msgstr "商品图片"
 
-#: .\models\product.py:80
+#: .\models\product.py:106
 msgid "product images"
 msgstr "商品图片"
 
-#: .\models\product.py:83
+#: .\models\product.py:109
 msgid "image"
 msgstr "图片"
 
-#: .\models\product.py:96
+#: .\models\product.py:122
 msgid "products"
 msgstr "商品"
 
-#: .\models\product.py:100
+#: .\models\product.py:126
 msgid "Product|published datetime"
 msgstr "发布时间"
 
-#: .\models\product.py:101
+#: .\models\product.py:127
 msgid "Product|sold"
 msgstr "已出售"
 
-#: .\models\product.py:103
+#: .\models\product.py:129
 msgid "Product|sold datetime"
 msgstr "出售时间"
 
-#: .\models\product.py:114 .\models\sell_request.py:55
+#: .\models\product.py:140 .\models\sell_request.py:55
 msgid "Product|brand"
 msgstr "品牌"
 
-#: .\models\product.py:116 .\models\sell_request.py:57
+#: .\models\product.py:142 .\models\sell_request.py:57
 msgid "Product|name"
 msgstr "名称"
 
-#: .\models\product.py:118
+#: .\models\product.py:144
 msgid "Product|style"
 msgstr "款式"
 
-#: .\models\product.py:120 .\models\sell_request.py:58
-msgid "Product|size"
-msgstr "尺码"
+#: .\models\product.py:146
+msgid "Product|color"
+msgstr "颜色"
 
-#: .\models\product.py:130
+#: .\models\product.py:148 .\models\sell_request.py:58
+msgid "Product|size"
+msgstr "尺码／尺寸"
+
+#: .\models\product.py:158
 msgid "ProductCondition|S"
 msgstr "S"
 
-#: .\models\product.py:131
+#: .\models\product.py:159
 msgid "ProductCondition|A+"
 msgstr "A+"
 
-#: .\models\product.py:132
+#: .\models\product.py:160
 msgid "ProductCondition|A"
 msgstr "A"
 
-#: .\models\product.py:133
+#: .\models\product.py:161
 msgid "ProductCondition|B"
 msgstr "B"
 
-#: .\models\product.py:134
+#: .\models\product.py:162
 msgid "ProductCondition|C"
 msgstr "C"
 
-#: .\models\product.py:135
+#: .\models\product.py:163
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:139 .\models\sell_request.py:59
+#: .\models\product.py:167 .\models\sell_request.py:59
 msgid "Product|condition"
 msgstr "成色"
 
-#: .\models\product.py:145 .\models\sell_request.py:63
+#: .\models\product.py:173 .\models\sell_request.py:63
 msgid "Product|attachments"
 msgstr "附件"
 
-#: .\models\product.py:147 .\models\sell_request.py:65
+#: .\models\product.py:175 .\models\sell_request.py:65
 msgid "Product|description"
 msgstr "描述"
 
-#: .\models\product.py:149 .\models\sell_request.py:62
+#: .\models\product.py:177
+msgid "Product|serial code"
+msgstr "防伪序列码"
+
+#: .\models\product.py:180
+msgid "Product|authentication method"
+msgstr "验真方式"
+
+#: .\models\product.py:183
+msgid "Product|location"
+msgstr "位置"
+
+#: .\models\product.py:186
+msgid "Product|purchase year"
+msgstr "购买年份"
+
+#: .\models\product.py:188 .\models\sell_request.py:62
 msgid "Product|original price"
 msgstr "原价"
 
-#: .\models\product.py:152
+#: .\models\product.py:191
 msgid "Product|buy back price"
 msgstr "回购价"
 
-#: .\models\product.py:153
+#: .\models\product.py:192
 msgid "Product|price"
 msgstr "定价"
 
-#: .\models\product.py:157
+#: .\models\product.py:196
 msgid "Product|main image"
 msgstr "主图"
 

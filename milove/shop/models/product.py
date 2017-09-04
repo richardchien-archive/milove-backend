@@ -13,6 +13,7 @@ from imagekit.processors import ResizeToFill
 from ..model_utils import get_or_none
 
 __all__ = ['Brand', 'Category', 'Attachment',
+           'AuthenticationMethod', 'ProductLocation',
            'ProductImage', 'Product']
 
 
@@ -50,7 +51,32 @@ class Attachment(models.Model):
         verbose_name = _('attachment')
         verbose_name_plural = _('attachments')
 
-    name = models.CharField(max_length=50, verbose_name=_('name'))
+    name = models.CharField(max_length=50, unique=True,
+                            verbose_name=_('name'))
+
+    def __str__(self):
+        return self.name
+
+
+class AuthenticationMethod(models.Model):
+    class Meta:
+        verbose_name = _('authentication method')
+        verbose_name_plural = _('authentication methods')
+
+    name = models.CharField(max_length=100, unique=True,
+                            verbose_name=_('name'))
+
+    def __str__(self):
+        return self.name
+
+
+class ProductLocation(models.Model):
+    class Meta:
+        verbose_name = _('product location')
+        verbose_name_plural = _('product locations')
+
+    name = models.CharField(max_length=200, unique=True,
+                            verbose_name=_('name'))
 
     def __str__(self):
         return self.name
@@ -116,6 +142,8 @@ class Product(models.Model):
                             verbose_name=_('Product|name'))
     style = models.CharField(max_length=200, blank=True,
                              verbose_name=_('Product|style'))
+    color = models.CharField(max_length=200, blank=True,
+                             verbose_name=_('Product|color'))
     size = models.CharField(max_length=20, blank=True,
                             verbose_name=_('Product|size'))
 
@@ -145,6 +173,17 @@ class Product(models.Model):
                                          verbose_name=_('Product|attachments'))
     description = models.TextField(blank=True,
                                    verbose_name=_('Product|description'))
+    serial_code = models.CharField(max_length=200, blank=True,
+                                   verbose_name=_('Product|serial code'))
+    authentication_method = models.ManyToManyField(
+        'AuthenticationMethod', related_name='products', blank=True,
+        verbose_name=_('Product|authentication method'))
+    location = models.ForeignKey('ProductLocation', related_name='products',
+                                 null=True, blank=True,
+                                 verbose_name=_('Product|location'))
+    purchase_year = models.IntegerField(blank=True, null=True,
+                                        verbose_name=_(
+                                            'Product|purchase year'))
     original_price = models.FloatField(
         verbose_name=_('Product|original price'))
     buy_back_price = models.FloatField(null=True, blank=True,
