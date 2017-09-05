@@ -21,6 +21,7 @@ from . import (
     coupon,
     payment,
     sell_request,
+    misc_info,
 )
 
 
@@ -72,3 +73,4 @@ urlpatterns += order.urlpatterns
 urlpatterns += coupon.urlpatterns
 urlpatterns += payment.urlpatterns
 urlpatterns += sell_request.urlpatterns
+urlpatterns += misc_info.urlpatterns

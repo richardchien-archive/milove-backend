@@ -6,3 +6,4 @@ from .order import *
 from .coupon import *
 from .payment import *
 from .sell_request import *
+from .misc_info import *

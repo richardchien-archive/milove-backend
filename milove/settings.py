@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'flat_responsive',
     'django_filters',
+    'solo',
 
     'django.contrib.admin',
     'django.contrib.auth',
