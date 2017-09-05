@@ -136,12 +136,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'get_main_image_preview',
                     'brand', 'name', 'size', 'condition',
                     'get_categories_string', 'serial_code', 'purchase_year',
-                    'get_price_fraction', 'sold')
+                    'get_price_fraction', 'show_on_homepage', 'sold')
     list_display_links = ('id', 'get_main_image_preview')
     ordering = ('-published_dt',)  # order by published datetime descending
-    list_editable = ('sold',)
+    list_editable = ('show_on_homepage', 'sold')
     list_filter = (
-        'published_dt', 'sold', 'sold_dt',
+        'published_dt', 'show_on_homepage', 'sold', 'sold_dt',
         ('brand', RelatedFieldDropdownFilter),
         ('condition', ChoicesFieldDropdownFilter),
         ('categories', RelatedFieldDropdownFilter),
@@ -152,10 +152,10 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('brand__name', 'name', 'style', 'color', 'size',
                      'description', 'serial_code')
 
-    fields = ('published_dt', 'sold', 'sold_dt', 'brand', 'name', 'style',
-              'color', 'size', 'condition', 'categories', 'attachments',
-              'description', 'serial_code', 'authentication_method',
-              'location', 'purchase_year',
+    fields = ('published_dt', 'show_on_homepage', 'sold', 'sold_dt', 'brand',
+              'name', 'style', 'color', 'size', 'condition', 'categories',
+              'attachments', 'description', 'serial_code',
+              'authentication_method', 'location', 'purchase_year',
               'original_price', 'buy_back_price', 'price',
               'main_image', 'get_main_image_preview')
     readonly_fields = ('published_dt', 'sold_dt', 'get_main_image_preview',)

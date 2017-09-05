@@ -22,8 +22,7 @@ class Brand(models.Model):
         verbose_name = _('brand')
         verbose_name_plural = _('brands')
 
-    name = models.CharField(max_length=200, unique=True,
-                            verbose_name=_('name'))
+    name = models.CharField(_('name'), max_length=200, unique=True)
 
     def __str__(self):
         return self.name
@@ -62,8 +61,7 @@ class Attachment(models.Model):
         verbose_name = _('attachment')
         verbose_name_plural = _('attachments')
 
-    name = models.CharField(max_length=50, unique=True,
-                            verbose_name=_('name'))
+    name = models.CharField(_('name'), max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -74,8 +72,7 @@ class AuthenticationMethod(models.Model):
         verbose_name = _('authentication method')
         verbose_name_plural = _('authentication methods')
 
-    name = models.CharField(max_length=100, unique=True,
-                            verbose_name=_('name'))
+    name = models.CharField(_('name'), max_length=100, unique=True)
 
     def __str__(self):
         return self.name
@@ -86,8 +83,7 @@ class ProductLocation(models.Model):
         verbose_name = _('product location')
         verbose_name_plural = _('product locations')
 
-    name = models.CharField(max_length=200, unique=True,
-                            verbose_name=_('name'))
+    name = models.CharField(_('name'), max_length=200, unique=True)
 
     def __str__(self):
         return self.name
@@ -116,8 +112,7 @@ class ProductImage(models.Model):
         verbose_name = _('product image')
         verbose_name_plural = _('product images')
 
-    image = models.ImageField(upload_to=_prod_image_path,
-                              verbose_name=_('image'))
+    image = models.ImageField(_('image'), upload_to=_prod_image_path)
     image_thumb = ImageSpecField(source='image', spec=_Thumbnail)
     product = models.ForeignKey('Product', on_delete=models.CASCADE,
                                 related_name='images',
@@ -132,12 +127,15 @@ class Product(models.Model):
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
-    published_dt = models.DateTimeField(auto_now_add=True,
-                                        verbose_name=_(
-                                            'Product|published datetime'))
-    sold = models.BooleanField(default=False, verbose_name=_('Product|sold'))
-    sold_dt = models.DateTimeField(null=True, blank=True,
-                                   verbose_name=_('Product|sold datetime'))
+    published_dt = models.DateTimeField(_('Product|published datetime'),
+                                        auto_now_add=True)
+
+    show_on_homepage = models.BooleanField(_('Product|show on homepage'),
+                                           default=False)
+
+    sold = models.BooleanField(_('Product|sold'), default=False)
+    sold_dt = models.DateTimeField(_('Product|sold datetime'),
+                                   null=True, blank=True)
 
     @staticmethod
     def sold_changed(_, new_obj):
@@ -149,14 +147,10 @@ class Product(models.Model):
     brand = models.ForeignKey('Brand', on_delete=models.CASCADE,
                               related_name='products',
                               verbose_name=_('Product|brand'))
-    name = models.CharField(max_length=200, blank=True,
-                            verbose_name=_('Product|name'))
-    style = models.CharField(max_length=200, blank=True,
-                             verbose_name=_('Product|style'))
-    color = models.CharField(max_length=200, blank=True,
-                             verbose_name=_('Product|color'))
-    size = models.CharField(max_length=20, blank=True,
-                            verbose_name=_('Product|size'))
+    name = models.CharField(_('Product|name'), max_length=200, blank=True)
+    style = models.CharField(_('Product|style'), max_length=200, blank=True)
+    color = models.CharField(_('Product|color'), max_length=200, blank=True)
+    size = models.CharField(_('Product|size'), max_length=20, blank=True)
 
     CONDITION_S = 'S'
     CONDITION_A_PLUS = 'A+'
@@ -174,37 +168,33 @@ class Product(models.Model):
         (CONDITION_D, _('ProductCondition|D')),
     )
 
-    condition = models.CharField(max_length=2, choices=CONDITIONS,
-                                 verbose_name=_('Product|condition'))
+    condition = models.CharField(_('Product|condition'),
+                                 max_length=2, choices=CONDITIONS)
 
     categories = models.ManyToManyField('Category', blank=True,
                                         related_name='products',
                                         verbose_name=_('Product|categories'))
     attachments = models.ManyToManyField('Attachment', blank=True,
                                          verbose_name=_('Product|attachments'))
-    description = models.TextField(blank=True,
-                                   verbose_name=_('Product|description'))
-    serial_code = models.CharField(max_length=200, blank=True,
-                                   verbose_name=_('Product|serial code'))
+    description = models.TextField(_('Product|description'), blank=True)
+    serial_code = models.CharField(_('Product|serial code'),
+                                   max_length=200, blank=True)
     authentication_method = models.ManyToManyField(
         'AuthenticationMethod', related_name='products', blank=True,
         verbose_name=_('Product|authentication method'))
     location = models.ForeignKey('ProductLocation', related_name='products',
                                  null=True, blank=True,
                                  verbose_name=_('Product|location'))
-    purchase_year = models.IntegerField(blank=True, null=True,
-                                        verbose_name=_(
-                                            'Product|purchase year'))
-    original_price = models.FloatField(
-        verbose_name=_('Product|original price'))
-    buy_back_price = models.FloatField(null=True, blank=True,
-                                       verbose_name=_(
-                                           'Product|buy back price'))
-    price = models.FloatField(verbose_name=_('Product|price'))
+    purchase_year = models.IntegerField(_('Product|purchase year'),
+                                        blank=True, null=True)
+    original_price = models.FloatField(_('Product|original price'))
+    buy_back_price = models.FloatField(_('Product|buy back price'),
+                                       null=True, blank=True)
+    price = models.FloatField(_('Product|price'))
 
-    main_image = models.ImageField(default=_prod_image_placeholder_path,
-                                   upload_to=_prod_image_path,
-                                   verbose_name=_('Product|main image'))
+    main_image = models.ImageField(_('Product|main image'),
+                                   default=_prod_image_placeholder_path,
+                                   upload_to=_prod_image_path)
     main_image_thumb = ImageSpecField(source='main_image', spec=_Thumbnail)
 
     def __str__(self):

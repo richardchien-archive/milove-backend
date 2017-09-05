@@ -60,8 +60,9 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 
         class Meta:
             model = Product
-            fields = ('published_dt', 'sold', 'brand', 'categories',
-                      'condition', 'original_price', 'price')
+            fields = ('published_dt', 'show_on_homepage', 'sold',
+                      'brand', 'categories', 'condition',
+                      'original_price', 'price')
 
     # def get_queryset(self):
     #     # only return unsold products and
