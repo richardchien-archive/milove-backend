@@ -9,6 +9,7 @@ from ..models.address import Address
 from ..models.payment_method import PaymentMethod
 from ..exceptions import PaymentFailed
 from ..payment_funcs import charge_balance_and_point, get_payment_func
+from ..thread_pool import delay_run
 
 __all__ = ['PaymentSerializer', 'PaymentAddSerializer']
 
@@ -141,5 +142,16 @@ class PaymentAddSerializer(serializers.ModelSerializer):
         finally:
             # no matter what happened, save the payment
             payment.save()
+
+        def close_pending_payment(p):
+            p.refresh_from_db(fields=('status',))
+            if p.status == Payment.STATUS_PENDING:
+                p.status = Payment.STATUS_CLOSED
+                p.save()
+
+        # if the payment is still pending after some time, close it
+        # if payment.status == Payment.STATUS_PENDING:
+        #     delay_run(settings.PAYMENT_TIMEOUT, close_pending_payment, payment)
+        # TODO: 开发完成后启用
 
         return payment

@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+from django.conf import settings
 from django.db import transaction
 from rest_framework import serializers
 
@@ -142,8 +143,8 @@ class OrderAddSerializer(serializers.ModelSerializer):
                 o.status = Order.STATUS_CLOSED
                 o.save()
 
-        # if the order is still unpaid after 30 minutes, close it
-        # delay_run(30 * 60, close_unpaid_order, order)
+        # if the order is still unpaid after some time, close it
+        # delay_run(settings.ORDER_TIMEOUT, close_unpaid_order, order)
         # TODO: 开发完成后启用
 
         return order
