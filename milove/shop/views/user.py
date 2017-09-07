@@ -5,7 +5,7 @@ from rest_framework import exceptions as rest_exceptions
 from rest_framework.decorators import list_route, detail_route
 from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.routers import SimpleRouter
 from rest_framework.generics import get_object_or_404
 
@@ -66,6 +66,11 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
         auth.login(request, user)
         return Response(self.get_serializer(user).data)
+
+    @list_route(['GET'], permission_classes=(IsAuthenticated,))
+    def current(self, request):
+        serializer = self.get_serializer(request.user)
+        return Response(serializer.data)
 
     @list_route(['POST'])
     def logout(self, request):
