@@ -37,14 +37,12 @@ class SellRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SellRequest
-        fields = '__all__'
+        exclude = ('user',)
         read_only_fields = ('created_dt', 'status', 'denied_reason',
                             'buy_back_valuation', 'sell_valuation',
                             'valuated_dt', 'sell_type',
                             'express_company', 'tracking_number')
-        extra_kwargs = {
-            'user': {
-                'write_only': True,
-                'default': serializers.CurrentUserDefault()
-            },
-        }
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)

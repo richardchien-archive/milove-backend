@@ -70,12 +70,8 @@ class OrderAddSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('user', 'products', 'shipping_address', 'comment', 'coupon')
+        fields = ('products', 'shipping_address', 'comment', 'coupon')
         extra_kwargs = {
-            'user': {
-                'write_only': True,
-                'default': serializers.CurrentUserDefault()
-            },
             'comment': {
                 'required': False
             }
@@ -88,7 +84,7 @@ class OrderAddSerializer(serializers.ModelSerializer):
         # which may be a temporary behavior
         products = products[:1]
 
-        user = validated_data['user']
+        user = self.context['request'].user
         comment = validated_data.get('comment', '')
         with transaction.atomic():
             order_items = []

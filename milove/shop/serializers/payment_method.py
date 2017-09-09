@@ -31,12 +31,8 @@ class PaymentMethodAddSerializer(PaymentMethodSerializer):
                                  validators=[validate_json_object])
 
     class Meta(PaymentMethodSerializer.Meta):
-        exclude = ('secret',)
+        exclude = ('user', 'secret',)
         extra_kwargs = {
-            'user': {
-                'write_only': True,
-                'default': serializers.CurrentUserDefault()
-            },
             'name': {
                 'required': False
             },
@@ -69,7 +65,7 @@ class PaymentMethodAddSerializer(PaymentMethodSerializer):
                 customer = stripe.Customer.create(source=token['id'])
                 card = customer.get('sources', {}).get('data', [{}])[0]
                 payment_method = PaymentMethod()
-                payment_method.user = validated_data['user']
+                payment_method.user = self.context['request'].user
                 if 'name' in validated_data:
                     payment_method.name = validated_data['name']
                 else:

@@ -8,10 +8,8 @@ __all__ = ['AddressSerializer']
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = '__all__'
-        extra_kwargs = {
-            'user': {
-                'write_only': True,
-                'default': serializers.CurrentUserDefault()
-            }
-        }
+        exclude = ('user',)
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)

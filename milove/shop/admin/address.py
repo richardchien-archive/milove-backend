@@ -5,9 +5,9 @@ from ..models.address import *
 
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('user', 'fullname', 'phone_number', 'country',
+    list_display = ('id', 'user', 'fullname', 'phone_number', 'country',
                     'province', 'city', 'zip_code')
-    list_display_links = ('user', 'fullname')
+    list_display_links = ('id', 'user', 'fullname')
     list_filter = (
         'country',
         ('province', AllValuesFieldDropdownFilter),
