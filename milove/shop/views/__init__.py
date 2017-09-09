@@ -22,6 +22,7 @@ from . import (
     payment,
     sell_request,
     misc_info,
+    withdrawal,
 )
 
 
@@ -74,3 +75,4 @@ urlpatterns += coupon.urlpatterns
 urlpatterns += payment.urlpatterns
 urlpatterns += sell_request.urlpatterns
 urlpatterns += misc_info.urlpatterns
+urlpatterns += withdrawal.urlpatterns

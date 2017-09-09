@@ -1,0 +1,38 @@
+{% extends 'shop/mails/base.html' %}
+{% block content %}
+  <h2>提现#{{ withdrawal.pk }}</h2>
+  <p>
+    有新的提现请求，简要信息如下：
+  </p>
+  <table>
+    <tbody>
+    <tr>
+      <td>用户名</td>
+      <td>{{ withdrawal.user.username }}</td>
+    </tr>
+    <tr>
+      <td>联系方式</td>
+      <td>
+        {% for key, value in withdrawal.user.info.contact.items %}
+          {{ key }}: {{ value }}<br>
+        {% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <td>提现金额</td>
+      <td>{{ withdrawal.amount }}</td>
+    </tr>
+    <tr>
+      <td>提现方式</td>
+      <td>{{ withdrawal.method }}</td>
+    </tr>
+    <tr>
+      <td>提现方式账号</td>
+      <td>{{ withdrawal.vendor_account }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <p>
+    详细信息见<a href="http://www.milove.com/admin/shop/withdrawal/{{ withdrawal.pk }}/change/">这里</a>。
+  </p>
+{% endblock %}

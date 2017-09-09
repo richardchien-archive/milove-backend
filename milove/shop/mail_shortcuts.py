@@ -96,3 +96,11 @@ def notify_sell_request_status_changed(sell_req):
                          [staff.email for staff in staffs],
                          'shop/mails/sell_request_%s_staff.html' % status,
                          context=locals())
+
+
+def notify_withdrawal_created(withdrawal):
+    staffs = User.objects.filter(
+        groups__name=settings.WITHDRAWAL_NOTIFICATION_GROUP_NAME)
+    _send_ignore_failure('有新的提现请求', [staff.email for staff in staffs],
+                         'shop/mails/withdrawal_created_staff.html',
+                         context=locals())

@@ -1,5 +1,5 @@
 import jsonfield
-from django.db import models
+from django.db import models, transaction
 from django.db.models import signals
 from django.conf import settings
 from django.dispatch import receiver
@@ -67,6 +67,28 @@ class UserInfo(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    def increase_balance(self, value):
+        with transaction.atomic():
+            self.refresh_from_db(fields=('balance',))
+            if value < 0 and self.balance + value < 0:
+                raise ValueError
+            self.balance = round(self.balance + value, 2)
+            self.save()
+
+    def decrease_balance(self, value):
+        return self.increase_balance(-value)
+
+    def increase_point(self, value):
+        with transaction.atomic():
+            self.refresh_from_db(fields=('point',))
+            if value < 0 and self.point + value < 0:
+                raise ValueError
+            self.point += int(value)
+            self.save()
+
+    def decrease_point(self, value):
+        return self.increase_point(-value)
 
 
 @receiver(signals.post_save, sender=settings.AUTH_USER_MODEL)

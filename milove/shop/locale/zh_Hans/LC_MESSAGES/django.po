@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-05 23:11+0800\n"
+"POT-Creation-Date: 2017-09-09 15:51+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\admin\__init__.py:15
+#: .\admin\__init__.py:16
 msgid "Milove Admin"
 msgstr "Milove 后台管理"
 
@@ -139,7 +139,7 @@ msgid "addresses"
 msgstr "地址"
 
 #: .\models\address.py:48 .\models\order.py:68 .\models\payment_method.py:17
-#: .\models\sell_request.py:53 .\models\user.py:61
+#: .\models\sell_request.py:53 .\models\user.py:61 .\models\withdrawal.py:21
 msgid "user"
 msgstr "用户"
 
@@ -217,6 +217,7 @@ msgid "orders"
 msgstr "订单"
 
 #: .\models\order.py:65 .\models\payment.py:29 .\models\sell_request.py:50
+#: .\models\withdrawal.py:18
 msgid "created datetime"
 msgstr "创建时间"
 
@@ -277,6 +278,7 @@ msgid "OrderStatus|returned"
 msgstr "已退货"
 
 #: .\models\order.py:99 .\models\payment.py:72 .\models\sell_request.py:92
+#: .\models\withdrawal.py:52
 msgid "status"
 msgstr "状态"
 
@@ -361,7 +363,7 @@ msgstr "应从积分抵扣的金额"
 msgid "Payment|paid point"
 msgstr "已抵扣的积分"
 
-#: .\models\payment.py:50
+#: .\models\payment.py:50 .\models\withdrawal.py:32
 msgid "PayPal"
 msgstr ""
 
@@ -727,6 +729,59 @@ msgstr "余额"
 msgid "UserInfo|point"
 msgstr "积分"
 
+#: .\models\withdrawal.py:15
+msgid "withdrawal"
+msgstr "提现"
+
+#: .\models\withdrawal.py:16
+msgid "withdrawals"
+msgstr "提现"
+
+#: .\models\withdrawal.py:23
+msgid "Withdrawal|amount"
+msgstr "金额"
+
+#: .\models\withdrawal.py:24
+msgid "Withdrawal|processed amount"
+msgstr "已处理金额"
+
+#: .\models\withdrawal.py:33
+msgid "Alipay"
+msgstr "支付宝"
+
+#: .\models\withdrawal.py:34
+msgid "Other"
+msgstr "其它"
+
+#: .\models\withdrawal.py:37
+msgid "Withdrawal|method"
+msgstr "提现方式"
+
+#: .\models\withdrawal.py:39
+msgid "Withdrawal|vendor account"
+msgstr "提现方式账号"
+
+#: .\models\withdrawal.py:47
+msgid "WithdrawalStatus|pending"
+msgstr "进行中"
+
+#: .\models\withdrawal.py:48
+msgid "WithdrawalStatus|closed"
+msgstr "已关闭"
+
+#: .\models\withdrawal.py:49
+msgid "WithdrawalStatus|done"
+msgstr "已完成"
+
+#: .\models\withdrawal.py:57
+msgid "Processed amount cannot be larger than amount."
+msgstr "已处理金额不能大于金额。"
+
+#: .\models\withdrawal.py:68
+#, python-format
+msgid "Withdrawal #%(pk)s"
+msgstr "提现#%(pk)s"
+
 #: .\serializers\payment_method.py:61
 #, python-format
 msgid "Value of \"%(field_name)s\" field is not valid."
@@ -737,10 +792,26 @@ msgstr "“%(field_name)s”字段的值无效。"
 msgid "File %(name)s is not valid."
 msgstr "文件%(name)s无效。"
 
+#: .\serializers\withdrawal.py:28
+msgid "Amount is not valid."
+msgstr "金额无效。"
+
 #: .\templates\admin\dropdown_filter.html:7
 #, python-format
 msgid " By %(filter_title)s "
 msgstr " 以 %(filter_title)s "
+
+#: .\templates\admin\solo\change_form.html:7
+msgid "Home"
+msgstr "首页"
+
+#: .\templates\admin\solo\change_form.html:14
+msgid "History"
+msgstr "历史"
+
+#: .\templates\admin\solo\change_form.html:17
+msgid "View on site"
+msgstr "在站点上查看"
 
 #: .\validators.py:13
 msgid ""

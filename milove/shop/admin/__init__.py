@@ -10,6 +10,7 @@ from . import (
     payment,
     sell_request,
     misc_info,
+    withdrawal,
 )
 
 admin.site.site_header = admin.site.site_title = _('Milove Admin')
