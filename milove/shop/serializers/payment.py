@@ -149,9 +149,8 @@ class PaymentAddSerializer(serializers.ModelSerializer):
                 p.status = Payment.STATUS_CLOSED
                 p.save()
 
-        # if the payment is still pending after some time, close it
-        # if payment.status == Payment.STATUS_PENDING:
-        #     delay_run(settings.PAYMENT_TIMEOUT, close_pending_payment, payment)
-        # TODO: 开发完成后启用
+        if not settings.DEBUG and payment.status == Payment.STATUS_PENDING:
+            # if the payment is still pending after some time, close it
+            delay_run(settings.PAYMENT_TIMEOUT, close_pending_payment, payment)
 
         return payment

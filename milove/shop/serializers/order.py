@@ -143,8 +143,8 @@ class OrderAddSerializer(serializers.ModelSerializer):
                 o.status = Order.STATUS_CLOSED
                 o.save()
 
-        # if the order is still unpaid after some time, close it
-        # delay_run(settings.ORDER_TIMEOUT, close_unpaid_order, order)
-        # TODO: 开发完成后启用
+        if not settings.DEBUG:
+            # if the order is still unpaid after some time, close it
+            delay_run(settings.ORDER_TIMEOUT, close_unpaid_order, order)
 
         return order
