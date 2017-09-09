@@ -139,6 +139,7 @@ class OrderAddSerializer(serializers.ModelSerializer):
         mail.notify_order_created(order)
 
         def close_unpaid_order(o):
+            o.refresh_from_db(fields=('status',))
             if o.status == Order.STATUS_UNPAID:
                 o.status = Order.STATUS_CLOSED
                 o.save()
