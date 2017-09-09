@@ -79,7 +79,7 @@ def withdrawal_pre_save(instance, **kwargs):
 
 
 @receiver(signals.post_save, sender=Withdrawal)
-def sell_request_post_save(instance, created, **kwargs):
+def withdrawal_post_save(instance, created, **kwargs):
     if created:
         # notify related user and staffs
         mail.notify_withdrawal_created(instance)
