@@ -129,10 +129,8 @@ class Order(models.Model):
                     item.product.save()
         if new_obj.status == Order.STATUS_DONE:
             # the order is done, give the user some points
-            new_obj.user.info.point += settings.AMOUNT_TO_POINT(
-                new_obj.paid_amount
-            )
-            new_obj.user.info.save()
+            new_obj.user.info.increase_point(
+                settings.AMOUNT_TO_POINT(new_obj.paid_amount))
 
 
 class OrderStatusTransition(models.Model):

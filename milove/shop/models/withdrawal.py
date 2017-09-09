@@ -62,7 +62,7 @@ class Withdrawal(models.Model):
         if new_obj.status == Withdrawal.STATUS_CLOSED:
             # rollback the balance
             new_obj.user.info.increase_balance(
-                max((0, new_obj.amount - new_obj.processed_amount)))
+                max(0, new_obj.amount - new_obj.processed_amount))
 
     def __str__(self):
         return _('Withdrawal #%(pk)s') % {'pk': self.pk}

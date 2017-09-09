@@ -133,10 +133,9 @@ class SellRequest(models.Model):
         elif new_obj.status == SellRequest.STATUS_DONE:
             # the sell request is done
             if new_obj.sell_type == SellRequest.SELL_TYPE_BUY_BACK:
-                new_obj.user.info.balance += new_obj.buy_back_valuation
+                new_obj.user.info.increase_balance(new_obj.buy_back_valuation)
             elif new_obj.sell_type == SellRequest.SELL_TYPE_SELL:
-                new_obj.user.info.balance += new_obj.sell_valuation
-            new_obj.user.info.save()
+                new_obj.user.info.increase_balance(new_obj.sell_valuation)
 
 
 @receiver(signals.pre_save, sender=SellRequest)

@@ -59,8 +59,7 @@ def charge_balance_and_point(payment):
     )
     if user.info.point >= point_to_use:
         with transaction.atomic():
-            user.info.point -= point_to_use
-            user.info.save()
+            user.info.decrease_point(point_to_use)
             payment.paid_point = point_to_use
             payment.save()
     else:
@@ -69,8 +68,7 @@ def charge_balance_and_point(payment):
     balance_to_use = payment.amount_from_balance
     if user.info.balance >= balance_to_use:
         with transaction.atomic():
-            user.info.balance -= balance_to_use
-            user.info.save()
+            user.info.decrease_balance(balance_to_use)
             payment.paid_amount_from_balance = balance_to_use
             payment.save()
     else:

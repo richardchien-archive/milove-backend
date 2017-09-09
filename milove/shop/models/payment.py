@@ -77,9 +77,9 @@ class Payment(models.Model):
         if new_obj.status in (Payment.STATUS_CLOSED,
                               Payment.STATUS_FAILED):
             # payment closed or failed, refund paid balance and point
-            new_obj.order.user.info.point += new_obj.paid_point
-            new_obj.order.user.info.balance += new_obj.paid_amount_from_balance
-            new_obj.order.user.info.save()
+            new_obj.order.user.info.increase_point(new_obj.paid_point)
+            new_obj.order.user.info.increase_balance(
+                new_obj.paid_amount_from_balance)
 
             # clean payment object, in case of duplicated refund
             new_obj.paid_point = 0
