@@ -6,11 +6,11 @@ from django.db.models import signals
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from imagekit import ImageSpec
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
 
 from ..model_utils import get_or_none
+from ..image_utils import ThumbnailSmall
+from ..file_storage import storage
 
 __all__ = ['Brand', 'Category', 'Attachment',
            'AuthenticationMethod', 'ProductLocation',
@@ -95,16 +95,11 @@ def _prod_image_path(_, filename):
     filename_hash = hashlib.md5()
     filename_hash.update(filename.encode('utf-8'))
     filename_hash.update(str(now.timestamp()).encode('utf-8'))
-    return 'products/{}{}'.format(filename_hash.hexdigest(), ext)
+    return 'uploads/{}-{}{}'.format(now.strftime('%Y%m%d%H%M%S'),
+                                    filename_hash.hexdigest(), ext)
 
 
 _prod_image_placeholder_path = 'placeholders/120x120.png'
-
-
-class _Thumbnail(ImageSpec):
-    processors = [ResizeToFill(120, 120)]
-    format = 'JPEG'
-    options = {'quality': 80}
 
 
 class ProductImage(models.Model):
@@ -113,7 +108,7 @@ class ProductImage(models.Model):
         verbose_name_plural = _('product images')
 
     image = models.ImageField(_('image'), upload_to=_prod_image_path)
-    image_thumb = ImageSpecField(source='image', spec=_Thumbnail)
+    image_thumb = ImageSpecField(source='image', spec=ThumbnailSmall)
     product = models.ForeignKey('Product', on_delete=models.CASCADE,
                                 related_name='images',
                                 verbose_name=_('product'))
@@ -195,7 +190,7 @@ class Product(models.Model):
     main_image = models.ImageField(_('Product|main image'),
                                    default=_prod_image_placeholder_path,
                                    upload_to=_prod_image_path)
-    main_image_thumb = ImageSpecField(source='main_image', spec=_Thumbnail)
+    main_image_thumb = ImageSpecField(source='main_image', spec=ThumbnailSmall)
 
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand.name \
@@ -207,6 +202,34 @@ def product_pre_save(sender, instance: Product, **kwargs):
     old = get_or_none(sender, pk=instance.pk)
     if old is None or old.sold != instance.sold:
         instance.sold_changed(old, instance)
+
+
+def _move_image_if_needed(product_id, name):
+    if name.startswith('uploads/') and storage.exists(name):
+        pure_name = name.split('/')[-1]
+        new_dir = 'products/%s/' % product_id
+        os.makedirs(storage.path(new_dir), exist_ok=True)
+        new_name = new_dir + pure_name
+        os.rename(storage.path(name), storage.path(new_name))
+        return new_name
+
+
+@receiver(signals.post_save, sender=Product)
+def product_post_save(instance: Product, **kwargs):
+    new_main_image_name = _move_image_if_needed(instance.pk,
+                                                instance.main_image.name)
+    if new_main_image_name:
+        instance.main_image = new_main_image_name
+        instance.save()
+
+
+@receiver(signals.post_save, sender=ProductImage)
+def product_image_post_save(instance: ProductImage, **kwargs):
+    new_image_name = _move_image_if_needed(instance.product.pk,
+                                           instance.image.name)
+    if new_image_name:
+        instance.image = new_image_name
+        instance.save()
 
 
 @receiver(signals.m2m_changed, sender=Product.categories.through)
