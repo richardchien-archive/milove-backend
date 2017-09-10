@@ -1,11 +1,11 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from django.core.files.storage import DefaultStorage
 from imagekit.cachefiles import ImageCacheFile
 
 from ..models.sell_request import *
 from ..image_utils import ThumbnailSmall
+from ..file_storage import storage
 
 
 class SellRequestSenderAddressInline(admin.StackedInline):
@@ -39,11 +39,10 @@ class SellRequestForm(forms.ModelForm):
 
 class SellRequestAdmin(admin.ModelAdmin):
     def get_preview(self, instance: SellRequest):
-        s = DefaultStorage()
-        url = s.url('placeholders/120x120.png')
+        url = storage.url('placeholders/120x120.png')
         if instance.image_paths:
             first_image_path = instance.image_paths[0]
-            with s.open(first_image_path, 'rb') as f:
+            with storage.open(first_image_path, 'rb') as f:
                 cached = ImageCacheFile(ThumbnailSmall(f))
                 cached.generate()
                 url = cached.url

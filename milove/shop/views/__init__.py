@@ -5,12 +5,12 @@ from django.conf.urls import url
 from django import forms
 from django.utils.datetime_safe import datetime
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.core.files.storage import DefaultStorage
 from rest_framework import exceptions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from ..validators import validate_uploaded_file_size
+from ..file_storage import storage
 from .helpers import validate_or_raise
 from . import (
     product,
@@ -57,7 +57,6 @@ def upload(request):
     filename = '{}-{}{}'.format(now.strftime('%Y%m%d%H%M%S'),
                                 filename_hash.hexdigest(), ext)
 
-    storage = DefaultStorage()
     storage.save(os.path.join('uploads', filename), file)
     return Response({'path': 'uploads/' + filename})
 

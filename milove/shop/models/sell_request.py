@@ -8,11 +8,11 @@ from django.db.models import signals
 from django.dispatch import receiver
 from django.conf import settings
 from django.utils import timezone
-from django.core.files.storage import DefaultStorage
 from jsonfield import JSONField
 
 from .address import AbstractAddress
 from .helpers import *
+from ..file_storage import storage
 from .. import mail_shortcuts as mail
 
 __all__ = ['SellRequestSenderAddress', 'SellRequest',
@@ -158,7 +158,6 @@ def sell_request_post_save(instance, created, **kwargs):
         mail.notify_sell_request_created(instance)
 
         # move uploaded files
-        storage = DefaultStorage()
         for index, name in enumerate(instance.image_paths):
             if name.startswith('uploads/') and storage.exists(name):
                 pure_name = name.split('/')[-1]
