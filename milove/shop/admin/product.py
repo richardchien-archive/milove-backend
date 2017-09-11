@@ -53,7 +53,7 @@ class BrandAdmin(_ModelWithProductCount):
     list_display = ('id', 'name', 'get_product_count',
                     'get_product_for_sale_count')
     list_display_links = ('id', 'name')
-    ordering = ('id',)
+    ordering = ('name',)
     search_fields = ('name',)
 
 
@@ -64,7 +64,7 @@ class CategoryAdmin(_ModelWithProductCount):
     list_display = ('id', 'name', 'super_category', 'level',
                     'get_product_count', 'get_product_for_sale_count')
     list_display_links = ('id', 'name')
-    ordering = ('id',)
+    ordering = ('super_category',)
     list_filter = ('level',)
 
 
@@ -138,7 +138,7 @@ class ProductAdmin(admin.ModelAdmin):
                     'get_categories_string', 'serial_code', 'purchase_year',
                     'get_price_fraction', 'show_on_homepage', 'sold')
     list_display_links = ('id', 'get_main_image_preview')
-    ordering = ('-published_dt',)  # order by published datetime descending
+    ordering = ('-id',)  # order by published datetime descending
     list_editable = ('show_on_homepage', 'sold')
     list_filter = (
         'published_dt', 'show_on_homepage', 'sold', 'sold_dt',
