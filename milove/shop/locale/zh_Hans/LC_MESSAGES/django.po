@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-09 15:51+0800\n"
+"POT-Creation-Date: 2017-09-11 18:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr "图片预览"
 msgid "Product|main image preview"
 msgstr "主图预览"
 
-#: .\admin\product.py:112 .\models\product.py:176
+#: .\admin\product.py:112 .\models\product.py:179
 msgid "Product|categories"
 msgstr "分类"
 
@@ -54,7 +54,7 @@ msgstr "分类"
 msgid "Product|price / original price"
 msgstr "定价／原价"
 
-#: .\admin\sell_request.py:52
+#: .\admin\sell_request.py:51
 msgid "preview"
 msgstr "预览"
 
@@ -191,12 +191,12 @@ msgstr "订单项"
 msgid "order items"
 msgstr "订单项"
 
-#: .\models\order.py:25 .\models\product.py:119 .\models\product.py:127
+#: .\models\order.py:25 .\models\product.py:114 .\models\product.py:122
 msgid "product"
 msgstr "商品"
 
 #: .\models\order.py:28 .\models\order.py:52 .\models\order.py:57
-#: .\models\order.py:145 .\models\payment.py:31
+#: .\models\order.py:143 .\models\payment.py:31
 msgid "order"
 msgstr "订单"
 
@@ -299,23 +299,23 @@ msgstr "运单号"
 msgid "Order #%(pk)s"
 msgstr "订单#%(pk)s"
 
-#: .\models\order.py:140
+#: .\models\order.py:138
 msgid "order status transition"
 msgstr "订单状态转移"
 
-#: .\models\order.py:141
+#: .\models\order.py:139
 msgid "order status transitions"
 msgstr "订单状态转移"
 
-#: .\models\order.py:146
+#: .\models\order.py:144
 msgid "happened datetime"
 msgstr "发生时间"
 
-#: .\models\order.py:148
+#: .\models\order.py:146
 msgid "source status"
 msgstr "源状态"
 
-#: .\models\order.py:150
+#: .\models\order.py:148
 msgid "destination status"
 msgstr "目标状态"
 
@@ -477,123 +477,139 @@ msgstr "商品位置"
 msgid "product locations"
 msgstr "商品位置"
 
-#: .\models\product.py:112
+#: .\models\product.py:107
 msgid "product image"
 msgstr "商品图片"
 
-#: .\models\product.py:113
+#: .\models\product.py:108
 msgid "product images"
 msgstr "商品图片"
 
-#: .\models\product.py:115
+#: .\models\product.py:110
 msgid "image"
 msgstr "图片"
 
-#: .\models\product.py:128
+#: .\models\product.py:123
 msgid "products"
 msgstr "商品"
 
-#: .\models\product.py:130
+#: .\models\product.py:125
 msgid "Product|published datetime"
 msgstr "发布时间"
 
-#: .\models\product.py:133
+#: .\models\product.py:128
 msgid "Product|show on homepage"
 msgstr "在首页显示"
 
-#: .\models\product.py:136
+#: .\models\product.py:131
 msgid "Product|sold"
 msgstr "已出售"
 
-#: .\models\product.py:137
+#: .\models\product.py:132
 msgid "Product|sold datetime"
 msgstr "出售时间"
 
-#: .\models\product.py:149 .\models\sell_request.py:55
+#: .\models\product.py:144 .\models\sell_request.py:55
 msgid "Product|brand"
 msgstr "品牌"
 
-#: .\models\product.py:150 .\models\sell_request.py:57
+#: .\models\product.py:145 .\models\sell_request.py:57
 msgid "Product|name"
 msgstr "名称"
 
-#: .\models\product.py:151
+#: .\models\product.py:146
+msgid "Name of the product."
+msgstr "商品名称，如“Bazar手提包”、“GG Marmont刺绣单肩包”、“PS1中号斜挎包”等，将显示在商品列表的品牌名下方。"
+
+#: .\models\product.py:148
 msgid "Product|style"
 msgstr "款式"
 
-#: .\models\product.py:152
+#: .\models\product.py:149
+msgid "Style of the product."
+msgstr "商品款式，如“长款”、“亮面短款”等。"
+
+#: .\models\product.py:151
 msgid "Product|color"
 msgstr "颜色"
 
-#: .\models\product.py:153 .\models\sell_request.py:58
+#: .\models\product.py:152
+msgid "Color of the product."
+msgstr "商品颜色，如“黑色”、“蓝色”等"
+
+#: .\models\product.py:154 .\models\sell_request.py:58
 msgid "Product|size"
 msgstr "尺码／尺寸"
 
-#: .\models\product.py:163
+#: .\models\product.py:155
+msgid "Size of the product."
+msgstr "商品尺码或尺寸，如“Micro”、“Small”、“IT 37”、“XL”等。"
+
+#: .\models\product.py:166
 msgid "ProductCondition|S"
 msgstr "S"
 
-#: .\models\product.py:164
+#: .\models\product.py:167
 msgid "ProductCondition|A+"
 msgstr "A+"
 
-#: .\models\product.py:165
+#: .\models\product.py:168
 msgid "ProductCondition|A"
 msgstr "A"
 
-#: .\models\product.py:166
+#: .\models\product.py:169
 msgid "ProductCondition|B"
 msgstr "B"
 
-#: .\models\product.py:167
+#: .\models\product.py:170
 msgid "ProductCondition|C"
 msgstr "C"
 
-#: .\models\product.py:168
+#: .\models\product.py:171
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:171 .\models\sell_request.py:59
+#: .\models\product.py:174 .\models\sell_request.py:59
 msgid "Product|condition"
 msgstr "成色"
 
-#: .\models\product.py:178 .\models\sell_request.py:63
+#: .\models\product.py:181 .\models\sell_request.py:63
 msgid "Product|attachments"
 msgstr "附件"
 
-#: .\models\product.py:179 .\models\sell_request.py:65
+#: .\models\product.py:182 .\models\sell_request.py:65
 msgid "Product|description"
 msgstr "描述"
 
-#: .\models\product.py:180
+#: .\models\product.py:183
 msgid "Product|serial code"
 msgstr "防伪序列码"
 
-#: .\models\product.py:184
+#: .\models\product.py:187
 msgid "Product|authentication method"
 msgstr "验真方式"
 
-#: .\models\product.py:187
+#: .\models\product.py:190
 msgid "Product|location"
 msgstr "位置"
 
-#: .\models\product.py:188
+#: .\models\product.py:191
 msgid "Product|purchase year"
 msgstr "购买年份"
 
-#: .\models\product.py:190 .\models\sell_request.py:62
+#: .\models\product.py:193 .\models\sell_request.py:62
 msgid "Product|original price"
 msgstr "原价"
 
-#: .\models\product.py:191
+#: .\models\product.py:194
 msgid "Product|buy back price"
 msgstr "回购价"
 
-#: .\models\product.py:193
+#: .\models\product.py:196
 msgid "Product|price"
 msgstr "定价"
 
-#: .\models\product.py:195
+#: .\models\product.py:198
 msgid "Product|main image"
 msgstr "主图"
 
@@ -782,7 +798,7 @@ msgstr "已处理金额不能大于金额。"
 msgid "Withdrawal #%(pk)s"
 msgstr "提现#%(pk)s"
 
-#: .\serializers\payment_method.py:61
+#: .\serializers\payment_method.py:57
 #, python-format
 msgid "Value of \"%(field_name)s\" field is not valid."
 msgstr "“%(field_name)s”字段的值无效。"
@@ -813,22 +829,22 @@ msgstr "历史"
 msgid "View on site"
 msgstr "在站点上查看"
 
-#: .\validators.py:13
+#: .\validators.py:14
 msgid ""
 "Enter a valid username. This value may contain only letters, numbers, and ./"
 "+/-/_ characters."
 msgstr "请输入合法的用户名。只能包含英文字母，数字和./+/-/_字符。"
 
-#: .\validators.py:20
+#: .\validators.py:21
 #, python-format
 msgid "File %(name)s is too large."
 msgstr "文件%(name)s太大。"
 
-#: .\validators.py:26
+#: .\validators.py:27
 msgid "This field must be a JSON object."
 msgstr "该字段必须是JSON对象。"
 
-#: .\validators.py:31
+#: .\validators.py:32
 msgid "This field must be a JSON array."
 msgstr "该字段必须是JSON数组。"
 

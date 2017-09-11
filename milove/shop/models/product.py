@@ -142,10 +142,18 @@ class Product(models.Model):
     brand = models.ForeignKey('Brand', on_delete=models.CASCADE,
                               related_name='products',
                               verbose_name=_('Product|brand'))
-    name = models.CharField(_('Product|name'), max_length=200, blank=True)
-    style = models.CharField(_('Product|style'), max_length=200, blank=True)
-    color = models.CharField(_('Product|color'), max_length=200, blank=True)
-    size = models.CharField(_('Product|size'), max_length=20, blank=True)
+    name = models.CharField(_('Product|name'),
+                            help_text=_('Name of the product.'),
+                            max_length=200, blank=True)
+    style = models.CharField(_('Product|style'),
+                             help_text=_('Style of the product.'),
+                             max_length=200, blank=True)
+    color = models.CharField(_('Product|color'),
+                             help_text=_('Color of the product.'),
+                             max_length=200, blank=True)
+    size = models.CharField(_('Product|size'),
+                            help_text=_('Size of the product.'),
+                            max_length=20, blank=True)
 
     CONDITION_S = 'S'
     CONDITION_A_PLUS = 'A+'
