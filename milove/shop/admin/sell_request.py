@@ -1,11 +1,9 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from imagekit.cachefiles import ImageCacheFile
 
 from ..models.sell_request import *
-from ..image_utils import ThumbnailSmall
-from ..file_storage import storage
+from ..image_utils import make_image_preview_tag
 
 
 class SellRequestSenderAddressInline(admin.StackedInline):
@@ -39,17 +37,22 @@ class SellRequestForm(forms.ModelForm):
 
 class SellRequestAdmin(admin.ModelAdmin):
     def get_preview(self, instance: SellRequest):
-        url = storage.url('placeholders/120x120.png')
+        image = 'placeholders/120x120.png'
         if instance.image_paths:
-            first_image_path = instance.image_paths[0]
-            with storage.open(first_image_path, 'rb') as f:
-                cached = ImageCacheFile(ThumbnailSmall(f))
-                cached.generate()
-                url = cached.url
-        return '<img src="%s" width="120" />' % url
+            image = instance.image_paths[0]
+        return make_image_preview_tag(image, link_to_full=False)
 
     get_preview.short_description = _('preview')
     get_preview.allow_tags = True
+
+    def get_all_images_preview(self, instance: SellRequest):
+        tags = []
+        for image_path in instance.image_paths:
+            tags.append(make_image_preview_tag(image_path))
+        return ' '.join(tags) if tags else '-'
+
+    get_all_images_preview.short_description = _('images')
+    get_all_images_preview.allow_tags = True
 
     form = SellRequestForm
 
@@ -66,13 +69,14 @@ class SellRequestAdmin(admin.ModelAdmin):
 
     fields = ('id', 'created_dt', 'user', 'brand', 'category', 'name',
               'size', 'condition', 'purchase_year', 'original_price',
-              'attachments', 'description', 'status', 'denied_reason',
-              'buy_back_valuation', 'sell_valuation', 'valuated_dt',
-              'sell_type', 'shipping_label',
+              'attachments', 'description', 'get_all_images_preview',
+              'status', 'denied_reason', 'buy_back_valuation',
+              'sell_valuation', 'valuated_dt', 'sell_type', 'shipping_label',
               'express_company', 'tracking_number')
     readonly_fields = ('id', 'created_dt', 'user', 'brand', 'category', 'name',
                        'size', 'condition', 'purchase_year', 'original_price',
-                       'attachments', 'description', 'valuated_dt')
+                       'attachments', 'description', 'get_all_images_preview',
+                       'valuated_dt')
     inlines = (SellRequestSenderAddressInline,)
 
     def has_add_permission(self, request):

@@ -6,10 +6,8 @@ from django.db.models import signals
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from imagekit.models import ImageSpecField
 
 from ..model_utils import get_or_none
-from ..image_utils import ThumbnailSmall
 from ..file_storage import storage
 
 __all__ = ['Brand', 'Category', 'Attachment',
@@ -108,7 +106,6 @@ class ProductImage(models.Model):
         verbose_name_plural = _('product images')
 
     image = models.ImageField(_('image'), upload_to=_prod_image_path)
-    image_thumb = ImageSpecField(source='image', spec=ThumbnailSmall)
     product = models.ForeignKey('Product', on_delete=models.CASCADE,
                                 related_name='images',
                                 verbose_name=_('product'))
@@ -198,7 +195,6 @@ class Product(models.Model):
     main_image = models.ImageField(_('Product|main image'),
                                    default=_prod_image_placeholder_path,
                                    upload_to=_prod_image_path)
-    main_image_thumb = ImageSpecField(source='main_image', spec=ThumbnailSmall)
 
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand.name \

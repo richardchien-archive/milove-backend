@@ -10,6 +10,7 @@ from ..admin_filters import (
     AllValuesFieldDropdownFilter
 )
 from ..models.product import *
+from ..image_utils import make_image_preview_tag
 
 
 class _ModelWithProductCount(admin.ModelAdmin):
@@ -79,11 +80,11 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
 
     def get_image_preview(self, instance: ProductImage):
-        if instance.image_thumb:
-            return '<img src="%s" width="120" />' % instance.image_thumb.url
+        if instance.image:
+            return make_image_preview_tag(instance.image)
         return '-'
 
-    get_image_preview.short_description = _('image preview')
+    get_image_preview.short_description = _('preview')
     get_image_preview.allow_tags = True
 
     fields = ('image', 'get_image_preview')
@@ -92,13 +93,22 @@ class ProductImageInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     def get_main_image_preview(self, instance: Product):
-        if instance.main_image_thumb:
-            return '<img src="%s" width="120" />' \
-                   % instance.main_image_thumb.url
+        if instance.main_image:
+            return make_image_preview_tag(instance.main_image,
+                                          link_to_full=False)
         return '-'
 
     get_main_image_preview.short_description = _('Product|main image preview')
     get_main_image_preview.allow_tags = True
+
+    def get_main_image_preview_with_link(self, instance: Product):
+        if instance.main_image:
+            return make_image_preview_tag(instance.main_image)
+        return '-'
+
+    get_main_image_preview_with_link.short_description = _(
+        'Product|main image preview')
+    get_main_image_preview_with_link.allow_tags = True
 
     def get_categories_string(self, instance: Product):
         qs = instance.categories
@@ -157,8 +167,9 @@ class ProductAdmin(admin.ModelAdmin):
               'attachments', 'description', 'serial_code',
               'authentication_method', 'location', 'purchase_year',
               'original_price', 'buy_back_price', 'price',
-              'main_image', 'get_main_image_preview')
-    readonly_fields = ('published_dt', 'sold_dt', 'get_main_image_preview',)
+              'main_image', 'get_main_image_preview_with_link')
+    readonly_fields = ('published_dt', 'sold_dt',
+                       'get_main_image_preview_with_link')
     inlines = (ProductImageInline,)
 
     # filter_horizontal = ('categories', 'attachments')
