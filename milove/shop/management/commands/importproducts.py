@@ -101,6 +101,7 @@ class Command(BaseCommand):
             images = [prod['main_image']] + prod.get('images', [])
             for i, img in enumerate(images):
                 images[i] = move_image_file(product, img[len('uploads/'):])
+                counter += 1
             product.main_image = images[0]
             for img in images[1:]:
                 ProductImage.objects.create(
