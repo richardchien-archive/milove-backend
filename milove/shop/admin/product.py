@@ -165,7 +165,7 @@ class ProductAdmin(admin.ModelAdmin):
     fields = ('published_dt', 'show_on_homepage', 'sold', 'sold_dt', 'brand',
               'name', 'style', 'color', 'size', 'condition', 'categories',
               'attachments', 'description', 'serial_code',
-              'authentication_method', 'location', 'purchase_year',
+              'authentication_methods', 'location', 'purchase_year',
               'original_price', 'buy_back_price', 'price',
               'main_image', 'get_main_image_preview_with_link')
     readonly_fields = ('published_dt', 'sold_dt',

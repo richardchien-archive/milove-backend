@@ -179,9 +179,9 @@ class Product(models.Model):
     description = models.TextField(_('Product|description'), blank=True)
     serial_code = models.CharField(_('Product|serial code'),
                                    max_length=200, blank=True)
-    authentication_method = models.ManyToManyField(
+    authentication_methods = models.ManyToManyField(
         'AuthenticationMethod', related_name='products', blank=True,
-        verbose_name=_('Product|authentication method'))
+        verbose_name=_('Product|authentication methods'))
     location = models.ForeignKey('ProductLocation', related_name='products',
                                  null=True, blank=True,
                                  verbose_name=_('Product|location'))
