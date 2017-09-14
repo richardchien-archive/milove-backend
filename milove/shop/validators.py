@@ -39,3 +39,8 @@ def validate_files_exist(value):
         if not storage.exists(file):
             raise ValidationError(_('File %(name)s does not exist.'),
                                   params={'name': file})
+
+
+def validate_positive_amount(value):
+    if value <= 0.0:
+        raise ValidationError(_('Amount must be larger than zero.'))

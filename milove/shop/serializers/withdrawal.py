@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from ..models.withdrawal import *
+from ..validators import validate_positive_amount
 
 __all__ = ['WithdrawalAddSerializer']
 
@@ -13,6 +14,11 @@ class WithdrawalAddSerializer(serializers.ModelSerializer):
         model = Withdrawal
         exclude = ('user',)
         read_only_fields = ('created_dt', 'processed_amount', 'status')
+        extra_kwargs = {
+            'amount': {
+                'validators': [validate_positive_amount]
+            }
+        }
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -23,7 +29,7 @@ class WithdrawalAddSerializer(serializers.ModelSerializer):
         return withdrawal
 
     def validate(self, attrs):
-        if attrs['amount'] < 0.0 \
-                or attrs['amount'] > self.context['request'].user.info.balance:
-            raise ValidationError(_('Amount is not valid.'))
+        if attrs['amount'] > self.context['request'].user.info.balance:
+            raise ValidationError(_('Amount is larger than '
+                                    'the user\'s balance.'))
         return super().validate(attrs)
