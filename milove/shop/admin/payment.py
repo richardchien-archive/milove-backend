@@ -14,11 +14,11 @@ class BillingAddressInline(admin.StackedInline):
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'order', 'amount', 'amount_from_balance',
+    list_display = ('id', 'order', 'amount', 'type', 'amount_from_balance',
                     'amount_from_point', 'method', 'vendor_payment_id',
                     'status')
     list_display_links = ('id', 'order')
-    list_filter = ('method', 'status',)
+    list_filter = ('type', 'method', 'status',)
     inlines = (BillingAddressInline,)
     ordering = ('-created_dt',)
     search_fields = ('id', 'order__user__username', 'order__user__email',

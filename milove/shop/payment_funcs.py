@@ -52,7 +52,7 @@ def register(method_name, stage='create'):
 
 
 def charge_balance_and_point(payment):
-    user = payment.order.user
+    user = payment.user
 
     point_to_use = settings.POINT_TO_AMOUNT_REVERSE(
         payment.amount_from_point

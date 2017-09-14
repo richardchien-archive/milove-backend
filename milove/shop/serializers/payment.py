@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import transaction
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from .helpers import PrimaryKeyRelatedFieldFilterByUser
 from ..models.payment import *
@@ -8,6 +10,7 @@ from ..models.order import Order
 from ..models.address import Address
 from ..models.payment_method import PaymentMethod
 from ..exceptions import PaymentFailed
+from ..validators import validate_positive_amount
 from ..payment_funcs import charge_balance_and_point, get_payment_func
 from ..thread_pool import delay_run
 
@@ -30,7 +33,13 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 class PaymentAddSerializer(serializers.ModelSerializer):
     order = PrimaryKeyRelatedFieldFilterByUser(
-        queryset=Order.objects.filter(status=Order.STATUS_UNPAID)
+        queryset=Order.objects.filter(status=Order.STATUS_UNPAID),
+        required=False,  # required if type is "standard"
+    )
+    amount = serializers.FloatField(
+        max_value=settings.MAX_RECHARGE_AMOUNT,
+        validators=[validate_positive_amount],
+        required=False,  # required if type is "recharge"
     )
 
     # this is actually an "Address", not a "BillingAddress"
@@ -54,33 +63,56 @@ class PaymentAddSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = ('order', 'billing_address', 'use_balance',
-                  'use_point', 'method', 'method_id')
+        fields = ('type', 'order', 'amount', 'billing_address',
+                  'use_balance', 'use_point', 'method', 'method_id')
         extra_kwargs = {
-            # no matter use or not, the following 2 fields must be passed in
-            'use_balance': {
-                'required': True
-            },
-            'use_point': {
+            'type': {
                 'required': True
             }
         }
 
+    def validate(self, attrs):
+        if attrs['type'] == Payment.TYPE_STANDARD and 'order' not in attrs:
+            raise ValidationError(_('"%(field)s" field is required '
+                                    'while creating a payment with '
+                                    'type "%(type)s".') % {
+                                      'field': 'order',
+                                      'type': Payment.TYPE_STANDARD
+                                  })
+        elif attrs['type'] == Payment.TYPE_RECHARGE and 'amount' not in attrs:
+            raise ValidationError(_('"%(field)s" field is required '
+                                    'while creating a payment with '
+                                    'type "%(type)s".') % {
+                                      'field': 'amount',
+                                      'type': Payment.TYPE_RECHARGE
+                                  })
+        return super().validate(attrs)
+
     def create(self, validated_data):
-        required_keys = {'order', 'billing_address', 'use_balance',
-                         'use_point', 'method', 'method_id'}
+        required_keys = {'type', 'billing_address', 'method', 'method_id'}
         assert required_keys == required_keys.intersection(
             validated_data.keys())
 
-        order = validated_data['order']
-        user = order.user
-        amount_to_pay = order.total_price - order.discount_amount
+        user = self.context['request'].user
+
+        order = None
+        if validated_data['type'] == Payment.TYPE_STANDARD:
+            order = validated_data['order']
+            amount_to_pay = order.total_price - order.discount_amount
+        else:
+            # the only possible type here is "recharge"
+            amount_to_pay = validated_data['amount']
+            # no way to recharge balance with point and balance
+            validated_data['use_point'] = False
+            validated_data['use_balance'] = False
 
         payment = Payment(
+            user=user,
+            type=validated_data['type'],
             order=order,
             amount=amount_to_pay,
-            use_point=validated_data['use_point'],
-            use_balance=validated_data['use_balance'],
+            use_point=validated_data.get('use_point', False),
+            use_balance=validated_data.get('use_balance', False),
             method=validated_data['method']
         )
 

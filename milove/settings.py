@@ -197,5 +197,6 @@ MAX_ADDRESSES = 10  # the max number of addresses of a single user
 PRODUCT_ADMIN_CATEGORY_LEVEL = 3
 ORDER_TIMEOUT = 30 * 60  # an unpaid order will be closed after 30 mins
 PAYMENT_TIMEOUT = 10 * 60  # a pending payment will be closed after 10 mins
+MAX_RECHARGE_AMOUNT = 100000
 
 MAX_UPLOAD_SIZE = 5242880

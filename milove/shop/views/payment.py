@@ -25,7 +25,7 @@ class PaymentViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Payment.objects.filter(order__user=self.request.user)
+        return Payment.objects.filter(user=self.request.user)
 
     def get_serializer_class(self):
         if self.action == 'create':

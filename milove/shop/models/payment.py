@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
 from django.dispatch import receiver
+from django.conf import settings
 from jsonfield import JSONField
 
 from .payment_method import PaymentMethod
@@ -27,9 +28,26 @@ class Payment(models.Model):
         verbose_name_plural = _('payments')
 
     created_dt = models.DateTimeField(_('created datetime'), auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
+                             related_name='payments',
+                             on_delete=models.SET_NULL, verbose_name=_('user'))
+    # "order" being null means the payment is of a recharge, but not an order
     order = models.ForeignKey(Order, on_delete=models.CASCADE,
-                              related_name='payments', verbose_name=_('order'))
+                              related_name='payments', verbose_name=_('order'),
+                              blank=True, null=True)
     amount = models.FloatField(_('Payment|amount'))
+
+    TYPE_STANDARD = 'standard'
+    TYPE_RECHARGE = 'recharge'
+    TYPES = (
+        (TYPE_STANDARD, _('PaymentType|standard')),
+        (TYPE_RECHARGE, _('PaymentType|recharge')),
+    )
+
+    type = models.CharField(_('type'), max_length=20,
+                            choices=TYPES, default=TYPE_STANDARD)
+
+    recharged = models.BooleanField(_('Payment|recharged'), default=False)
 
     use_balance = models.BooleanField(_('Payment|use balance'))
     # amount that need to be paid from balance
@@ -74,23 +92,31 @@ class Payment(models.Model):
 
     @staticmethod
     def status_changed(old_obj, new_obj):
-        if new_obj.status in (Payment.STATUS_CLOSED,
-                              Payment.STATUS_FAILED):
+        if new_obj.type == Payment.TYPE_STANDARD \
+                and new_obj.status in (Payment.STATUS_CLOSED,
+                                       Payment.STATUS_FAILED):
             # payment closed or failed, refund paid balance and point
-            new_obj.order.user.info.increase_point(new_obj.paid_point)
-            new_obj.order.user.info.increase_balance(
+            new_obj.user.info.increase_point(new_obj.paid_point)
+            new_obj.user.info.increase_balance(
                 new_obj.paid_amount_from_balance)
 
             # clean payment object, in case of duplicated refund
             new_obj.paid_point = 0
             new_obj.paid_amount_from_balance = 0.0
 
+        if new_obj.type == Payment.TYPE_RECHARGE \
+                and new_obj.status == Payment.STATUS_SUCCEEDED \
+                and not new_obj.recharged:
+            # payment succeeded, increase the balance
+            new_obj.user.info.increase_balance(new_obj.amount)
+            new_obj.recharged = True
+
     def __str__(self):
         return _('Payment #%(pk)s') % {'pk': self.pk}
 
 
 @receiver(signals.pre_save, sender=Payment)
-def order_pre_save(instance, **kwargs):
+def payment_pre_save(instance, **kwargs):
     old_instance = None
     if instance.pk:
         old_instance = Payment.objects.get(pk=instance.pk)
@@ -100,12 +126,13 @@ def order_pre_save(instance, **kwargs):
 
 
 @receiver(signals.post_save, sender=Payment)
-def order_post_save(instance, **kwargs):
+def payment_post_save(instance, **kwargs):
     # put this code in post_save is because that
     # the order should notify user and staffs after becoming "paid",
     # and that notification needs the payment object related to the order,
     # which means the payment with status "succeeded" must be save first
-    if instance.status == Payment.STATUS_SUCCEEDED \
+    if instance.type == Payment.TYPE_STANDARD \
+            and instance.status == Payment.STATUS_SUCCEEDED \
             and instance.order.status == Order.STATUS_UNPAID:
         # payment succeeded, mark the order as paid
         instance.order.status = Order.STATUS_PAID
