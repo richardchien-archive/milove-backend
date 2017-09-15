@@ -9,6 +9,7 @@ from django.conf import settings
 from .product import Product
 from .address import AbstractAddress
 from .helpers import *
+from ..image_utils import make_image_preview_tag
 from .. import mail_shortcuts as mail
 
 __all__ = ['OrderItem', 'ShippingAddress', 'Order', 'OrderStatusTransition',
@@ -29,9 +30,9 @@ class OrderItem(models.Model):
     price = models.FloatField(verbose_name=_('strike price'))
 
     def get_product_main_image_preview(self):
-        if self.product.main_image_thumb:
-            return '<img src="%s" width="120" />' \
-                   % self.product.main_image_thumb.url
+        if self.product.main_image:
+            return make_image_preview_tag(self.product.main_image,
+                                          link_to_full=False)
         return '-'
 
     get_product_main_image_preview.short_description = _(
