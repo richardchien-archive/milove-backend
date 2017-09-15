@@ -92,4 +92,4 @@ class Command(BaseCommand):
         self.stdout.write('Faking sell requests...')
         make_fake_sell_requests(user, client)
 
-        self.stdout.write(self.style.SUCCESS('Successfully import products.'))
+        self.stdout.write(self.style.SUCCESS('Successfully made fake data.'))
