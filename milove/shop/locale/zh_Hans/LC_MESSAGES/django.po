@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-14 21:40+0800\n"
+"POT-Creation-Date: 2017-09-15 08:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -601,7 +601,7 @@ msgid "Product|serial code"
 msgstr "防伪序列码"
 
 #: .\models\product.py:184
-msgid "Product|authentication method"
+msgid "Product|authentication methods"
 msgstr "验真方式"
 
 #: .\models\product.py:187
