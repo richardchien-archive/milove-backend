@@ -43,6 +43,16 @@ class Category(models.Model):
             return self.name
         return str(self.super_category) + ' - ' + str(self.name)
 
+    def simple_name(self):
+        simple_name = self.name
+        if self.super_category:
+            cat = self.super_category
+            while cat.super_category:
+                cat = cat.super_category
+            # now "cat" is the most top level category
+            simple_name = cat.name + simple_name
+        return simple_name
+
 
 @receiver(signals.pre_save, sender=Category)
 def category_pre_save(sender, instance: Category, **kwargs):

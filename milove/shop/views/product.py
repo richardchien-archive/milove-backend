@@ -1,5 +1,6 @@
 import django_filters.rest_framework
 from rest_framework import viewsets, serializers
+from rest_framework.response import Response
 from rest_framework.routers import SimpleRouter
 from rest_framework.pagination import PageNumberPagination
 
@@ -18,26 +19,48 @@ class BrandViewSet(viewsets.ReadOnlyModelViewSet):
 router.register('brands', BrandViewSet)
 
 
+class CategoryTreeSerializer(serializers.ModelSerializer):
+    """Special serializer for CategoryViewSet"""
+
+    class Meta:
+        model = Category
+        exclude = ('super_category',)
+        depth = 10  # this is intended to be large
+
+
+# the following line is a hack to accomplish self nested serialization
+# https://stackoverflow.com/questions/13376894/django-rest-framework-nested-self-referential-objects
+
+# noinspection PyProtectedMember
+CategoryTreeSerializer._declared_fields['children'] \
+    = CategoryTreeSerializer(many=True)
+
+
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    class Serializer(serializers.ModelSerializer):
-        """Special serializer for CategoryViewSet"""
+    class Filter(django_filters.rest_framework.FilterSet):
+        level = django_filters.rest_framework.NumberFilter()
+        super_category = rest_filters.CommaSplitListFilter()
 
         class Meta:
             model = Category
-            exclude = ('super_category',)
-            depth = 10  # this is intended to be large
+            fields = ('level', 'super_category')
 
-    # the following line is a hack to accomplish self nested serialization
-    # https://stackoverflow.com/questions/13376894/django-rest-framework-nested-self-referential-objects
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    filter_class = Filter
 
-    # noinspection PyProtectedMember
-    Serializer._declared_fields['children'] = Serializer(many=True)
-
-    # only get the root level categories,
-    # sub categories will be nested in 'children' field
-    # see Serializer class
-    queryset = Category.objects.filter(super_category=None)
-    serializer_class = Serializer
+    def list(self, request, *args, **kwargs):
+        structure = request.GET.get('structure')
+        if structure == 'tree':
+            # only get the root level categories,
+            # sub categories will be nested in 'children' field
+            # see Serializer class
+            queryset = self.filter_queryset(self.get_queryset()).filter(
+                super_category=None)
+            serializer = CategoryTreeSerializer(queryset, many=True)
+            return Response(serializer.data)
+        # default list structure
+        return super().list(request, *args, **kwargs)
 
 
 router.register('categories', CategoryViewSet)
@@ -71,14 +94,6 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             fields = ('published_dt', 'show_on_homepage', 'sold',
                       'brand', 'categories', 'condition',
                       'original_price', 'price')
-
-    # def get_queryset(self):
-    #     # only return unsold products and
-    #     # sold products which are sold within 7 days
-    #     return Product.objects.filter(
-    #         Q(sold=False)
-    #         | Q(sold_dt__gt=timezone.now() - timezone.timedelta(days=7))
-    #     )
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

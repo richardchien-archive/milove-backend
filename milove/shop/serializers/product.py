@@ -2,7 +2,8 @@ from rest_framework import serializers
 
 from ..models.product import *
 
-__all__ = ['BrandSerializer', 'AttachmentSerializer', 'ProductSerializer']
+__all__ = ['BrandSerializer', 'CategorySerializer',
+           'AttachmentSerializer', 'ProductSerializer']
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -17,6 +18,15 @@ class AttachmentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    fullname = serializers.CharField(source='__str__')
+    simple_name = serializers.CharField()
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
 class ProductSerializer(serializers.ModelSerializer):
     class ProductImageField(serializers.RelatedField):
         def to_internal_value(self, data):
@@ -24,13 +34,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
         def to_representation(self, value):
             return value.image.name
-
-    class CategorySerializer(serializers.ModelSerializer):
-        fullname = serializers.CharField(source='__str__')
-
-        class Meta:
-            model = Category
-            fields = '__all__'
 
     main_image = serializers.ImageField(use_url=False, read_only=True)
     images = ProductImageField(many=True, read_only=True)
