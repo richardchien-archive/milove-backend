@@ -2,12 +2,18 @@ from rest_framework import serializers
 
 from ..models.product import *
 
-__all__ = ['BrandSerializer', 'ProductSerializer']
+__all__ = ['BrandSerializer', 'AttachmentSerializer', 'ProductSerializer']
 
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
+        fields = '__all__'
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attachment
         fields = '__all__'
 
 

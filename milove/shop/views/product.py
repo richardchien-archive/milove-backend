@@ -43,6 +43,14 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
 router.register('categories', CategoryViewSet)
 
 
+class AttachmentViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Attachment.objects.all()
+    serializer_class = AttachmentSerializer
+
+
+router.register('attachments', AttachmentViewSet)
+
+
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     class Pagination(PageNumberPagination):
         page_size = 20
