@@ -41,7 +41,8 @@ class SellRequestSerializer(serializers.ModelSerializer):
         read_only_fields = ('created_dt', 'status', 'denied_reason',
                             'buy_back_valuation', 'sell_valuation',
                             'valuated_dt', 'sell_type',
-                            'express_company', 'tracking_number')
+                            'express_company', 'tracking_number',
+                            'done_dt')
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user

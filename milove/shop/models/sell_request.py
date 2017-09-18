@@ -121,6 +121,9 @@ class SellRequest(models.Model):
     tracking_number = models.CharField(_('tracking number'),
                                        null=True, blank=True, max_length=30)
 
+    done_dt = models.DateTimeField(_('SellRequest|done datetime'),
+                                   null=True, blank=True)
+
     def __str__(self):
         return ('#%s ' % self.pk) + self.brand \
                + (' ' + self.name if self.name else '')
@@ -132,6 +135,7 @@ class SellRequest(models.Model):
             new_obj.valuated_dt = timezone.now()
         elif new_obj.status == SellRequest.STATUS_DONE:
             # the sell request is done
+            new_obj.done_dt = timezone.now()
             if new_obj.sell_type == SellRequest.SELL_TYPE_BUY_BACK:
                 new_obj.user.info.increase_balance(new_obj.buy_back_valuation)
             elif new_obj.sell_type == SellRequest.SELL_TYPE_SELL:
