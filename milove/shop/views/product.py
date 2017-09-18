@@ -1,8 +1,14 @@
+import random
+
 import django_filters.rest_framework
 from rest_framework import viewsets, serializers
+from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.routers import SimpleRouter
 from rest_framework.pagination import PageNumberPagination
+from django.conf import settings
+from django.db import models, transaction
+from django.db.models import Q
 
 from ..models.product import *
 from ..serializers.product import *
@@ -62,6 +68,20 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         # default list structure
         return super().list(request, *args, **kwargs)
 
+    @list_route()
+    def hot(self, request, **kwargs):
+        try:
+            count = int(request.GET['count'])
+        except (KeyError, ValueError):
+            count = settings.DEFAULT_HOT_CATEGORIES
+        queryset = self.get_queryset().filter(
+            level=settings.DETAIL_CATEGORY_LEVEL
+        ).annotate(
+            product_count=models.Count('products')
+        ).order_by('-product_count')[:count]
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 router.register('categories', CategoryViewSet)
 
@@ -103,6 +123,65 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     ordering = ('sold', '-published_dt',)
     search_fields = ('brand__name', 'name', 'style', 'size',
                      'categories__name', 'description')
+
+    @list_route()
+    def homepage(self, request, **kwargs):
+        try:
+            count = int(request.GET['count'])
+        except (KeyError, ValueError):
+            count = settings.DEFAULT_PRODUCTS_ON_HOMEPAGE
+        count = min(count, settings.MAX_PRODUCTS_ON_HOMEPAGE)
+        queryset = self.get_queryset().filter(
+            sold=False).order_by('-show_on_homepage')[:count]
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @list_route()
+    def recommendation(self, request, **kwargs):
+        try:
+            count = int(request.GET['count'])
+        except (KeyError, ValueError):
+            count = settings.DEFAULT_PRODUCTS_ON_HOMEPAGE
+        count = min(count, settings.MAX_RECOMMENDED_PRODUCTS)
+        recent = filter(lambda x: x.isdigit(),
+                        request.GET.get('recent_visited', '').split(','))
+        recent_products = Product.objects.filter(pk__in=recent)[:10]
+        brands = set()
+        categories = set()
+        for prod in recent_products:
+            brands.add(prod.brand)
+            categories.update(prod.categories.filter(
+                level=settings.DETAIL_CATEGORY_LEVEL
+            ))
+
+        recommended_products = []
+        with transaction.atomic():
+            qs = Product.objects.filter(
+                Q(brand__in=brands) | Q(categories__in=categories),
+                sold=False,
+            )
+            total_count = qs.count()
+            recommended_indexes = random.sample(
+                range(total_count),
+                k=min(count, total_count)
+            )
+            [recommended_products.append(qs[i]) for i in recommended_indexes]
+
+        extra_count = count - len(recommended_products)
+        if extra_count > 0:
+            # not enough
+            qs = Product.objects.filter(sold=False).exclude(
+                Q(brand__in=brands) | Q(categories__in=categories)
+            )
+            total_count = qs.count()
+            recommended_indexes = random.sample(
+                range(total_count),
+                k=min(extra_count, total_count)
+            )
+            [recommended_products.append(qs[i]) for i in recommended_indexes]
+
+        serializer = self.get_serializer(recommended_products, many=True)
+        return Response(serializer.data)
 
 
 router.register('products', ProductViewSet)
