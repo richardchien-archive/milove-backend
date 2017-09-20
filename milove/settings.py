@@ -191,13 +191,15 @@ THREAD_POOL_MAX_WORKER = 20
 ORDER_NOTIFICATION_GROUP_NAME = '订单管理员'
 SELL_REQUEST_NOTIFICATION_GROUP_NAME = '出售请求管理员'
 WITHDRAWAL_NOTIFICATION_GROUP_NAME = '提现管理员'
+
 AMOUNT_TO_POINT = lambda x: int(x / 10.0)
 POINT_TO_AMOUNT = lambda x: x / 100.0
 POINT_TO_AMOUNT_REVERSE = lambda x: x * 100.0
-MAX_ADDRESSES = 10  # the max number of addresses of a single user
-PRODUCT_ADMIN_CATEGORY_LEVEL = 3
+
 ORDER_TIMEOUT = 30 * 60  # an unpaid order will be closed after 30 mins
 PAYMENT_TIMEOUT = 10 * 60  # a pending payment will be closed after 10 mins
+
+MAX_ADDRESSES = 10  # the max number of addresses of a single user
 MAX_RECHARGE_AMOUNT = 100000
 DEFAULT_PRODUCTS_ON_HOMEPAGE = 9
 MAX_PRODUCTS_ON_HOMEPAGE = 20

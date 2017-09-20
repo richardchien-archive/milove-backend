@@ -122,12 +122,7 @@ class ProductAdmin(admin.ModelAdmin):
     get_main_image_preview_with_link.allow_tags = True
 
     def get_categories_string(self, instance: Product):
-        qs = instance.categories
-        if settings.PRODUCT_ADMIN_CATEGORY_LEVEL \
-                and settings.PRODUCT_ADMIN_CATEGORY_LEVEL > 0:
-            qs = qs.filter(level=settings.PRODUCT_ADMIN_CATEGORY_LEVEL)
-        else:
-            qs = qs.all()
+        qs = instance.categories.filter(level=settings.DETAIL_CATEGORY_LEVEL)
         return ', '.join(map(str, qs))
 
     get_categories_string.short_description = _('Product|categories')
@@ -145,11 +140,9 @@ class ProductAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == 'categories' \
-                and settings.PRODUCT_ADMIN_CATEGORY_LEVEL \
-                and settings.PRODUCT_ADMIN_CATEGORY_LEVEL > 0:
+        if db_field.name == 'categories':
             kwargs['queryset'] = Category.objects.filter(
-                level=settings.PRODUCT_ADMIN_CATEGORY_LEVEL)
+                level=settings.DETAIL_CATEGORY_LEVEL)
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
     list_per_page = 20
