@@ -63,7 +63,7 @@ def upload(request):
 
 urlpatterns = [
     url(r'^get_token/$', get_token),
-    url(r'^upload/$', upload),
+    url(r'^upload/$', upload, name='upload'),
 ]
 urlpatterns += product.urlpatterns
 urlpatterns += user.urlpatterns

@@ -1,16 +1,18 @@
-from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
-from django.db import models as db_models
 from django import forms
 from django.conf import settings
+from django.contrib import admin
+from django.db import models as db_models
+from django.utils.translation import ugettext_lazy as _
+
+from milove.ajaximage.forms import AjaxImageField
 
 from ..admin_filters import (
     RelatedFieldDropdownFilter,
     ChoicesFieldDropdownFilter,
     AllValuesFieldDropdownFilter
 )
-from ..models.product import *
 from ..image_utils import make_image_preview_tag
+from ..models.product import *
 
 
 class _ModelWithProductCount(admin.ModelAdmin):
@@ -89,6 +91,15 @@ class ProductImageInline(admin.TabularInline):
 
     fields = ('image', 'get_image_preview')
     readonly_fields = ('get_image_preview',)
+
+    class Form(forms.ModelForm):
+        image = AjaxImageField(label=_('image'))
+
+        class Meta:
+            model = ProductImage
+            fields = '__all__'
+
+    form = Form
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -175,12 +186,7 @@ class ProductAdmin(admin.ModelAdmin):
     # filter_horizontal = ('categories', 'attachments')
 
     class Form(forms.ModelForm):
-        class AjaxImageField(forms.CharField):
-            widget = forms.TextInput
-
-        # main_image = AjaxImageField(label=_('Product|main image'))
-        # TODO: this should be customized
-        # see https://github.com/bradleyg/django-ajaximage
+        main_image = AjaxImageField(label=_('Product|main image'))
 
         class Meta:
             model = Product

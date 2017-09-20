@@ -1,0 +1,29 @@
+.ajaximage {
+    float: left;
+}
+
+.ajaximage .progress {
+    margin-top: 5px;
+    background: #333;
+    width: 120px;
+}
+
+.ajaximage img {
+    display: block;
+}
+
+.ajaximage .progress {
+    margin-bottom: 0;
+}
+
+.ajaximage .progress,
+.ajaximage .ajaximage-cancel,
+.ajaximage .ajaximage-file {
+    display: none;
+}
+
+.ajaximage.ajaximage-uploading .progress,
+.ajaximage.ajaximage-uploading .ajaximage-cancel,
+.ajaximage.ajaximage-idle .ajaximage-file {
+    display: block;
+}

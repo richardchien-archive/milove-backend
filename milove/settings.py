@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'milove.shop',
+    'milove.ajaximage',
     'imagekit',
     'rest_framework',
     'corsheaders',

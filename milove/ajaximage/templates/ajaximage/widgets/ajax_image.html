@@ -1,0 +1,15 @@
+<div class="ajaximage">
+  <input class="ajaximage-upload-url" type="hidden" value="{% url 'milove.shop:upload' %}">
+  <input class="ajaximage-path-input" type="hidden" name="{{ widget.name }}"{% if widget.value != None %}
+         value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %} />
+  目前: <span class="ajaximage-path">{% if widget.value != None %}{{ widget.value|stringformat:'s' }}{% endif %}</span>
+  <br>
+  <div class="ajaximage-file">
+    修改: <input type="file" class="ajaximage-file-input"/>
+  </div>
+  <img class="ajaximage-img" width="120" src="">
+  <div class="progress progress-striped active">
+    <div class="bar"></div>
+  </div>
+  <a class="ajaximage-cancel" href="#">Cancel</a>
+</div>
