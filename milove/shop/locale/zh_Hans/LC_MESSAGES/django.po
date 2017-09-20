@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 08:31+0800\n"
+"POT-Creation-Date: 2017-09-20 19:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,29 +30,37 @@ msgstr "折扣"
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr "订单状态不可以从“%(src_status)s”切换到“%(dst_status)s”。"
 
-#: .\admin\product.py:42
+#: .\admin\product.py:44
 msgid "total number of products"
 msgstr "商品总数"
 
-#: .\admin\product.py:49
+#: .\admin\product.py:51
 msgid "number of products for sale"
 msgstr "在售商品数"
 
-#: .\admin\product.py:87 .\admin\sell_request.py:45
+#: .\admin\product.py:89 .\admin\sell_request.py:45
 msgid "preview"
 msgstr "预览"
 
-#: .\admin\product.py:101 .\admin\product.py:110 .\models\order.py:38
+#: .\admin\product.py:96 .\models\product.py:118
+msgid "image"
+msgstr "图片"
+
+#: .\admin\product.py:112 .\admin\product.py:121 .\models\order.py:39
 msgid "Product|main image preview"
 msgstr "主图预览"
 
-#: .\admin\product.py:122 .\models\product.py:176
+#: .\admin\product.py:133 .\models\product.py:186
 msgid "Product|categories"
 msgstr "分类"
 
-#: .\admin\product.py:127
+#: .\admin\product.py:138
 msgid "Product|price / original price"
 msgstr "定价／原价"
+
+#: .\admin\product.py:189 .\models\product.py:207
+msgid "Product|main image"
+msgstr "主图"
 
 #: .\admin\sell_request.py:54
 msgid "images"
@@ -138,7 +146,7 @@ msgstr "地址"
 msgid "addresses"
 msgstr "地址"
 
-#: .\models\address.py:48 .\models\order.py:68 .\models\payment.py:33
+#: .\models\address.py:48 .\models\order.py:69 .\models\payment.py:33
 #: .\models\payment_method.py:17 .\models\sell_request.py:53
 #: .\models\user.py:61 .\models\withdrawal.py:21
 msgid "user"
@@ -184,139 +192,139 @@ msgstr "杂项信息"
 msgid "promotion message"
 msgstr "促销信息"
 
-#: .\models\order.py:21
+#: .\models\order.py:22
 msgid "order item"
 msgstr "订单项"
 
-#: .\models\order.py:22
+#: .\models\order.py:23
 msgid "order items"
 msgstr "订单项"
 
-#: .\models\order.py:25 .\models\product.py:111 .\models\product.py:119
+#: .\models\order.py:26 .\models\product.py:121 .\models\product.py:129
 msgid "product"
 msgstr "商品"
 
-#: .\models\order.py:28 .\models\order.py:52 .\models\order.py:57
-#: .\models\order.py:143 .\models\payment.py:36
+#: .\models\order.py:29 .\models\order.py:53 .\models\order.py:58
+#: .\models\order.py:144 .\models\payment.py:36
 msgid "order"
 msgstr "订单"
 
-#: .\models\order.py:29
+#: .\models\order.py:30
 msgid "strike price"
 msgstr "成交价"
 
-#: .\models\order.py:47
+#: .\models\order.py:48
 msgid "shipping address"
 msgstr "收货地址"
 
-#: .\models\order.py:48
+#: .\models\order.py:49
 msgid "shipping addresses"
 msgstr "收货地址"
 
-#: .\models\order.py:58
+#: .\models\order.py:59
 msgid "orders"
 msgstr "订单"
 
-#: .\models\order.py:65 .\models\payment.py:30 .\models\sell_request.py:50
+#: .\models\order.py:66 .\models\payment.py:30 .\models\sell_request.py:50
 #: .\models\withdrawal.py:18
 msgid "created datetime"
 msgstr "创建时间"
 
-#: .\models\order.py:69
+#: .\models\order.py:70
 msgid "total price"
 msgstr "总价"
 
-#: .\models\order.py:70
+#: .\models\order.py:71
 msgid "discount amount"
 msgstr "折扣金额"
 
-#: .\models\order.py:72
+#: .\models\order.py:73
 msgid "paid amount"
 msgstr "实付金额"
 
-#: .\models\order.py:73
+#: .\models\order.py:74
 msgid "Order|comment"
 msgstr "买家留言"
 
-#: .\models\order.py:87
+#: .\models\order.py:88
 msgid "OrderStatus|unpaid"
 msgstr "待付款"
 
-#: .\models\order.py:88
+#: .\models\order.py:89
 msgid "OrderStatus|closed"
 msgstr "已关闭"
 
-#: .\models\order.py:89
+#: .\models\order.py:90
 msgid "OrderStatus|paid"
 msgstr "已付款"
 
-#: .\models\order.py:90
+#: .\models\order.py:91
 msgid "OrderStatus|cancelling"
 msgstr "取消中"
 
-#: .\models\order.py:91
+#: .\models\order.py:92
 msgid "OrderStatus|cancelled"
 msgstr "已取消"
 
-#: .\models\order.py:92
+#: .\models\order.py:93
 msgid "OrderStatus|shipping"
 msgstr "待收货"
 
-#: .\models\order.py:93
+#: .\models\order.py:94
 msgid "OrderStatus|done"
 msgstr "已完成"
 
-#: .\models\order.py:94
+#: .\models\order.py:95
 msgid "OrderStatus|return requested"
 msgstr "已申请退货"
 
-#: .\models\order.py:95
+#: .\models\order.py:96
 msgid "OrderStatus|returning"
 msgstr "退货中"
 
-#: .\models\order.py:96
+#: .\models\order.py:97
 msgid "OrderStatus|returned"
 msgstr "已退货"
 
-#: .\models\order.py:99 .\models\payment.py:90 .\models\sell_request.py:92
+#: .\models\order.py:100 .\models\payment.py:90 .\models\sell_request.py:92
 #: .\models\withdrawal.py:52
 msgid "status"
 msgstr "状态"
 
-#: .\models\order.py:101
+#: .\models\order.py:102
 msgid "last status"
 msgstr "上一个状态"
 
-#: .\models\order.py:105 .\models\sell_request.py:119
+#: .\models\order.py:106 .\models\sell_request.py:119
 msgid "express company"
 msgstr "快递公司"
 
-#: .\models\order.py:107 .\models\sell_request.py:121
+#: .\models\order.py:108 .\models\sell_request.py:121
 msgid "tracking number"
 msgstr "运单号"
 
-#: .\models\order.py:111
+#: .\models\order.py:112
 #, python-format
 msgid "Order #%(pk)s"
 msgstr "订单#%(pk)s"
 
-#: .\models\order.py:138
+#: .\models\order.py:139
 msgid "order status transition"
 msgstr "订单状态转移"
 
-#: .\models\order.py:139
+#: .\models\order.py:140
 msgid "order status transitions"
 msgstr "订单状态转移"
 
-#: .\models\order.py:144
+#: .\models\order.py:145
 msgid "happened datetime"
 msgstr "发生时间"
 
-#: .\models\order.py:146
+#: .\models\order.py:147
 msgid "source status"
 msgstr "源状态"
 
-#: .\models\order.py:148
+#: .\models\order.py:149
 msgid "destination status"
 msgstr "目标状态"
 
@@ -426,7 +434,7 @@ msgid "payment methods"
 msgstr "支付方式"
 
 #: .\models\payment_method.py:19 .\models\product.py:23 .\models\product.py:34
-#: .\models\product.py:62 .\models\product.py:73 .\models\product.py:84
+#: .\models\product.py:72 .\models\product.py:83 .\models\product.py:94
 msgid "name"
 msgstr "名称"
 
@@ -466,167 +474,163 @@ msgstr "父级分类"
 msgid "category level"
 msgstr "分类层级"
 
-#: .\models\product.py:59
+#: .\models\product.py:69
 msgid "attachment"
 msgstr "附件"
 
-#: .\models\product.py:60
+#: .\models\product.py:70
 msgid "attachments"
 msgstr "附件"
 
-#: .\models\product.py:70
+#: .\models\product.py:80
 msgid "authentication method"
 msgstr "验真方式"
 
-#: .\models\product.py:71
+#: .\models\product.py:81
 msgid "authentication methods"
 msgstr "验真方式"
 
-#: .\models\product.py:81
+#: .\models\product.py:91
 msgid "product location"
 msgstr "商品位置"
 
-#: .\models\product.py:82
+#: .\models\product.py:92
 msgid "product locations"
 msgstr "商品位置"
 
-#: .\models\product.py:105
+#: .\models\product.py:115
 msgid "product image"
 msgstr "商品图片"
 
-#: .\models\product.py:106
+#: .\models\product.py:116
 msgid "product images"
 msgstr "商品图片"
 
-#: .\models\product.py:108
-msgid "image"
-msgstr "图片"
-
-#: .\models\product.py:120
+#: .\models\product.py:130
 msgid "products"
 msgstr "商品"
 
-#: .\models\product.py:122
+#: .\models\product.py:132
 msgid "Product|published datetime"
 msgstr "发布时间"
 
-#: .\models\product.py:125
+#: .\models\product.py:135
 msgid "Product|show on homepage"
 msgstr "在首页显示"
 
-#: .\models\product.py:128
+#: .\models\product.py:138
 msgid "Product|sold"
 msgstr "已出售"
 
-#: .\models\product.py:129
+#: .\models\product.py:139
 msgid "Product|sold datetime"
 msgstr "出售时间"
 
-#: .\models\product.py:141 .\models\sell_request.py:55
+#: .\models\product.py:151 .\models\sell_request.py:55
 msgid "Product|brand"
 msgstr "品牌"
 
-#: .\models\product.py:142 .\models\sell_request.py:57
+#: .\models\product.py:152 .\models\sell_request.py:57
 msgid "Product|name"
 msgstr "名称"
 
-#: .\models\product.py:143
+#: .\models\product.py:153
 msgid "Name of the product."
 msgstr ""
 "商品名称，如“Bazar手提包”、“GG Marmont刺绣单肩包”、“PS1中号斜挎包”等，将显示"
 "在商品列表的品牌名下方。"
 
-#: .\models\product.py:145
+#: .\models\product.py:155
 msgid "Product|style"
 msgstr "款式"
 
-#: .\models\product.py:146
+#: .\models\product.py:156
 msgid "Style of the product."
 msgstr "商品款式，如“长款”、“亮面短款”等。"
 
-#: .\models\product.py:148
+#: .\models\product.py:158
 msgid "Product|color"
 msgstr "颜色"
 
-#: .\models\product.py:149
+#: .\models\product.py:159
 msgid "Color of the product."
 msgstr "商品颜色，如“黑色”、“蓝色”等"
 
-#: .\models\product.py:151 .\models\sell_request.py:58
+#: .\models\product.py:161 .\models\sell_request.py:58
 msgid "Product|size"
 msgstr "尺码／尺寸"
 
-#: .\models\product.py:152
+#: .\models\product.py:162
 msgid "Size of the product."
 msgstr "商品尺码或尺寸，如“Micro”、“Small”、“IT 37”、“XL”等。"
 
-#: .\models\product.py:163
+#: .\models\product.py:173
 msgid "ProductCondition|S"
 msgstr "S"
 
-#: .\models\product.py:164
+#: .\models\product.py:174
 msgid "ProductCondition|A+"
 msgstr "A+"
 
-#: .\models\product.py:165
+#: .\models\product.py:175
 msgid "ProductCondition|A"
 msgstr "A"
 
-#: .\models\product.py:166
+#: .\models\product.py:176
 msgid "ProductCondition|B"
 msgstr "B"
 
-#: .\models\product.py:167
+#: .\models\product.py:177
 msgid "ProductCondition|C"
 msgstr "C"
 
-#: .\models\product.py:168
+#: .\models\product.py:178
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:171 .\models\sell_request.py:59
+#: .\models\product.py:181 .\models\sell_request.py:59
 msgid "Product|condition"
 msgstr "成色"
 
-#: .\models\product.py:178 .\models\sell_request.py:63
+#: .\models\product.py:188 .\models\sell_request.py:63
 msgid "Product|attachments"
 msgstr "附件"
 
-#: .\models\product.py:179 .\models\sell_request.py:65
+#: .\models\product.py:189 .\models\sell_request.py:65
 msgid "Product|description"
 msgstr "描述"
 
-#: .\models\product.py:180
+#: .\models\product.py:190
 msgid "Product|serial code"
 msgstr "防伪序列码"
 
-#: .\models\product.py:184
+#: .\models\product.py:194
 msgid "Product|authentication methods"
 msgstr "验真方式"
 
-#: .\models\product.py:187
+#: .\models\product.py:197
 msgid "Product|location"
 msgstr "位置"
 
-#: .\models\product.py:188
+#: .\models\product.py:198
 msgid "Product|purchase year"
 msgstr "购买年份"
 
-#: .\models\product.py:190 .\models\sell_request.py:62
+#: .\models\product.py:200 .\models\sell_request.py:62
 msgid "Product|original price"
 msgstr "原价"
 
-#: .\models\product.py:191
+#: .\models\product.py:201
 msgid "Product|buy back price"
 msgstr "回购价"
 
-#: .\models\product.py:193
+#: .\models\product.py:202
+msgid "Customers won't see this price."
+msgstr "客户不会看到这个价格。"
+
+#: .\models\product.py:205
 msgid "Product|price"
 msgstr "定价"
-
-#: .\models\product.py:195
-msgid "Product|main image"
-msgstr "主图"
 
 #: .\models\sell_request.py:25
 msgid "sell request sender address"
@@ -728,6 +732,10 @@ msgstr "出售类型"
 msgid "shipping label"
 msgstr "邮寄标签"
 
+#: .\models\sell_request.py:124
+msgid "SellRequest|done datetime"
+msgstr "完成时间"
+
 #: .\models\user.py:24
 msgid "Required. 150 characters or fewer. Letters, digits and ./+/-/_ only."
 msgstr "必填。150个字符或者更少。包含字母，数字和仅有的./+/-/_符号。"
@@ -814,14 +822,10 @@ msgid "Withdrawal #%(pk)s"
 msgstr "提现#%(pk)s"
 
 #: .\serializers\payment.py:76 .\serializers\payment.py:83
-#, fuzzy, python-format
-#| msgid ""
-#| "The \"%(field_name)s\" is required for payment method \"%(payment_method)s"
-#| "\"."
 msgid ""
 "\"%(field)s\" field is required while creating a payment with type \"%(type)s"
 "\"."
-msgstr "对于支付方式“%(payment_method)s”，“%(field_name)s”字段是必填的。"
+msgstr "创建“%(type)s”类型的支付时，“%(field)s”字段是必填的。"
 
 #: .\serializers\payment_method.py:57
 #, python-format
@@ -835,7 +839,7 @@ msgstr "文件%(name)s无效。"
 
 #: .\serializers\withdrawal.py:33
 msgid "Amount is larger than the user's balance."
-msgstr ""
+msgstr "金额超出了用户的余额。"
 
 #: .\templates\admin\dropdown_filter.html:7
 #, python-format
@@ -879,10 +883,8 @@ msgid "File %(name)s does not exist."
 msgstr "文件%(name)s不存在。"
 
 #: .\validators.py:46
-#, fuzzy
-#| msgid "Processed amount cannot be larger than amount."
 msgid "Amount must be larger than zero."
-msgstr "已处理金额不能大于金额。"
+msgstr "金额必须大于0。"
 
 #~ msgid "Amount is not valid."
 #~ msgstr "金额无效。"

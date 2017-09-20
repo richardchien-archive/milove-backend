@@ -72,11 +72,11 @@ class SellRequestAdmin(admin.ModelAdmin):
               'attachments', 'description', 'get_all_images_preview',
               'status', 'denied_reason', 'buy_back_valuation',
               'sell_valuation', 'valuated_dt', 'sell_type', 'shipping_label',
-              'express_company', 'tracking_number')
+              'express_company', 'tracking_number', 'done_dt')
     readonly_fields = ('id', 'created_dt', 'user', 'brand', 'category', 'name',
                        'size', 'condition', 'purchase_year', 'original_price',
                        'attachments', 'description', 'get_all_images_preview',
-                       'valuated_dt')
+                       'valuated_dt', 'done_dt')
     inlines = (SellRequestSenderAddressInline,)
 
     def has_add_permission(self, request):

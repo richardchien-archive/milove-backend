@@ -199,6 +199,8 @@ class Product(models.Model):
                                         blank=True, null=True)
     original_price = models.FloatField(_('Product|original price'))
     buy_back_price = models.FloatField(_('Product|buy back price'),
+                                       help_text=_('Customers won\'t '
+                                                   'see this price.'),
                                        null=True, blank=True)
     price = models.FloatField(_('Product|price'))
 

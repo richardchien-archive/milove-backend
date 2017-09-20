@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 08:31+0800\n"
+"POT-Creation-Date: 2017-09-20 19:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,29 +30,37 @@ msgstr "discount"
 msgid "Order status cannot be switched to %(dst_status)s from %(src_status)s."
 msgstr ""
 
-#: .\admin\product.py:42
+#: .\admin\product.py:44
 msgid "total number of products"
 msgstr ""
 
-#: .\admin\product.py:49
+#: .\admin\product.py:51
 msgid "number of products for sale"
 msgstr ""
 
-#: .\admin\product.py:87 .\admin\sell_request.py:45
+#: .\admin\product.py:89 .\admin\sell_request.py:45
 msgid "preview"
 msgstr ""
 
-#: .\admin\product.py:101 .\admin\product.py:110 .\models\order.py:38
+#: .\admin\product.py:96 .\models\product.py:118
+msgid "image"
+msgstr ""
+
+#: .\admin\product.py:112 .\admin\product.py:121 .\models\order.py:39
 msgid "Product|main image preview"
 msgstr "main image preview"
 
-#: .\admin\product.py:122 .\models\product.py:176
+#: .\admin\product.py:133 .\models\product.py:186
 msgid "Product|categories"
 msgstr "categories"
 
-#: .\admin\product.py:127
+#: .\admin\product.py:138
 msgid "Product|price / original price"
 msgstr "price / original price"
+
+#: .\admin\product.py:189 .\models\product.py:207
+msgid "Product|main image"
+msgstr "main image"
 
 #: .\admin\sell_request.py:54
 msgid "images"
@@ -138,7 +146,7 @@ msgstr ""
 msgid "addresses"
 msgstr ""
 
-#: .\models\address.py:48 .\models\order.py:68 .\models\payment.py:33
+#: .\models\address.py:48 .\models\order.py:69 .\models\payment.py:33
 #: .\models\payment_method.py:17 .\models\sell_request.py:53
 #: .\models\user.py:61 .\models\withdrawal.py:21
 msgid "user"
@@ -184,139 +192,139 @@ msgstr ""
 msgid "promotion message"
 msgstr ""
 
-#: .\models\order.py:21
+#: .\models\order.py:22
 msgid "order item"
 msgstr ""
 
-#: .\models\order.py:22
+#: .\models\order.py:23
 msgid "order items"
 msgstr ""
 
-#: .\models\order.py:25 .\models\product.py:111 .\models\product.py:119
+#: .\models\order.py:26 .\models\product.py:121 .\models\product.py:129
 msgid "product"
 msgstr ""
 
-#: .\models\order.py:28 .\models\order.py:52 .\models\order.py:57
-#: .\models\order.py:143 .\models\payment.py:36
+#: .\models\order.py:29 .\models\order.py:53 .\models\order.py:58
+#: .\models\order.py:144 .\models\payment.py:36
 msgid "order"
 msgstr ""
 
-#: .\models\order.py:29
+#: .\models\order.py:30
 msgid "strike price"
 msgstr ""
 
-#: .\models\order.py:47
+#: .\models\order.py:48
 msgid "shipping address"
 msgstr ""
 
-#: .\models\order.py:48
+#: .\models\order.py:49
 msgid "shipping addresses"
 msgstr ""
 
-#: .\models\order.py:58
+#: .\models\order.py:59
 msgid "orders"
 msgstr ""
 
-#: .\models\order.py:65 .\models\payment.py:30 .\models\sell_request.py:50
+#: .\models\order.py:66 .\models\payment.py:30 .\models\sell_request.py:50
 #: .\models\withdrawal.py:18
 msgid "created datetime"
 msgstr ""
 
-#: .\models\order.py:69
+#: .\models\order.py:70
 msgid "total price"
 msgstr ""
 
-#: .\models\order.py:70
+#: .\models\order.py:71
 msgid "discount amount"
 msgstr ""
 
-#: .\models\order.py:72
+#: .\models\order.py:73
 msgid "paid amount"
 msgstr ""
 
-#: .\models\order.py:73
+#: .\models\order.py:74
 msgid "Order|comment"
 msgstr "comment"
 
-#: .\models\order.py:87
+#: .\models\order.py:88
 msgid "OrderStatus|unpaid"
 msgstr "unpaid"
 
-#: .\models\order.py:88
+#: .\models\order.py:89
 msgid "OrderStatus|closed"
 msgstr "closed"
 
-#: .\models\order.py:89
+#: .\models\order.py:90
 msgid "OrderStatus|paid"
 msgstr "paid"
 
-#: .\models\order.py:90
+#: .\models\order.py:91
 msgid "OrderStatus|cancelling"
 msgstr "cancelling"
 
-#: .\models\order.py:91
+#: .\models\order.py:92
 msgid "OrderStatus|cancelled"
 msgstr "cancelled"
 
-#: .\models\order.py:92
+#: .\models\order.py:93
 msgid "OrderStatus|shipping"
 msgstr "shipping"
 
-#: .\models\order.py:93
+#: .\models\order.py:94
 msgid "OrderStatus|done"
 msgstr "done"
 
-#: .\models\order.py:94
+#: .\models\order.py:95
 msgid "OrderStatus|return requested"
 msgstr "return requested"
 
-#: .\models\order.py:95
+#: .\models\order.py:96
 msgid "OrderStatus|returning"
 msgstr "returning"
 
-#: .\models\order.py:96
+#: .\models\order.py:97
 msgid "OrderStatus|returned"
 msgstr "returned"
 
-#: .\models\order.py:99 .\models\payment.py:90 .\models\sell_request.py:92
+#: .\models\order.py:100 .\models\payment.py:90 .\models\sell_request.py:92
 #: .\models\withdrawal.py:52
 msgid "status"
 msgstr ""
 
-#: .\models\order.py:101
+#: .\models\order.py:102
 msgid "last status"
 msgstr ""
 
-#: .\models\order.py:105 .\models\sell_request.py:119
+#: .\models\order.py:106 .\models\sell_request.py:119
 msgid "express company"
 msgstr ""
 
-#: .\models\order.py:107 .\models\sell_request.py:121
+#: .\models\order.py:108 .\models\sell_request.py:121
 msgid "tracking number"
 msgstr ""
 
-#: .\models\order.py:111
+#: .\models\order.py:112
 #, python-format
 msgid "Order #%(pk)s"
 msgstr ""
 
-#: .\models\order.py:138
+#: .\models\order.py:139
 msgid "order status transition"
 msgstr ""
 
-#: .\models\order.py:139
+#: .\models\order.py:140
 msgid "order status transitions"
 msgstr ""
 
-#: .\models\order.py:144
+#: .\models\order.py:145
 msgid "happened datetime"
 msgstr ""
 
-#: .\models\order.py:146
+#: .\models\order.py:147
 msgid "source status"
 msgstr ""
 
-#: .\models\order.py:148
+#: .\models\order.py:149
 msgid "destination status"
 msgstr ""
 
@@ -426,7 +434,7 @@ msgid "payment methods"
 msgstr ""
 
 #: .\models\payment_method.py:19 .\models\product.py:23 .\models\product.py:34
-#: .\models\product.py:62 .\models\product.py:73 .\models\product.py:84
+#: .\models\product.py:72 .\models\product.py:83 .\models\product.py:94
 msgid "name"
 msgstr ""
 
@@ -466,165 +474,161 @@ msgstr ""
 msgid "category level"
 msgstr ""
 
-#: .\models\product.py:59
+#: .\models\product.py:69
 msgid "attachment"
 msgstr ""
 
-#: .\models\product.py:60
+#: .\models\product.py:70
 msgid "attachments"
 msgstr ""
 
-#: .\models\product.py:70
+#: .\models\product.py:80
 msgid "authentication method"
 msgstr ""
 
-#: .\models\product.py:71
+#: .\models\product.py:81
 msgid "authentication methods"
 msgstr ""
 
-#: .\models\product.py:81
+#: .\models\product.py:91
 msgid "product location"
 msgstr ""
 
-#: .\models\product.py:82
+#: .\models\product.py:92
 msgid "product locations"
 msgstr ""
 
-#: .\models\product.py:105
+#: .\models\product.py:115
 msgid "product image"
 msgstr ""
 
-#: .\models\product.py:106
+#: .\models\product.py:116
 msgid "product images"
 msgstr ""
 
-#: .\models\product.py:108
-msgid "image"
-msgstr ""
-
-#: .\models\product.py:120
+#: .\models\product.py:130
 msgid "products"
 msgstr ""
 
-#: .\models\product.py:122
+#: .\models\product.py:132
 msgid "Product|published datetime"
 msgstr "published datetime"
 
-#: .\models\product.py:125
+#: .\models\product.py:135
 msgid "Product|show on homepage"
 msgstr "show on homepage"
 
-#: .\models\product.py:128
+#: .\models\product.py:138
 msgid "Product|sold"
 msgstr "sold"
 
-#: .\models\product.py:129
+#: .\models\product.py:139
 msgid "Product|sold datetime"
 msgstr "sold datetime"
 
-#: .\models\product.py:141 .\models\sell_request.py:55
+#: .\models\product.py:151 .\models\sell_request.py:55
 msgid "Product|brand"
 msgstr "brand"
 
-#: .\models\product.py:142 .\models\sell_request.py:57
+#: .\models\product.py:152 .\models\sell_request.py:57
 msgid "Product|name"
 msgstr "name"
 
-#: .\models\product.py:143
+#: .\models\product.py:153
 msgid "Name of the product."
 msgstr ""
 
-#: .\models\product.py:145
+#: .\models\product.py:155
 msgid "Product|style"
 msgstr "style"
 
-#: .\models\product.py:146
+#: .\models\product.py:156
 msgid "Style of the product."
 msgstr ""
 
-#: .\models\product.py:148
+#: .\models\product.py:158
 msgid "Product|color"
 msgstr "color"
 
-#: .\models\product.py:149
+#: .\models\product.py:159
 msgid "Color of the product."
 msgstr ""
 
-#: .\models\product.py:151 .\models\sell_request.py:58
+#: .\models\product.py:161 .\models\sell_request.py:58
 msgid "Product|size"
 msgstr "size"
 
-#: .\models\product.py:152
+#: .\models\product.py:162
 msgid "Size of the product."
 msgstr ""
 
-#: .\models\product.py:163
+#: .\models\product.py:173
 msgid "ProductCondition|S"
 msgstr "S"
 
-#: .\models\product.py:164
+#: .\models\product.py:174
 msgid "ProductCondition|A+"
 msgstr "A+"
 
-#: .\models\product.py:165
+#: .\models\product.py:175
 msgid "ProductCondition|A"
 msgstr "A"
 
-#: .\models\product.py:166
+#: .\models\product.py:176
 msgid "ProductCondition|B"
 msgstr "B"
 
-#: .\models\product.py:167
+#: .\models\product.py:177
 msgid "ProductCondition|C"
 msgstr "C"
 
-#: .\models\product.py:168
+#: .\models\product.py:178
 msgid "ProductCondition|D"
 msgstr "D"
 
-#: .\models\product.py:171 .\models\sell_request.py:59
+#: .\models\product.py:181 .\models\sell_request.py:59
 msgid "Product|condition"
 msgstr "condition"
 
-#: .\models\product.py:178 .\models\sell_request.py:63
+#: .\models\product.py:188 .\models\sell_request.py:63
 msgid "Product|attachments"
 msgstr "attachments"
 
-#: .\models\product.py:179 .\models\sell_request.py:65
+#: .\models\product.py:189 .\models\sell_request.py:65
 msgid "Product|description"
 msgstr "description"
 
-#: .\models\product.py:180
+#: .\models\product.py:190
 msgid "Product|serial code"
 msgstr "serial code"
 
-#: .\models\product.py:184
+#: .\models\product.py:194
 msgid "Product|authentication methods"
 msgstr "authentication methods"
 
-#: .\models\product.py:187
+#: .\models\product.py:197
 msgid "Product|location"
 msgstr "location"
 
-#: .\models\product.py:188
+#: .\models\product.py:198
 msgid "Product|purchase year"
 msgstr "purchase year"
 
-#: .\models\product.py:190 .\models\sell_request.py:62
+#: .\models\product.py:200 .\models\sell_request.py:62
 msgid "Product|original price"
 msgstr "original price"
 
-#: .\models\product.py:191
+#: .\models\product.py:201
 msgid "Product|buy back price"
 msgstr "buy back price"
 
-#: .\models\product.py:193
+#: .\models\product.py:202
+msgid "Customers won't see this price."
+msgstr ""
+
+#: .\models\product.py:205
 msgid "Product|price"
 msgstr "price"
-
-#: .\models\product.py:195
-msgid "Product|main image"
-msgstr "main image"
 
 #: .\models\sell_request.py:25
 msgid "sell request sender address"
@@ -725,6 +729,10 @@ msgstr "sell type"
 #: .\models\sell_request.py:116
 msgid "shipping label"
 msgstr ""
+
+#: .\models\sell_request.py:124
+msgid "SellRequest|done datetime"
+msgstr "done datetime"
 
 #: .\models\user.py:24
 msgid "Required. 150 characters or fewer. Letters, digits and ./+/-/_ only."
