@@ -1,6 +1,7 @@
 import random
 
 import django_filters.rest_framework
+import rest_framework.filters
 from rest_framework import viewsets, serializers
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
@@ -115,10 +116,24 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                       'brand', 'categories', 'condition',
                       'original_price', 'price')
 
+    class OrderingFilter(rest_framework.filters.OrderingFilter):
+        def get_ordering(self, request, queryset, view):
+            ordering = super().get_ordering(request, queryset, view)
+            if 'sold' not in ordering:
+                # make sure sold=False first
+                ordering = ('sold',) + tuple(ordering)
+            return ordering
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = Pagination
     filter_class = Filter
+    filter_backends = (
+        django_filters.rest_framework.DjangoFilterBackend,
+        OrderingFilter,  # use custom ordering backend
+        rest_framework.filters.SearchFilter
+    )
+
     # most recently published unsold first
     ordering = ('sold', '-published_dt',)
     search_fields = ('brand__name', 'name', 'style', 'size',
