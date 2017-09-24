@@ -21,6 +21,7 @@ router = SimpleRouter()
 class BrandViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
+    ordering = ('name',)
 
 
 router.register('brands', BrandViewSet)
