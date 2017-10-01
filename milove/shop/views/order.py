@@ -104,7 +104,8 @@ class OrderViewSet(PartialUpdateModelMixin,
         else:
             status_flow.append(None)
 
-        result['flow'] = status_flow
+        result['flow-done'] = status_flow[:-1]
+        result['flow-next'] = status_flow[-1]
 
         return Response(result)
 
