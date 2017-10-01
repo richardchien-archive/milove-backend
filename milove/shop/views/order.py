@@ -72,6 +72,40 @@ class OrderViewSet(PartialUpdateModelMixin,
             if trans.dst_status in needed_statuses:
                 result[trans.dst_status + '_dt'] = trans.happened_dt
 
+        # the following codes are very bad, but I have no time to optimize it
+
+        status_flow = ['已下单']
+        final_status = Order.STATUS_UNPAID
+        if result.get('paid_dt'):
+            status_flow.append('已付款')
+            final_status = Order.STATUS_PAID
+        if result.get('shipping_dt'):
+            status_flow.append('已发货')
+            final_status = Order.STATUS_SHIPPING
+
+        # terminating status
+        if result.get('closed_dt'):
+            status_flow.append('已关闭')
+            final_status = Order.STATUS_CLOSED
+        elif result.get('cancelled_dt'):
+            status_flow.append('已取消')
+            final_status = Order.STATUS_CANCELLED
+        elif result.get('done_dt'):
+            status_flow.append('已完成')
+            final_status = Order.STATUS_DONE
+
+        # next status
+        if final_status == Order.STATUS_UNPAID:
+            status_flow.append('待付款')
+        elif final_status == Order.STATUS_PAID:
+            status_flow.append('待发货')
+        elif final_status == Order.STATUS_SHIPPING:
+            status_flow.append('待收货')
+        else:
+            status_flow.append(None)
+
+        result['flow'] = status_flow
+
         return Response(result)
 
     @detail_route(methods=['PUT'])
