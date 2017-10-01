@@ -181,6 +181,14 @@ class Product(models.Model):
     condition = models.CharField(_('Product|condition'),
                                  max_length=2, choices=CONDITIONS)
 
+    def brief_info(self):
+        info = []
+        for k in ('style', 'color', 'size', 'condition'):
+            v = getattr(self, k, None)
+            if v:
+                info.append(_('Product|' + k) + ':' + v)
+        return ';'.join(info)
+
     categories = models.ManyToManyField('Category', blank=True,
                                         related_name='products',
                                         verbose_name=_('Product|categories'))
