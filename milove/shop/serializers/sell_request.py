@@ -32,7 +32,7 @@ class SellRequestSerializer(serializers.ModelSerializer):
                     validate_uploaded_files,
                     validate_files_exist]
     )
-    brief_info = serializers.CharField()
+    brief_info = serializers.CharField(read_only=True)
     sender_address = SellRequestSenderAddressSerializer(read_only=True)
     shipping_label = serializers.FileField(use_url=False, read_only=True)
 
