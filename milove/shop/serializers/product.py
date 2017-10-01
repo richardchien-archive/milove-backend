@@ -38,7 +38,7 @@ class ProductSerializer(serializers.ModelSerializer):
     main_image = serializers.ImageField(use_url=False, read_only=True)
     images = ProductImageField(many=True, read_only=True)
     categories = CategorySerializer(many=True, read_only=True)
-    brief_info = serializers.CharField()
+    brief_info = serializers.CharField(read_only=True)
 
     class Meta:
         model = Product
