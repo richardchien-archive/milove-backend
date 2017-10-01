@@ -65,6 +65,14 @@ class SellRequest(models.Model):
     description = models.TextField(_('Product|description'), blank=True)
     image_paths = JSONField(_('image paths'), default=[], blank=True)
 
+    def brief_info(self):
+        info = []
+        for k in ('size', 'condition'):
+            v = getattr(self, k, None)
+            if v:
+                info.append(_('Product|' + k) + ':' + v)
+        return ';'.join(info)
+
     STATUS_CREATED = 'created'
     STATUS_CANCELLED = 'cancelled'
     STATUS_DENIED = 'denied'
