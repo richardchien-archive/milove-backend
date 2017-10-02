@@ -103,6 +103,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         max_page_size = 50
 
     class Filter(django_filters.rest_framework.FilterSet):
+        id = rest_filters.CommaSplitListFilter()
         published_dt = django_filters.rest_framework.DateFromToRangeFilter()
         sold = django_filters.rest_framework.BooleanFilter()
         brand = rest_filters.CommaSplitListFilter()
